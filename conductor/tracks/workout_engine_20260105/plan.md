@@ -5,7 +5,7 @@
 *   [x] Task: Define 'SetGenerator' and 'Blueprint' interfaces to implement the 'Bucket & Filler' design b898f45
 *   [x] Task: Create specific 'SetGenerators' for common swim patterns (Pyramid, Intervals, Ladder) a34bdaf
 *   [x] Task: Implement basic utility functions for time/distance conversions and rounding logic 69188fc
-*   [ ] Task: Conductor - User Manual Verification 'Foundation & Data Structures' (Protocol in workflow.md)
+*   [x] Task: Conductor - User Manual Verification 'Foundation & Data Structures' (Protocol in workflow.md) [checkpoint: d9f187d]
 
 ## Phase 2: Core Generation Logic
 *   [ ] Task: Write tests for the basic workout structure generation (Warm-up, Pre-set, Main Set, Cool-down)
