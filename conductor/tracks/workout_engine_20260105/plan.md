@@ -8,6 +8,7 @@
 *   [x] Task: Conductor - User Manual Verification 'Foundation & Data Structures' (Protocol in workflow.md) [checkpoint: d9f187d]
 
 ## Phase 2: Core Generation Logic
+*   [x] Task: Implement 'hypoxicGenerator' (Lung Buster) to validate generator extensibility 203f12e
 *   [ ] Task: Write tests for the basic workout structure generation (Warm-up, Pre-set, Main Set, Cool-down)
 *   [ ] Task: Implement the high-level generation orchestrator
 *   [ ] Task: Write tests for the time-scaling algorithm (adjusting reps/sets to fit duration)
