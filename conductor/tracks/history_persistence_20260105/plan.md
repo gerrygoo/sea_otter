@@ -13,6 +13,6 @@
 *   [x] Task: Conductor - User Manual Verification 'Reactive Stores' (Protocol in workflow.md) [checkpoint: 36b0700]
 
 ## Phase 3: Integration & Cleanup
-*   [ ] Task: Integrate history saving into the main generation flow (optional/manual trigger)
+*   [x] Task: Integrate history saving into the main generation flow (optional/manual trigger) d72d7d6
 *   [ ] Task: Add utility to clear history or specific entries
 *   [ ] Task: Conductor - User Manual Verification 'Integration & Cleanup' (Protocol in workflow.md)
