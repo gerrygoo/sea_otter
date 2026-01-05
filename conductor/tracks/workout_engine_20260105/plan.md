@@ -13,7 +13,7 @@
 *   [x] Task: Implement the high-level generation orchestrator cdf85d6
 *   [x] Task: Write tests for the time-scaling algorithm (adjusting reps/sets to fit duration) 14fb80d
 *   [x] Task: Implement the scaling logic to ensure workouts fit within user time constraints 14fb80d
-*   [ ] Task: Conductor - User Manual Verification 'Core Generation Logic' (Protocol in workflow.md)
+*   [x] Task: Conductor - User Manual Verification 'Core Generation Logic' (Protocol in workflow.md) [checkpoint: deed856]
 
 ## Phase 3: Gear & Focus Filtering
 *   [ ] Task: Write tests for gear-based exercise filtering
