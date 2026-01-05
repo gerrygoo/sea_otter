@@ -5,6 +5,8 @@
 	import { onMount } from 'svelte';
 	import { history } from '$lib/stores/history';
 
+	import { pwaInfo } from 'virtual:pwa-info';
+
 	let { children } = $props();
 
 	onMount(() => {
@@ -12,7 +14,10 @@
 	});
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<svelte:head>
+	<link rel="icon" href={favicon} />
+	{@html pwaInfo?.webManifest.linkTag}
+</svelte:head>
 
 <main class="p-4 pb-20 max-w-md mx-auto w-full">
 	{@render children()}

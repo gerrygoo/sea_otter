@@ -11,7 +11,17 @@
 <div class="space-y-6">
   <div class="flex justify-between items-center">
     <h1 class="text-2xl font-black uppercase tracking-tight">History</h1>
-    <span class="text-sm font-bold text-gray-500">{$history.length} Saved</span>
+    <div class="flex items-center space-x-4">
+      <span class="text-sm font-bold text-gray-500">{$history.length} Saved</span>
+      {#if $history.length > 0}
+        <button 
+          onclick={() => { if(confirm('Clear all history?')) history.clear() }}
+          class="text-xs text-red-600 font-bold uppercase underline"
+        >
+          Clear
+        </button>
+      {/if}
+    </div>
   </div>
 
   {#if $history.length === 0}
