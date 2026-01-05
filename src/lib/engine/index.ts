@@ -1,13 +1,15 @@
 import type { WorkoutParameters, Workout, GeneratorContext, WorkoutBlueprint, SwimSet } from './types';
 import { basicIntervalGenerator } from './generators/basic';
 import { pyramidGenerator, ladderGenerator } from './generators/patterns';
+import { hypoxicGenerator } from './generators/hypoxic';
+import { pullGenerator, kickGenerator } from './generators/gear';
 import { estimateDistanceDuration } from './utils';
 
 // Define standard generators for each slot
 // TODO: In future tasks, we will expand these lists
 const WarmupGenerators = [basicIntervalGenerator]; // Just use basic for now
-const PresetGenerators = [ladderGenerator];
-const MainSetGenerators = [pyramidGenerator, basicIntervalGenerator];
+const PresetGenerators = [ladderGenerator, kickGenerator];
+const MainSetGenerators = [pyramidGenerator, basicIntervalGenerator, hypoxicGenerator, pullGenerator];
 const CooldownGenerators = [basicIntervalGenerator];
 
 const StandardBlueprint: WorkoutBlueprint = [
