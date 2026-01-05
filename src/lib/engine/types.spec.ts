@@ -36,7 +36,7 @@ describe('Engine Types & Interfaces', () => {
       timeBudgetSeconds: 600 // 10 minutes
     };
 
-    const result = mockGenerator(mockContext, mockConstraints);
+    const result = mockGenerator.generate(mockContext, mockConstraints);
     
     expect(result).not.toBeNull();
     expect(result).toHaveLength(1);
