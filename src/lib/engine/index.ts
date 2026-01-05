@@ -3,9 +3,10 @@ import { basicIntervalGenerator } from './generators/basic';
 import { pyramidGenerator, ladderGenerator } from './generators/patterns';
 import { hypoxicGenerator } from './generators/hypoxic';
 import { pullGenerator, kickGenerator } from './generators/gear';
+import { underwaterGenerator } from './generators/specialty';
 
 const WarmupGenerators = [basicIntervalGenerator];
-const PresetGenerators = [ladderGenerator, kickGenerator];
+const PresetGenerators = [ladderGenerator, kickGenerator, underwaterGenerator];
 const MainSetGenerators = [pyramidGenerator, basicIntervalGenerator, hypoxicGenerator, pullGenerator];
 const CooldownGenerators = [basicIntervalGenerator];
 
