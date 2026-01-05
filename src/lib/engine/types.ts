@@ -59,6 +59,13 @@ export interface Workout {
   estimatedDurationMinutes: number;
 }
 
+export interface SavedWorkout extends Workout {
+  id: string;
+  createdAt: string; // ISO timestamp
+  isFavorite: boolean;
+  name?: string;
+}
+
 // --- Generator Engine Types ---
 
 export interface GeneratorContext {

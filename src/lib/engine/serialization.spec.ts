@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { generateWorkout } from './index';
-import { WorkoutSchema } from './schema';
+import { WorkoutSchema, SavedWorkoutSchema } from './schema';
 import { PoolSizeUnit, TrainingFocus } from './types';
 
 describe('Serialization & Validation', () => {
@@ -22,6 +22,28 @@ describe('Serialization & Validation', () => {
         console.error(result.error);
     }
     
+    expect(result.success).toBe(true);
+  });
+
+  it('should validate a SavedWorkout object', () => {
+    const workout = generateWorkout({
+      poolSize: 25,
+      poolUnit: PoolSizeUnit.Yards,
+      totalTimeMinutes: 30,
+      availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
+      focus: TrainingFocus.Aerobic,
+      preferredStrokes: [],
+      effortLevel: 5
+    });
+
+    const savedWorkout = {
+      ...workout,
+      id: '550e8400-e29b-41d4-a716-446655440000',
+      createdAt: new Date().toISOString(),
+      isFavorite: false
+    };
+
+    const result = SavedWorkoutSchema.safeParse(savedWorkout);
     expect(result.success).toBe(true);
   });
 

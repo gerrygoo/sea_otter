@@ -29,6 +29,13 @@ export const WorkoutSchema = z.object({
   estimatedDurationMinutes: z.number().nonnegative(),
 });
 
+export const SavedWorkoutSchema = WorkoutSchema.extend({
+  id: z.string().uuid(),
+  createdAt: z.string().datetime(),
+  isFavorite: z.boolean(),
+  name: z.string().optional(),
+});
+
 export const WorkoutParametersSchema = z.object({
   poolSize: z.number().positive(),
   poolUnit: z.nativeEnum(PoolSizeUnit),
