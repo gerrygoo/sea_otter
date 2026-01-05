@@ -20,7 +20,7 @@ describe('Scaling Logic (Pyramid)', () => {
       timeBudgetSeconds: 200 // Tight budget, definitely can't do 100-200-300...
     };
 
-    const result = pyramidGenerator(mockContext, constraints);
+    const result = pyramidGenerator.generate(mockContext, constraints);
 
     expect(result).not.toBeNull();
     expect(result).toHaveLength(3); // 50, 100, 50

@@ -75,14 +75,16 @@ export interface GeneratorConstraints {
   maxDistance?: number;
 }
 
-/**
- * A function that generates a sequence of SwimSets given a time budget and context.
- * Returns null if it cannot generate a valid set within the constraints.
- */
-export type SetGenerator = (
+export type SetGeneratorFunction = (
   context: GeneratorContext,
   constraints: GeneratorConstraints
 ) => SwimSet[] | null;
+
+export interface SetGenerator {
+  generate: SetGeneratorFunction;
+  name: string;
+  focusAlignment: Partial<Record<TrainingFocus, number>>; // 0.0 to 1.0 (1.0 = perfect match)
+}
 
 export interface BlueprintSlot {
   type: 'warmup' | 'preset' | 'mainSet' | 'cooldown';

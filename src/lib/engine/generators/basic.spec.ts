@@ -17,7 +17,7 @@ describe('Basic Interval Generator', () => {
       timeBudgetSeconds: 600 // 10 minutes
     };
 
-    const result = basicIntervalGenerator(mockContext, constraints);
+    const result = basicIntervalGenerator.generate(mockContext, constraints);
 
     expect(result).not.toBeNull();
     // Assuming 1:30 pace per 100 for default calc
@@ -31,7 +31,7 @@ describe('Basic Interval Generator', () => {
       timeBudgetSeconds: 30 // Too short for a 100 swim
     };
 
-    const result = basicIntervalGenerator(mockContext, constraints);
+    const result = basicIntervalGenerator.generate(mockContext, constraints);
 
     expect(result).toBeNull();
   });

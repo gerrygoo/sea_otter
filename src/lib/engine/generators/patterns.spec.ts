@@ -18,7 +18,7 @@ describe('Pattern Generators', () => {
         timeBudgetSeconds: 1800 // 30 minutes, plenty of time
       };
 
-      const result = pyramidGenerator(mockContext, constraints);
+      const result = pyramidGenerator.generate(mockContext, constraints);
 
       expect(result).not.toBeNull();
       // A standard 1-2-3-2-1 pyramid is 5 items
@@ -33,7 +33,7 @@ describe('Pattern Generators', () => {
         timeBudgetSeconds: 60 // Too short for a pyramid
       };
 
-      const result = pyramidGenerator(mockContext, constraints);
+      const result = pyramidGenerator.generate(mockContext, constraints);
 
       expect(result).toBeNull();
     });
@@ -45,7 +45,7 @@ describe('Pattern Generators', () => {
         timeBudgetSeconds: 1800 
       };
 
-      const result = ladderGenerator(mockContext, constraints);
+      const result = ladderGenerator.generate(mockContext, constraints);
 
       expect(result).not.toBeNull();
       expect(result).toHaveLength(4);

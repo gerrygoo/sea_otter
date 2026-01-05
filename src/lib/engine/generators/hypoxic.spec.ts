@@ -17,7 +17,7 @@ describe('Hypoxic Generator', () => {
       timeBudgetSeconds: 1800 
     };
 
-    const result = hypoxicGenerator(mockContext, constraints);
+    const result = hypoxicGenerator.generate(mockContext, constraints);
 
     expect(result).not.toBeNull();
     expect(result).toHaveLength(5);
@@ -36,7 +36,7 @@ describe('Hypoxic Generator', () => {
     const constraints: GeneratorConstraints = {
       timeBudgetSeconds: 60 
     };
-    const result = hypoxicGenerator(mockContext, constraints);
+    const result = hypoxicGenerator.generate(mockContext, constraints);
     expect(result).toBeNull();
   });
 });
