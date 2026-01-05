@@ -3,7 +3,7 @@
 ## Phase 1: Foundation & Data Structures
 *   [x] Task: Define TypeScript interfaces and enums for engine inputs and outputs 8de1c1f
 *   [x] Task: Define 'SetGenerator' and 'Blueprint' interfaces to implement the 'Bucket & Filler' design b898f45
-*   [ ] Task: Create specific 'SetGenerators' for common swim patterns (Pyramid, Intervals, Ladder)
+*   [x] Task: Create specific 'SetGenerators' for common swim patterns (Pyramid, Intervals, Ladder) a34bdaf
 *   [ ] Task: Implement basic utility functions for time/distance conversions and rounding logic
 *   [ ] Task: Conductor - User Manual Verification 'Foundation & Data Structures' (Protocol in workflow.md)
 
