@@ -13,10 +13,10 @@
 *   [x] Task: Conductor - User Manual Verification 'Generator Interface' (Protocol in workflow.md) [checkpoint: b4a6953]
 
 ## Phase 3: History & Favorites Views
-*   [ ] Task: Implement the History list view with filtering/sorting
-*   [ ] Task: Implement workout cards with 'Favorite' toggle and 'Delete' action
-*   [ ] Task: Connect views to the reactive history store
-*   [ ] Task: Conductor - User Manual Verification 'History & Favorites Views' (Protocol in workflow.md)
+*   [x] Task: Implement the History list view with filtering/sorting 2a13e3e
+*   [x] Task: Implement workout cards with 'Favorite' toggle and 'Delete' action 2a13e3e
+*   [x] Task: Connect views to the reactive history store 2a13e3e
+*   [x] Task: Conductor - User Manual Verification 'History & Favorites Views' (Protocol in workflow.md) [checkpoint: 1b2775e]
 
 ## Phase 4: Polishing & Deployment
 *   [ ] Task: Implement offline support (PWA manifest/service worker)
