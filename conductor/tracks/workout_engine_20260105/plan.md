@@ -11,8 +11,8 @@
 *   [x] Task: Implement 'hypoxicGenerator' (Lung Buster) to validate generator extensibility 203f12e
 *   [x] Task: Write tests for the basic workout structure generation (Warm-up, Pre-set, Main Set, Cool-down) cdf85d6
 *   [x] Task: Implement the high-level generation orchestrator cdf85d6
-*   [ ] Task: Write tests for the time-scaling algorithm (adjusting reps/sets to fit duration)
-*   [ ] Task: Implement the scaling logic to ensure workouts fit within user time constraints
+*   [x] Task: Write tests for the time-scaling algorithm (adjusting reps/sets to fit duration) 14fb80d
+*   [x] Task: Implement the scaling logic to ensure workouts fit within user time constraints 14fb80d
 *   [ ] Task: Conductor - User Manual Verification 'Core Generation Logic' (Protocol in workflow.md)
 
 ## Phase 3: Gear & Focus Filtering
