@@ -18,9 +18,9 @@
 ## Phase 3: Gear & Focus Filtering
 *   [x] Task: Write tests for gear-based exercise filtering f031791
 *   [x] Task: Implement logic to filter the set library based on available user equipment f031791
-*   [ ] Task: Write tests for training-focus prioritization (e.g., more speed sets for 'Speed' focus)
-*   [ ] Task: Implement focus-based weighting for set selection
-*   [ ] Task: Conductor - User Manual Verification 'Gear & Focus Filtering' (Protocol in workflow.md)
+*   [x] Task: Write tests for training-focus prioritization (e.g., more speed sets for 'Speed' focus) 4d670b8
+*   [x] Task: Implement focus-based weighting for set selection 4d670b8
+*   [x] Task: Conductor - User Manual Verification 'Gear & Focus Filtering' (Protocol in workflow.md) [checkpoint: 51b60d3]
 
 ## Phase 4: Final Integration & Serialization
 *   [ ] Task: Write comprehensive integration tests for end-to-end workout generation
