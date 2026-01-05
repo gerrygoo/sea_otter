@@ -19,7 +19,7 @@
 *   [x] Task: Conductor - User Manual Verification 'History & Favorites Views' (Protocol in workflow.md) [checkpoint: 1b2775e]
 
 ## Phase 4: Polishing & Deployment
-*   [ ] Task: Implement offline support (PWA manifest/service worker)
-*   [ ] Task: Conduct a mobile accessibility audit (touch targets, contrast)
-*   [ ] Task: Final UI polish and bug fixes
-*   [ ] Task: Conductor - User Manual Verification 'Polishing & Deployment' (Protocol in workflow.md)
+*   [x] Task: Implement offline support (PWA manifest/service worker) 2f4f66b
+*   [x] Task: Conduct a mobile accessibility audit (touch targets, contrast) 2f4f66b
+*   [x] Task: Final UI polish and bug fixes 2f4f66b
+*   [x] Task: Conductor - User Manual Verification 'Polishing & Deployment' (Protocol in workflow.md) [checkpoint: d168741]
