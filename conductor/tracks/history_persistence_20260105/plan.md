@@ -7,9 +7,9 @@
 *   [x] Task: Conductor - User Manual Verification 'Persistence Layer & Schema' (Protocol in workflow.md) [checkpoint: a358eba]
 
 ## Phase 2: Reactive Stores
-*   [ ] Task: Implement a Svelte store for Workout History
-*   [ ] Task: Implement a Svelte store for Favorite Workouts
-*   [ ] Task: Write tests for store reactivity and synchronization with localStorage
+*   [x] Task: Implement a Svelte store for Workout History e90742c
+*   [x] Task: Implement a Svelte store for Favorite Workouts e90742c
+*   [x] Task: Write tests for store reactivity and synchronization with localStorage e90742c
 *   [ ] Task: Conductor - User Manual Verification 'Reactive Stores' (Protocol in workflow.md)
 
 ## Phase 3: Integration & Cleanup
