@@ -1,7 +1,7 @@
 # Plan: Core Workout Generation Engine
 
 ## Phase 1: Foundation & Data Structures
-*   [ ] Task: Define TypeScript interfaces and enums for engine inputs and outputs
+*   [~] Task: Define TypeScript interfaces and enums for engine inputs and outputs
 *   [ ] Task: Create a curated library of swim set templates and drills as static constants
 *   [ ] Task: Implement basic utility functions for time/distance conversions (e.g., yards to meters, pace calculations)
 *   [ ] Task: Conductor - User Manual Verification 'Foundation & Data Structures' (Protocol in workflow.md)
