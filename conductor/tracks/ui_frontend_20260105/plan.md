@@ -2,9 +2,9 @@
 
 ## Phase 1: App Shell & Layout
 *   [x] Task: Setup base Tailwind configuration and global styles (high contrast) a0b2a54
-*   [ ] Task: Implement the main application layout with mobile navigation
-*   [ ] Task: Create placeholders for Generate, History, and Favorites views
-*   [ ] Task: Conductor - User Manual Verification 'App Shell & Layout' (Protocol in workflow.md)
+*   [x] Task: Implement the main application layout with mobile navigation 9151da3
+*   [x] Task: Create placeholders for Generate, History, and Favorites views 3ccbf6f
+*   [x] Task: Conductor - User Manual Verification 'App Shell & Layout' (Protocol in workflow.md) [checkpoint: 72fa320]
 
 ## Phase 2: Generator Interface
 *   [ ] Task: Build the reactive workout parameter form (Gear, Focus, Time)
