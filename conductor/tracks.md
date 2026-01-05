@@ -9,6 +9,3 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## [x] Track: History Tracking and Favorites
 *Link: [./conductor/tracks/history_persistence_20260105/](./conductor/tracks/history_persistence_20260105/)*
-
-## [x] Track: Mobile-First User Interface
-*Link: [./conductor/tracks/ui_frontend_20260105/](./conductor/tracks/ui_frontend_20260105/)*
