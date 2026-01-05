@@ -1,11 +1,30 @@
 <script lang="ts">
-  // Placeholder for History
+  import { history } from '$lib/stores/history';
+  import WorkoutCard from '$lib/components/WorkoutCard.svelte';
+
+  // Sort by newest first
+  let sortedHistory = $derived($history.sort((a, b) => 
+    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  ));
 </script>
 
-<div class="flex flex-col items-center justify-center min-h-[50vh] space-y-4 text-center">
-  <h1 class="text-2xl font-bold uppercase tracking-tight">Workout History</h1>
-  <p class="text-gray-600">Your past swimming sessions will appear here.</p>
-  <div class="w-full max-w-sm border-2 border-black p-8 border-dashed">
-    No history yet.
+<div class="space-y-6">
+  <div class="flex justify-between items-center">
+    <h1 class="text-2xl font-black uppercase tracking-tight">History</h1>
+    <span class="text-sm font-bold text-gray-500">{$history.length} Saved</span>
   </div>
+
+  {#if $history.length === 0}
+    <div class="w-full border-2 border-black p-8 border-dashed text-center text-gray-500">
+      No workouts saved yet.
+      <br>
+      <a href="/" class="text-blue-600 underline font-bold">Generate one!</a>
+    </div>
+  {:else}
+    <div class="space-y-4">
+      {#each sortedHistory as workout (workout.id)}
+        <WorkoutCard {workout} />
+      {/each}
+    </div>
+  {/if}
 </div>
