@@ -1,0 +1,2 @@
+To build the user interface, I suggest the following track:
+- Create the mobile-responsive SvelteKit application layout, including the Workout Generator form, Workout Display view, and History/Favorites management screens using Tailwind CSS.
