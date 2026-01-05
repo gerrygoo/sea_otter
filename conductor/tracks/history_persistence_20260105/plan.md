@@ -2,8 +2,8 @@
 
 ## Phase 1: Persistence Layer & Schema
 *   [x] Task: Define 'SavedWorkout' interface (extending Workout with ID and Timestamp) 499c169
-*   [ ] Task: Implement a 'storage' utility for CRUD operations on localStorage with Zod validation
-*   [ ] Task: Write unit tests for the storage utility
+*   [x] Task: Implement a 'storage' utility for CRUD operations on localStorage with Zod validation dfc5707
+*   [x] Task: Write unit tests for the storage utility dfc5707
 *   [ ] Task: Conductor - User Manual Verification 'Persistence Layer & Schema' (Protocol in workflow.md)
 
 ## Phase 2: Reactive Stores
