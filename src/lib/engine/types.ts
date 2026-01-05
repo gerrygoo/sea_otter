@@ -58,3 +58,37 @@ export interface Workout {
   totalDistance: number;
   estimatedDurationMinutes: number;
 }
+
+// --- Generator Engine Types ---
+
+export interface GeneratorContext {
+  poolSize: number;
+  poolUnit: PoolSizeUnit;
+  availableGear: Gear;
+  focus: TrainingFocus;
+  effortLevel: number;
+}
+
+export interface GeneratorConstraints {
+  timeBudgetSeconds: number;
+  minDistance?: number;
+  maxDistance?: number;
+}
+
+/**
+ * A function that generates a sequence of SwimSets given a time budget and context.
+ * Returns null if it cannot generate a valid set within the constraints.
+ */
+export type SetGenerator = (
+  context: GeneratorContext,
+  constraints: GeneratorConstraints
+) => SwimSet[] | null;
+
+export interface BlueprintSlot {
+  type: 'warmup' | 'preset' | 'mainSet' | 'cooldown';
+  budgetPercentage: number;
+  generators: SetGenerator[];
+}
+
+export type WorkoutBlueprint = BlueprintSlot[];
+
