@@ -10,7 +10,7 @@
 *   [x] Task: Implement a Svelte store for Workout History e90742c
 *   [x] Task: Implement a Svelte store for Favorite Workouts e90742c
 *   [x] Task: Write tests for store reactivity and synchronization with localStorage e90742c
-*   [ ] Task: Conductor - User Manual Verification 'Reactive Stores' (Protocol in workflow.md)
+*   [x] Task: Conductor - User Manual Verification 'Reactive Stores' (Protocol in workflow.md) [checkpoint: 36b0700]
 
 ## Phase 3: Integration & Cleanup
 *   [ ] Task: Integrate history saving into the main generation flow (optional/manual trigger)
