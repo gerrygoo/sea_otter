@@ -22,6 +22,8 @@ I want to build an app (ideally a web app) that helps me generate lap swimming w
         *   **Preferences:** Preferred stroke styles, desired effort level.
         *   **Focus Areas:** Skill prioritization (Aerobic, Speed, Strength, Technique).
         *   **Equipment:** Available tools (paddles, fins, pull buoy, snorkel, kickboard, etc.).
-*   **User Interface:**
+    *   **User Interface:**
     *   **Mobile-First Design:** A responsive web interface optimized for readability and quick reference at the pool deck.
+    *   **History & Favorites:** Save workouts locally to track progress and bookmark favorite sessions.
+    *   **Offline Support:** Progressive Web App (PWA) capabilities for reliable use in pool environments with poor connectivity.
     *   **Serialization:** Support for exporting workouts to standard formats (e.g., JSON) with future potential for direct Garmin integration.

@@ -1,2 +1,0 @@
-To build the history and persistence layer, I suggest the following track:
-- Implement a persistence layer using `localStorage` (or `IndexedDB` via `idb`) to save completed workouts and manage a "Favorites" list, including Svelte stores for reactive access.

@@ -15,5 +15,7 @@
 
 ## Development Tools
 *   **Build Tool:** [Vite](https://vitejs.dev/) (bundled with SvelteKit).
-*   **Testing:** [Vitest](https://vitest.dev/) for unit testing the generation engine logic and [Playwright](https://playwright.dev/) for end-to-end testing.
+*   **Testing:** [Vitest](https://vitest.dev/) for unit testing, [Svelte Testing Library](https://testing-library.com/docs/svelte-testing-library/intro/) for component testing, and [Playwright](https://playwright.dev/) for end-to-end testing.
+*   **Validation:** [Zod](https://zod.dev/) for schema validation and data integrity.
+*   **PWA:** [Vite PWA Plugin](https://vite-pwa-org.netlify.app/) for offline support.
 *   **Linting/Formatting:** [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/).
