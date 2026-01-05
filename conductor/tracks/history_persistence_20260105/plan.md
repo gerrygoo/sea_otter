@@ -14,5 +14,5 @@
 
 ## Phase 3: Integration & Cleanup
 *   [x] Task: Integrate history saving into the main generation flow (optional/manual trigger) d72d7d6
-*   [ ] Task: Add utility to clear history or specific entries
+*   [x] Task: Add utility to clear history or specific entries e90742c
 *   [ ] Task: Conductor - User Manual Verification 'Integration & Cleanup' (Protocol in workflow.md)
