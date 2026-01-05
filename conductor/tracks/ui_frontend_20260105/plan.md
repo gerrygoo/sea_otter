@@ -7,10 +7,10 @@
 *   [x] Task: Conductor - User Manual Verification 'App Shell & Layout' (Protocol in workflow.md) [checkpoint: 72fa320]
 
 ## Phase 2: Generator Interface
-*   [ ] Task: Build the reactive workout parameter form (Gear, Focus, Time)
-*   [ ] Task: Integrate the form with the Generation Engine
-*   [ ] Task: Implement the Workout Display component (Shorthand + Detailed views)
-*   [ ] Task: Conductor - User Manual Verification 'Generator Interface' (Protocol in workflow.md)
+*   [x] Task: Build the reactive workout parameter form (Gear, Focus, Time) 8020219
+*   [x] Task: Integrate the form with the Generation Engine 8020219
+*   [x] Task: Implement the Workout Display component (Shorthand + Detailed views) 8020219
+*   [x] Task: Conductor - User Manual Verification 'Generator Interface' (Protocol in workflow.md) [checkpoint: b4a6953]
 
 ## Phase 3: History & Favorites Views
 *   [ ] Task: Implement the History list view with filtering/sorting
