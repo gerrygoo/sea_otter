@@ -1,7 +1,7 @@
 # Plan: History Tracking and Favorites
 
 ## Phase 1: Persistence Layer & Schema
-*   [~] Task: Define 'SavedWorkout' interface (extending Workout with ID and Timestamp)
+*   [x] Task: Define 'SavedWorkout' interface (extending Workout with ID and Timestamp) 499c169
 *   [ ] Task: Implement a 'storage' utility for CRUD operations on localStorage with Zod validation
 *   [ ] Task: Write unit tests for the storage utility
 *   [ ] Task: Conductor - User Manual Verification 'Persistence Layer & Schema' (Protocol in workflow.md)
