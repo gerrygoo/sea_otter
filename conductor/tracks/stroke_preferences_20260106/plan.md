@@ -1,6 +1,6 @@
 # Plan: Stroke Preferences
 
-## Phase 1: Types & Schema
+## Phase 1: Types & Schema [checkpoint: 2a611e7]
 - [x] Task: Update `StrokeStyle` enum and add `StrokePreference` type in `src/lib/engine/types.ts` eed607e
 - [x] Task: Update `WorkoutParameters` and `GeneratorContext` to include `strokePreferences` eed607e
 - [x] Task: Update Zod schemas in `src/lib/engine/schema.ts` to reflect preference changes 59b2b13
