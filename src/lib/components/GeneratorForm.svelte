@@ -1,6 +1,7 @@
 <script lang="ts">
   import { PoolSizeUnit, TrainingFocus, StrokeStyle } from '$lib/engine/types';
-  import type { WorkoutParameters } from '$lib/engine/types';
+  import type { WorkoutParameters, StrokePreferenceValue } from '$lib/engine/types';
+  import StrokePreferenceSelector from './StrokePreferenceSelector.svelte';
 
   let { onGenerate } = $props<{ onGenerate: (params: WorkoutParameters) => void }>();
 
@@ -17,10 +18,20 @@
     },
     focus: TrainingFocus.Aerobic,
     preferredStrokes: [],
+    strokePreferences: {
+      [StrokeStyle.Free]: 3,
+      [StrokeStyle.Back]: 3,
+      [StrokeStyle.Breast]: 3,
+      [StrokeStyle.Fly]: 3,
+      [StrokeStyle.IM]: 3,
+      [StrokeStyle.Drill]: 3,
+      [StrokeStyle.Kick]: 3
+    },
     effortLevel: 5
   });
 
   const focusOptions = Object.values(TrainingFocus);
+  const strokeOptions = Object.values(StrokeStyle).filter(s => s !== StrokeStyle.Choice);
   const gearOptions = [
     { key: 'fins', label: 'Fins' },
     { key: 'kickboard', label: 'Kickboard' },
@@ -29,13 +40,17 @@
     { key: 'snorkel', label: 'Snorkel' }
   ];
 
+  function handlePreferenceChange(stroke: StrokeStyle, val: StrokePreferenceValue) {
+    params.strokePreferences[stroke] = val;
+  }
+
   function handleSubmit(e: Event) {
     e.preventDefault();
     onGenerate($state.snapshot(params));
   }
 </script>
 
-<form onsubmit={handleSubmit} class="space-y-6 w-full max-w-md mx-auto">
+<form onsubmit={handleSubmit} class="space-y-6 w-full max-w-md mx-auto pb-12">
   <!-- Time & Pool -->
   <div class="grid grid-cols-2 gap-4">
     <div>
@@ -81,6 +96,20 @@
         <option value={option}>{option}</option>
       {/each}
     </select>
+  </div>
+
+  <!-- Stroke Preferences -->
+  <div class="space-y-4">
+    <span class="block text-sm font-bold uppercase">Stroke Preferences</span>
+    <div class="grid grid-cols-1 gap-4">
+      {#each strokeOptions as stroke}
+        <StrokePreferenceSelector 
+          {stroke} 
+          value={params.strokePreferences[stroke]} 
+          handleChange={(val) => handlePreferenceChange(stroke, val)}
+        />
+      {/each}
+    </div>
   </div>
 
   <!-- Gear -->
