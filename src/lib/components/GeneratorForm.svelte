@@ -81,20 +81,6 @@
     </div>
   </div>
 
-  <!-- Focus -->
-  <div>
-    <label for="focus" class="block text-sm font-bold uppercase mb-1">Focus</label>
-    <select 
-      id="focus" 
-      bind:value={params.focus}
-      class="w-full border-2 border-black p-3 rounded-none bg-white outline-none font-bold text-lg appearance-none"
-    >
-      {#each focusOptions as option}
-        <option value={option}>{option}</option>
-      {/each}
-    </select>
-  </div>
-
   <!-- Stroke Preferences -->
   <div class="space-y-4">
     <span class="block text-sm font-bold uppercase">Stroke Preferences</span>
@@ -109,17 +95,37 @@
     </div>
   </div>
 
-  <!-- Technique Focus -->
-  <div class="space-y-4">
-    <span class="block text-sm font-bold uppercase">Technique Focus</span>
-    <div class="grid grid-cols-1 gap-4">
-      {#each techniqueStrokes as stroke}
-        <StrokePreferenceSelector 
-          {stroke} 
-          value={params.strokePreferences[stroke]} 
-          handleChange={(val) => handlePreferenceChange(stroke, val)}
-        />
-      {/each}
+  <!-- Technique & Focus Group -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Technique Focus -->
+    <div class="space-y-4">
+      <span class="block text-sm font-bold uppercase">Technique Focus</span>
+      <div class="grid grid-cols-1 gap-4">
+        {#each techniqueStrokes as stroke}
+          <StrokePreferenceSelector 
+            {stroke} 
+            value={params.strokePreferences[stroke]} 
+            handleChange={(val) => handlePreferenceChange(stroke, val)}
+          />
+        {/each}
+      </div>
+    </div>
+
+    <!-- Focus -->
+    <div>
+      <label for="focus" class="block text-sm font-bold uppercase mb-1">Main Focus</label>
+      <select 
+        id="focus" 
+        bind:value={params.focus}
+        class="w-full border-2 border-black p-3 rounded-none bg-white outline-none font-bold text-lg appearance-none"
+      >
+        {#each focusOptions as option}
+          <option value={option}>{option}</option>
+        {/each}
+      </select>
+      <p class="text-xs text-gray-500 mt-2 leading-tight">
+        Determines the intensity and structure of the main set.
+      </p>
     </div>
   </div>
 
