@@ -9,7 +9,7 @@
 ## Phase 2: User Interface Implementation
 - [x] Task: Create or update a UI component for stroke preference segmented controls bedcf9e
 - [x] Task: Integrate stroke preferences into `GeneratorForm.svelte` with appropriate labels 82e3134
-- [ ] Task: Ensure stroke preferences are persisted in `localStorage` via the history/settings store
+- [x] Task: Ensure stroke preferences are persisted in `localStorage` via the history/settings store 5d8622f
 - [ ] Task: Conductor - User Manual Verification 'User Interface Implementation' (Protocol in workflow.md)
 
 ## Phase 3: Engine Logic - Filtering & Weighting
