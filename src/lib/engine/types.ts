@@ -18,7 +18,21 @@ export enum StrokeStyle {
   Breast = 'Breast',
   Fly = 'Fly',
   IM = 'IM',
+  Drill = 'Drill',
+  Kick = 'Kick',
   Choice = 'Choice'
+}
+
+export type StrokePreferenceValue = 1 | 2 | 3 | 4 | 5;
+
+export interface StrokePreferences {
+  [StrokeStyle.Free]: StrokePreferenceValue;
+  [StrokeStyle.Back]: StrokePreferenceValue;
+  [StrokeStyle.Breast]: StrokePreferenceValue;
+  [StrokeStyle.Fly]: StrokePreferenceValue;
+  [StrokeStyle.IM]: StrokePreferenceValue;
+  [StrokeStyle.Drill]: StrokePreferenceValue;
+  [StrokeStyle.Kick]: StrokePreferenceValue;
 }
 
 export interface Gear {
@@ -35,7 +49,8 @@ export interface WorkoutParameters {
   totalTimeMinutes: number;
   availableGear: Gear;
   focus: TrainingFocus;
-  preferredStrokes: StrokeStyle[];
+  preferredStrokes: StrokeStyle[]; // Deprecated in favor of strokePreferences
+  strokePreferences: StrokePreferences;
   effortLevel: number; // 1-10
 }
 
@@ -74,6 +89,7 @@ export interface GeneratorContext {
   availableGear: Gear;
   focus: TrainingFocus;
   effortLevel: number;
+  strokePreferences: StrokePreferences;
 }
 
 export interface GeneratorConstraints {
