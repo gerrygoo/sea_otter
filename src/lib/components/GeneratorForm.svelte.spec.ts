@@ -9,7 +9,7 @@ vi.mock('$lib/stores/settings', () => {
   const store = writable({
     totalTimeMinutes: 30,
     poolSize: 25,
-    poolUnit: 'yards',
+    poolUnit: 'meters',
     availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
     focus: 'Aerobic',
     preferredStrokes: [],
