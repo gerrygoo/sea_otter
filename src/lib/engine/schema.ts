@@ -36,6 +36,24 @@ export const SavedWorkoutSchema = WorkoutSchema.extend({
   name: z.string().optional(),
 });
 
+export const StrokePreferenceValueSchema = z.union([
+  z.literal(1),
+  z.literal(2),
+  z.literal(3),
+  z.literal(4),
+  z.literal(5),
+]);
+
+export const StrokePreferencesSchema = z.object({
+  [StrokeStyle.Free]: StrokePreferenceValueSchema,
+  [StrokeStyle.Back]: StrokePreferenceValueSchema,
+  [StrokeStyle.Breast]: StrokePreferenceValueSchema,
+  [StrokeStyle.Fly]: StrokePreferenceValueSchema,
+  [StrokeStyle.IM]: StrokePreferenceValueSchema,
+  [StrokeStyle.Drill]: StrokePreferenceValueSchema,
+  [StrokeStyle.Kick]: StrokePreferenceValueSchema,
+});
+
 export const WorkoutParametersSchema = z.object({
   poolSize: z.number().positive(),
   poolUnit: z.nativeEnum(PoolSizeUnit),
@@ -43,5 +61,6 @@ export const WorkoutParametersSchema = z.object({
   availableGear: GearSchema,
   focus: z.nativeEnum(TrainingFocus),
   preferredStrokes: z.array(z.nativeEnum(StrokeStyle)),
+  strokePreferences: StrokePreferencesSchema,
   effortLevel: z.number().min(1).max(10),
 });
