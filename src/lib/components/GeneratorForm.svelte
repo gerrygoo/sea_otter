@@ -1,33 +1,17 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { PoolSizeUnit, TrainingFocus, StrokeStyle } from '$lib/engine/types';
   import type { WorkoutParameters, StrokePreferenceValue } from '$lib/engine/types';
   import StrokePreferenceSelector from './StrokePreferenceSelector.svelte';
+  import { settingsStore } from '$lib/stores/settings';
 
   let { onGenerate } = $props<{ onGenerate: (params: WorkoutParameters) => void }>();
 
-  let params = $state<WorkoutParameters>({
-    poolSize: 25,
-    poolUnit: PoolSizeUnit.Yards,
-    totalTimeMinutes: 30,
-    availableGear: {
-      fins: false,
-      kickboard: false,
-      pullBuoy: false,
-      paddles: false,
-      snorkel: false
-    },
-    focus: TrainingFocus.Aerobic,
-    preferredStrokes: [],
-    strokePreferences: {
-      [StrokeStyle.Free]: 3,
-      [StrokeStyle.Back]: 3,
-      [StrokeStyle.Breast]: 3,
-      [StrokeStyle.Fly]: 3,
-      [StrokeStyle.IM]: 3,
-      [StrokeStyle.Drill]: 3,
-      [StrokeStyle.Kick]: 3
-    },
-    effortLevel: 5
+  let params = $state<WorkoutParameters>($settingsStore);
+
+  onMount(() => {
+    settingsStore.load();
+    params = $settingsStore;
   });
 
   const focusOptions = Object.values(TrainingFocus);
@@ -42,7 +26,13 @@
 
   function handlePreferenceChange(stroke: StrokeStyle, val: StrokePreferenceValue) {
     params.strokePreferences[stroke] = val;
+    settingsStore.set($state.snapshot(params));
   }
+
+  // Update store when other params change (we could also use $settingsStore directly but params is easier for binding)
+  $effect(() => {
+    settingsStore.set($state.snapshot(params));
+  });
 
   function handleSubmit(e: Event) {
     e.preventDefault();

@@ -2,6 +2,31 @@
  * @vitest-environment happy-dom
  */
 import { describe, it, expect, vi } from 'vitest';
+import { writable } from 'svelte/store';
+
+// Mock settingsStore
+vi.mock('$lib/stores/settings', () => {
+  const store = writable({
+    totalTimeMinutes: 30,
+    poolSize: 25,
+    poolUnit: 'yards',
+    availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
+    focus: 'Aerobic',
+    preferredStrokes: [],
+    strokePreferences: {
+      'Free': 3, 'Back': 3, 'Breast': 3, 'Fly': 3, 'IM': 3, 'Drill': 3, 'Kick': 3
+    },
+    effortLevel: 5
+  });
+  return {
+    settingsStore: {
+      subscribe: store.subscribe,
+      set: vi.fn((val) => store.set(val)),
+      load: vi.fn(),
+    }
+  };
+});
+
 import { render, screen, fireEvent } from '@testing-library/svelte';
 import GeneratorForm from './GeneratorForm.svelte';
 import { StrokeStyle } from '$lib/engine/types';
