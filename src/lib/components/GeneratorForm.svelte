@@ -19,9 +19,9 @@
   // Split strokes into standard strokes and technique types
   const allStrokes = Object.values(StrokeStyle);
   const standardStrokes = allStrokes.filter(s => 
-    s !== StrokeStyle.Choice && s !== StrokeStyle.Drill && s !== StrokeStyle.Kick
+    s !== StrokeStyle.Choice && s !== StrokeStyle.Drill && s !== StrokeStyle.Kick && s !== StrokeStyle.Pull
   );
-  const techniqueStrokes = [StrokeStyle.Drill, StrokeStyle.Kick];
+  const techniqueStrokes = [StrokeStyle.Drill, StrokeStyle.Kick, StrokeStyle.Pull];
 
   const gearOptions = [
     { key: 'fins', label: 'Fins' },

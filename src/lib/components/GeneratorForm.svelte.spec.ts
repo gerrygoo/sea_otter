@@ -14,7 +14,7 @@ vi.mock('$lib/stores/settings', () => {
     focus: 'Aerobic',
     preferredStrokes: [],
     strokePreferences: {
-      'Free': 3, 'Back': 3, 'Breast': 3, 'Fly': 3, 'IM': 3, 'Drill': 3, 'Kick': 3
+      'Free': 3, 'Back': 3, 'Breast': 3, 'Fly': 3, 'IM': 3, 'Drill': 3, 'Kick': 3, 'Pull': 3
     },
     effortLevel: 5
   });

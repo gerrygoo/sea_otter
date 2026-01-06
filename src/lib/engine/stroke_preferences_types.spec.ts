@@ -14,6 +14,7 @@ describe('Stroke Preferences Types', () => {
     // New ones expected by spec
     expect(StrokeStyle.Drill).toBeDefined();
     expect(StrokeStyle.Kick).toBeDefined();
+    expect(StrokeStyle.Pull).toBeDefined();
   });
 
   it('should allow valid preference values (1-5)', () => {

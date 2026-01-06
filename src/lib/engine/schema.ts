@@ -52,6 +52,7 @@ export const StrokePreferencesSchema = z.object({
   [StrokeStyle.IM]: StrokePreferenceValueSchema,
   [StrokeStyle.Drill]: StrokePreferenceValueSchema,
   [StrokeStyle.Kick]: StrokePreferenceValueSchema,
+  [StrokeStyle.Pull]: StrokePreferenceValueSchema,
 });
 
 export const WorkoutParametersSchema = z.object({

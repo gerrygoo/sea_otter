@@ -20,6 +20,7 @@ export enum StrokeStyle {
   IM = 'IM',
   Drill = 'Drill',
   Kick = 'Kick',
+  Pull = 'Pull',
   Choice = 'Choice'
 }
 
@@ -33,6 +34,7 @@ export interface StrokePreferences {
   [StrokeStyle.IM]: StrokePreferenceValue;
   [StrokeStyle.Drill]: StrokePreferenceValue;
   [StrokeStyle.Kick]: StrokePreferenceValue;
+  [StrokeStyle.Pull]: StrokePreferenceValue;
 }
 
 export interface Gear {

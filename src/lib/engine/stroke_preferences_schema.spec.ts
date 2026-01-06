@@ -19,6 +19,7 @@ describe('Stroke Preferences Schema', () => {
         [StrokeStyle.IM]: 3,
         [StrokeStyle.Drill]: 3,
         [StrokeStyle.Kick]: 3,
+        [StrokeStyle.Pull]: 3,
       },
       effortLevel: 5
     };
