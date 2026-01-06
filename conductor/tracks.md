@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [ ] Track: Workout Detail & Re-use
+## [x] Track: Workout Detail & Re-use
 *Link: [./conductor/tracks/workout_detail_20260105/](./conductor/tracks/workout_detail_20260105/)*
