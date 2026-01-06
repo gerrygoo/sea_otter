@@ -7,7 +7,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Types & Schema' (Protocol in workflow.md)
 
 ## Phase 2: User Interface Implementation
-- [ ] Task: Create or update a UI component for stroke preference segmented controls
+- [x] Task: Create or update a UI component for stroke preference segmented controls bedcf9e
 - [ ] Task: Integrate stroke preferences into `GeneratorForm.svelte` with appropriate labels
 - [ ] Task: Ensure stroke preferences are persisted in `localStorage` via the history/settings store
 - [ ] Task: Conductor - User Manual Verification 'User Interface Implementation' (Protocol in workflow.md)
