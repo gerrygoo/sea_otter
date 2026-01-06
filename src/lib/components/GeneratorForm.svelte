@@ -15,7 +15,14 @@
   });
 
   const focusOptions = Object.values(TrainingFocus);
-  const strokeOptions = Object.values(StrokeStyle).filter(s => s !== StrokeStyle.Choice);
+  
+  // Split strokes into standard strokes and technique types
+  const allStrokes = Object.values(StrokeStyle);
+  const standardStrokes = allStrokes.filter(s => 
+    s !== StrokeStyle.Choice && s !== StrokeStyle.Drill && s !== StrokeStyle.Kick
+  );
+  const techniqueStrokes = [StrokeStyle.Drill, StrokeStyle.Kick];
+
   const gearOptions = [
     { key: 'fins', label: 'Fins' },
     { key: 'kickboard', label: 'Kickboard' },
@@ -92,7 +99,21 @@
   <div class="space-y-4">
     <span class="block text-sm font-bold uppercase">Stroke Preferences</span>
     <div class="grid grid-cols-1 gap-4">
-      {#each strokeOptions as stroke}
+      {#each standardStrokes as stroke}
+        <StrokePreferenceSelector 
+          {stroke} 
+          value={params.strokePreferences[stroke]} 
+          handleChange={(val) => handlePreferenceChange(stroke, val)}
+        />
+      {/each}
+    </div>
+  </div>
+
+  <!-- Technique Focus -->
+  <div class="space-y-4">
+    <span class="block text-sm font-bold uppercase">Technique Focus</span>
+    <div class="grid grid-cols-1 gap-4">
+      {#each techniqueStrokes as stroke}
         <StrokePreferenceSelector 
           {stroke} 
           value={params.strokePreferences[stroke]} 
