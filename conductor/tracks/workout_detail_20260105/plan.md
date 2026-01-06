@@ -6,7 +6,7 @@
 *   [x] Task: Conductor - User Manual Verification 'Component Refactoring' (Protocol in workflow.md) [checkpoint: efa8f62]
 
 ## Phase 2: Detail View Implementation
-*   [ ] Task: Implement the dynamic route 'src/routes/history/[id]/+page.svelte'
-*   [ ] Task: Implement logic to look up the workout ID from the history store
-*   [ ] Task: Update 'WorkoutCard' to link to the detail page
-*   [ ] Task: Conductor - User Manual Verification 'Detail View Implementation' (Protocol in workflow.md)
+*   [x] Task: Implement the dynamic route 'src/routes/history/[id]/+page.svelte' 013872b
+*   [x] Task: Implement logic to look up the workout ID from the history store 013872b
+*   [x] Task: Update 'WorkoutCard' to link to the detail page 013872b
+*   [x] Task: Conductor - User Manual Verification 'Detail View Implementation' (Protocol in workflow.md) [checkpoint: 7cbf3bd]
