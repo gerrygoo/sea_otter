@@ -3,7 +3,7 @@
 ## Phase 1: Types & Schema
 - [x] Task: Update `StrokeStyle` enum and add `StrokePreference` type in `src/lib/engine/types.ts` eed607e
 - [x] Task: Update `WorkoutParameters` and `GeneratorContext` to include `strokePreferences` eed607e
-- [ ] Task: Update Zod schemas in `src/lib/engine/schema.ts` to reflect preference changes
+- [x] Task: Update Zod schemas in `src/lib/engine/schema.ts` to reflect preference changes 59b2b13
 - [ ] Task: Conductor - User Manual Verification 'Types & Schema' (Protocol in workflow.md)
 
 ## Phase 2: User Interface Implementation
