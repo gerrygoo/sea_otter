@@ -10,6 +10,7 @@
 - [x] Task: Create or update a UI component for stroke preference segmented controls bedcf9e
 - [x] Task: Integrate stroke preferences into `GeneratorForm.svelte` with appropriate labels 1fb4799
 - [x] Task: Add `Pull` to StrokeStyle, Schema, and UI to match Kick support 66274ec
+- [x] Task: Make Metric the default pool unit in settings store f43a45c
 - [x] Task: Ensure stroke preferences are persisted in `localStorage` via the history/settings store 5d8622f
 - [ ] Task: Conductor - User Manual Verification 'User Interface Implementation' (Protocol in workflow.md)
 
