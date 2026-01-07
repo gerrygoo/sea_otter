@@ -15,7 +15,7 @@
 - [x] Task: Ensure stroke preferences are persisted in `localStorage` via the history/settings store 5d8622f
 - [ ] Task: Conductor - User Manual Verification 'User Interface Implementation' (Protocol in workflow.md)
 
-## Phase 3: Engine Logic - Filtering & Weighting
+## Phase 3: Engine Logic - Filtering & Weighting [checkpoint: 7083852]
 - [x] Task: Implement "Never" (1) exclusion logic in the workout generation engine eac439c
 - [x] Task: Implement weighting logic for preferences 2-5 to influence stroke selection frequency b86a04b
 - [x] Task: Implement "Smart Fallback" logic for cases where all strokes are disabled 32f5cb6
