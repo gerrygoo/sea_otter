@@ -17,27 +17,62 @@ export const mixedWarmupGenerator: SetGenerator = {
 
     const sets: SwimSet[] = [];
     let remainingTime = constraints.timeBudgetSeconds;
-
-    // 1. Swim Part (Free) - Always include a swim
-    const swimDist = 200;
-    const swimDur = estimateDistanceDuration(swimDist, 100); // 1:40 pace for warmup
     
-    if (remainingTime < swimDur) return null; // Not enough time for even the swim
+    // Calculate potential total distance based on a conservative warmup pace (e.g. 100s/100m)
+    // We aim to fill ~90% of the budget to be safe
+    const estPace = 100;
+    const totalCapacity = Math.floor((constraints.timeBudgetSeconds * 0.95) / estPace) * 100;
+    
+    // Distribute capacity
+    // If we have kick/pull, ratio: 50% Swim, 25% Kick, 25% Pull
+    // If only swim: 100% Swim
+    let swimRatio = 1.0;
+    if (canKick && canPull) swimRatio = 0.5;
+    else if (canKick || canPull) swimRatio = 0.6; // 60/40 split if one missing
+    
+    let swimDist = Math.max(200, Math.floor((totalCapacity * swimRatio) / 100) * 100);
+    
+    // Cap warmup swim at reasonable length unless huge budget? 
+    // For general fitness, 600-800 swim is fine.
+    // If budget is huge (slack utilization), let it grow.
+    
+    // 1. Swim Part
+    const swimDur = estimateDistanceDuration(swimDist, 100);
+    
+    if (remainingTime < swimDur) {
+        // Fallback to min 200
+        swimDist = 200;
+        // If still too big, return null (handled by upstream?) 
+        // Actually estimateDistanceDuration(200, 100) = 200s (3m20s). 
+        // If budget is < 3m20s, we probably can't do mixed warmup.
+    }
 
-    sets.push({
-        reps: 1,
-        distance: swimDist,
-        stroke: StrokeStyle.Free,
-        description: 'Warmup Swim (Easy)',
-        intervalSeconds: swimDur,
-        gearUsed: []
-    });
-    remainingTime -= swimDur;
+    if (remainingTime >= estimateDistanceDuration(swimDist, 100)) {
+        sets.push({
+            reps: 1,
+            distance: swimDist,
+            stroke: StrokeStyle.Free,
+            description: `Warmup Swim (Easy)`,
+            intervalSeconds: estimateDistanceDuration(swimDist, 100),
+            gearUsed: []
+        });
+        remainingTime -= estimateDistanceDuration(swimDist, 100);
+    } else {
+        return null; 
+    }
 
-    // 2. Kick Part (if time and gear permits)
+    // 2. Kick Part
     if (canKick) {
-        const kickDist = 100;
-        const kickDur = estimateDistanceDuration(kickDist, 130); // Kick is slower
+        let kickDist = 100;
+        if (canPull) {
+             // 25% of total
+             kickDist = Math.max(100, Math.floor((totalCapacity * 0.25) / 100) * 100);
+        } else {
+             // 40% of total
+             kickDist = Math.max(100, Math.floor((totalCapacity * 0.40) / 100) * 100);
+        }
+        
+        const kickDur = estimateDistanceDuration(kickDist, 130);
         if (remainingTime >= kickDur) {
             sets.push({
                 reps: 1,
@@ -51,9 +86,17 @@ export const mixedWarmupGenerator: SetGenerator = {
         }
     }
 
-    // 3. Pull Part (if time and gear permits)
+    // 3. Pull Part
     if (canPull) {
-        const pullDist = 100;
+        let pullDist = 100;
+        if (canKick) {
+             // 25% of total
+             pullDist = Math.max(100, Math.floor((totalCapacity * 0.25) / 100) * 100);
+        } else {
+             // 40% of total
+             pullDist = Math.max(100, Math.floor((totalCapacity * 0.40) / 100) * 100);
+        }
+
         const pullDur = estimateDistanceDuration(pullDist, 110);
         if (remainingTime >= pullDur) {
             sets.push({
@@ -80,18 +123,23 @@ export const pyramidWarmupGenerator: SetGenerator = {
     [TrainingFocus.Mixed]: 0.8
   },
   generate: (context, constraints) => {
-    const baseInterval = 100; // Warmup pace
-    // 100, 200, 100 sequence
-    const distances = [100, 200, 100];
-    const totalDist = distances.reduce((a,b) => a+b, 0);
-    const totalDur = estimateDistanceDuration(totalDist, baseInterval);
+    const baseInterval = 100;
+    
+    // Define scalable variations
+    const variations = [
+      [200, 300, 200], // 700
+      [100, 200, 100], // 400
+      [50, 100, 50]    // 200
+    ];
 
-    if (totalDur > constraints.timeBudgetSeconds) {
-        // Try smaller pyramid: 50, 100, 50
-        const smallDistances = [50, 100, 50];
-        const smallTotalDur = estimateDistanceDuration(200, baseInterval);
-        if (smallTotalDur <= constraints.timeBudgetSeconds) {
-             return smallDistances.map(d => ({
+    for (const distances of variations) {
+        const totalDist = distances.reduce((a,b) => a+b, 0);
+        const totalDur = estimateDistanceDuration(totalDist, baseInterval);
+        
+        if (totalDur <= constraints.timeBudgetSeconds) {
+             // If we have massive slack (e.g. can fit > 2x the largest), maybe repeat?
+             // Or just stick to one pyramid for warmup to avoid exhaustion.
+             return distances.map(d => ({
                 reps: 1,
                 distance: d,
                 stroke: StrokeStyle.Free,
@@ -100,16 +148,7 @@ export const pyramidWarmupGenerator: SetGenerator = {
                 gearUsed: []
             }));
         }
-        return null;
     }
-
-    return distances.map(d => ({
-        reps: 1,
-        distance: d,
-        stroke: StrokeStyle.Free,
-        description: `${d} Free (Warmup Pyramid)`,
-        intervalSeconds: estimateDistanceDuration(d, baseInterval),
-        gearUsed: []
-    }));
+    return null;
   }
 };
