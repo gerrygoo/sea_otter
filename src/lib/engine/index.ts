@@ -4,9 +4,10 @@ import { pyramidGenerator, ladderGenerator } from './generators/patterns';
 import { hypoxicGenerator } from './generators/hypoxic';
 import { pullGenerator, kickGenerator } from './generators/gear';
 import { underwaterGenerator } from './generators/specialty';
+import { drillGenerator } from './generators/drills';
 
 const WarmupGenerators = [basicIntervalGenerator];
-const PresetGenerators = [ladderGenerator, kickGenerator, underwaterGenerator];
+const PresetGenerators = [ladderGenerator, kickGenerator, underwaterGenerator, drillGenerator];
 const MainSetGenerators = [pyramidGenerator, basicIntervalGenerator, hypoxicGenerator, pullGenerator];
 const CooldownGenerators = [basicIntervalGenerator];
 
@@ -72,7 +73,9 @@ function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number
 
   for (const generator of sortedGenerators) {
     const sets = generator.generate(context, { timeBudgetSeconds: budget });
-    if (sets) return sets;
+    if (sets) {
+      return sets;
+    }
   }
 
   return [];
