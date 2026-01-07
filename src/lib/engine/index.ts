@@ -22,8 +22,10 @@ const StandardBlueprint: WorkoutBlueprint = [
 /**
  * Orchestrates the generation of a structured swimming workout based on user parameters.
  * Uses a "Bucket & Filler" heuristic prioritized by training focus.
+ * @param params User parameters
+ * @param randomize If true, shuffles top-ranked generators to create variety
  */
-export const generateWorkout = (params: WorkoutParameters): Workout => {
+export const generateWorkout = (params: WorkoutParameters, randomize: boolean = false): Workout => {
   const context: GeneratorContext = {
     poolSize: params.poolSize,
     poolUnit: params.poolUnit,
@@ -48,7 +50,7 @@ export const generateWorkout = (params: WorkoutParameters): Workout => {
   const mainSetSlot = StandardBlueprint.find(s => s.type === 'mainSet')!;
   const mainSetBudget = totalTimeSeconds * mainSetSlot.budgetPercentage;
   
-  workoutParts.mainSet = fillSlot(mainSetSlot, context, mainSetBudget);
+  workoutParts.mainSet = fillSlot(mainSetSlot, context, mainSetBudget, randomize);
   remainingTime -= calculateDuration(workoutParts.mainSet);
 
   // 2. Fill supporting segments (Warmup, Preset, Cooldown)
@@ -56,22 +58,52 @@ export const generateWorkout = (params: WorkoutParameters): Workout => {
   
   for (const slot of otherSlots) {
     const slotBudget = Math.min(remainingTime, totalTimeSeconds * slot.budgetPercentage);
-    workoutParts[slot.type] = fillSlot(slot, context, slotBudget);
+    workoutParts[slot.type] = fillSlot(slot, context, slotBudget, randomize);
     remainingTime -= calculateDuration(workoutParts[slot.type]);
   }
 
   return assembleWorkout(workoutParts);
 };
 
+/**
+ * Generates multiple distinct workout options for the given parameters.
+ * @param params User parameters
+ * @param count Number of options to generate
+ */
+export const generateWorkoutOptions = (params: WorkoutParameters, count: number = 3): Workout[] => {
+  const workouts: Workout[] = [];
+  // For options, we always want variety, so we enable randomization
+  for (let i = 0; i < count; i++) {
+    workouts.push(generateWorkout(params, true));
+  }
+  return workouts;
+};
+
 // --- Helper Functions ---
 
-function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number): SwimSet[] {
+function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number, randomize: boolean = false): SwimSet[] {
   // Sort generators by Focus Alignment
-  const sortedGenerators = [...slot.generators].sort((a, b) => {
+  let sortedGenerators = [...slot.generators].sort((a, b) => {
     const scoreA = a.focusAlignment[context.focus] || 0;
     const scoreB = b.focusAlignment[context.focus] || 0;
     return scoreB - scoreA;
   });
+
+  if (randomize) {
+    // Shuffle the top 3 generators to introduce variety while keeping quality
+    // This allows us to rotate between equally valid strategies (e.g. Pyramid vs Basic vs Hypoxic)
+    const topCount = Math.min(3, sortedGenerators.length);
+    const topGenerators = sortedGenerators.slice(0, topCount);
+    const restGenerators = sortedGenerators.slice(topCount);
+    
+    // Fisher-Yates shuffle for top candidates
+    for (let i = topGenerators.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [topGenerators[i], topGenerators[j]] = [topGenerators[j], topGenerators[i]];
+    }
+    
+    sortedGenerators = [...topGenerators, ...restGenerators];
+  }
 
   for (const generator of sortedGenerators) {
     const sets = generator.generate(context, { timeBudgetSeconds: budget });
