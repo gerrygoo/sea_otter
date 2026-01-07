@@ -281,7 +281,7 @@
           id="optionCount" 
           bind:value={params.optionCount} 
           min="1" 
-          max="5"
+          max="10"
           step="1"
           class="w-32 accent-black"
         />

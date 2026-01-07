@@ -1,10 +1,26 @@
 <script lang="ts">
-  import type { Workout } from '$lib/engine/types';
+  import type { Workout, SwimSet, PoolSizeUnit } from '$lib/engine/types';
 
   let { workouts, onSelect } = $props<{ 
     workouts: Workout[], 
     onSelect: (workout: Workout) => void 
   }>();
+
+  function getSegmentSummary(sets: SwimSet[], unit?: PoolSizeUnit) {
+    if (!sets || sets.length === 0) return '-';
+    const dist = sets.reduce((acc, s) => acc + s.distance * s.reps, 0);
+    const unitLabel = unit === 'meters' ? 'm' : 'y';
+    
+    const strokes = Array.from(new Set(sets.map(s => {
+        if (s.stroke.includes('Kick')) return 'Kick';
+        if (s.stroke.includes('Drill')) return 'Drill';
+        return s.stroke; 
+    })));
+    
+    const strokeStr = strokes.length > 2 ? 'Mix' : strokes.join('/');
+    
+    return `${dist}${unitLabel} ${strokeStr}`;
+  }
 </script>
 
 <div class="space-y-6">
@@ -46,7 +62,6 @@
                     {#each workout.mainSet as set}
                         <li class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
                              <span class="font-mono font-bold mr-2 whitespace-nowrap">{set.reps} x {set.distance} {set.stroke}</span>
-                             <!-- Clean up description to avoid redundancy if possible, or just show it -->
                              <span class="text-gray-600 text-xs text-left sm:text-right flex-1 leading-tight">{set.description}</span>
                         </li>
                     {/each}
@@ -54,10 +69,19 @@
              </div>
 
              <!-- Other Parts Summary -->
-             <div class="grid grid-cols-3 gap-2 text-xs text-gray-500 pt-2 border-t-2 border-black/10">
-                <div>Warmup: {workout.warmup.reduce((acc,s)=>acc+s.distance*s.reps,0)}y</div>
-                <div>Preset: {workout.preset.reduce((acc,s)=>acc+s.distance*s.reps,0)}y</div>
-                <div>Cooldown: {workout.cooldown.reduce((acc,s)=>acc+s.distance*s.reps,0)}y</div>
+             <div class="grid grid-cols-3 gap-2 text-xs text-gray-600 pt-2 border-t-2 border-black/10">
+                <div>
+                    <span class="block font-bold uppercase text-[10px] text-gray-400">Warmup</span>
+                    {getSegmentSummary(workout.warmup, workout.poolUnit)}
+                </div>
+                <div>
+                    <span class="block font-bold uppercase text-[10px] text-gray-400">Preset</span>
+                    {getSegmentSummary(workout.preset, workout.poolUnit)}
+                </div>
+                <div>
+                    <span class="block font-bold uppercase text-[10px] text-gray-400">Cooldown</span>
+                    {getSegmentSummary(workout.cooldown, workout.poolUnit)}
+                </div>
              </div>
         </div>
 

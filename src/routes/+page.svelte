@@ -50,7 +50,7 @@
 
 {#if workoutOptions.length === 0}
   <div class="flex flex-col items-center justify-center min-h-[50vh] space-y-6">
-    <h1 class="text-3xl font-black uppercase tracking-tight text-center">Sea Otter Generator</h1>
+    <h1 class="text-3xl font-black uppercase tracking-tight text-center">Swimming Generator</h1>
     <GeneratorForm onGenerate={handleGenerate} />
   </div>
 {:else if !selectedWorkout}
