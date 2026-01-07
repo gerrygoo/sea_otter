@@ -44,7 +44,8 @@ describe('GeneratorForm', () => {
 
     const timeInput = getByLabelText(/Time/i);
     const focusSelect = getByLabelText(/Focus/i);
-    const submitButton = getByText(/Generate Workout/i);
+    // Button text is now "Generate 3 Workouts"
+    const submitButton = getByText(/Generate \d+ Workout/i);
 
     expect(timeInput).toBeTruthy();
     expect(focusSelect).toBeTruthy();
@@ -75,7 +76,7 @@ describe('GeneratorForm', () => {
     await fireEvent.input(minInput, { target: { value: '1' } });
     await fireEvent.input(secInput, { target: { value: '30' } });
 
-    const submitButton = getByText(/Generate Workout/i);
+    const submitButton = getByText(/Generate \d+ Workout/i);
     await fireEvent.click(submitButton);
 
     expect(onGenerate).toHaveBeenCalled();
@@ -115,7 +116,7 @@ describe('GeneratorForm', () => {
     expect(getAllByPlaceholderText('MM')[0]).toHaveValue(1);
     expect(getAllByPlaceholderText('SS')[0]).toHaveValue(35);
 
-    const submitButton = getByText(/Generate Workout/i);
+    const submitButton = getByText(/Generate \d+ Workout/i);
     await fireEvent.click(submitButton);
 
     expect(onGenerate).toHaveBeenCalled();

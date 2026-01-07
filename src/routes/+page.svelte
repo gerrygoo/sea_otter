@@ -12,7 +12,7 @@
 
   function handleGenerate(params: WorkoutParameters) {
     currentParams = params;
-    workoutOptions = generateWorkoutOptions(params, 3);
+    workoutOptions = generateWorkoutOptions(params, params.optionCount || 3);
     selectedWorkout = null;
   }
 
@@ -22,14 +22,14 @@
 
   function handleFindSimilar() {
     if (selectedWorkout && currentParams) {
-      workoutOptions = generateSimilar(selectedWorkout, currentParams, 3);
+      workoutOptions = generateSimilar(selectedWorkout, currentParams, currentParams.optionCount || 3);
       selectedWorkout = null;
     }
   }
 
   function handleRegenerate() {
     if (currentParams) {
-      workoutOptions = generateWorkoutOptions(currentParams, 3);
+      workoutOptions = generateWorkoutOptions(currentParams, currentParams.optionCount || 3);
       selectedWorkout = null;
     }
   }

@@ -55,6 +55,7 @@ export interface WorkoutParameters {
   strokePreferences: StrokePreferences;
   effortLevel: number; // 1-10
   cssPace?: number; // seconds per 100 units
+  optionCount?: number; // Number of variations to generate (default 3)
 }
 
 import { EffortIntensity } from './pace_logic';

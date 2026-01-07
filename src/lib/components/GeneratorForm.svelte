@@ -23,7 +23,8 @@
     preferredStrokes: [],
     strokePreferences: $settingsStore.strokePreferences, // Use store values for the rest
     effortLevel: 5,
-    cssPace: $settingsStore.cssPace
+    cssPace: $settingsStore.cssPace,
+    optionCount: 3
   });
 
   // CSS UI State
@@ -269,12 +270,30 @@
     </div>
   </div>
 
-  <!-- Effort Level (Optional for now, maybe add later or keep simple) -->
-  
+  <!-- Generation Options -->
+  <div>
+    <label for="optionCount" class="block text-sm font-bold uppercase mb-1">Workout Options</label>
+    <div class="flex items-center justify-between border-2 border-black p-2 bg-white">
+      <span class="text-sm font-medium">How many variations?</span>
+      <div class="flex items-center space-x-2">
+        <input 
+          type="range" 
+          id="optionCount" 
+          bind:value={params.optionCount} 
+          min="1" 
+          max="5"
+          step="1"
+          class="w-32 accent-black"
+        />
+        <span class="font-mono font-bold text-lg w-6 text-center">{params.optionCount ?? 3}</span>
+      </div>
+    </div>
+  </div>
+
   <button 
     type="submit"
     class="w-full bg-black text-white text-xl font-bold uppercase py-4 hover:bg-gray-800 transition-colors"
   >
-    Generate Workout
+    Generate {params.optionCount ?? 3} Workout{(params.optionCount ?? 3) > 1 ? 's' : ''}
   </button>
 </form>
