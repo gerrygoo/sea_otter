@@ -22,7 +22,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Engine Logic - Filtering & Weighting' (Protocol in workflow.md)
 
 ## Phase 4: Engine Logic - Drill Alignment
-- [ ] Task: Update drill selection logic to prioritize drills matching high-preference (4-5) strokes
+- [x] Task: Update drill selection logic to prioritize drills matching high-preference (4-5) strokes 3a851e1
 - [ ] Task: Ensure gear requirements are still respected when selecting stroke-specific drills
 - [ ] Task: Conductor - User Manual Verification 'Engine Logic - Drill Alignment' (Protocol in workflow.md)
 
