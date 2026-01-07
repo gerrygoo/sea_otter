@@ -8,8 +8,9 @@ import { drillGenerator } from './generators/drills';
 import { EffortIntensity, getTargetPace } from './pace_logic';
 import { tagWorkout } from './tagging';
 import { mutateWorkout } from './mutation';
+import { mixedWarmupGenerator, pyramidWarmupGenerator } from './generators/warmup';
 
-const WarmupGenerators = [basicIntervalGenerator];
+const WarmupGenerators = [basicIntervalGenerator, mixedWarmupGenerator, pyramidWarmupGenerator];
 const PresetGenerators = [ladderGenerator, kickGenerator, underwaterGenerator, drillGenerator];
 const MainSetGenerators = [pyramidGenerator, basicIntervalGenerator, hypoxicGenerator, pullGenerator];
 const CooldownGenerators = [basicIntervalGenerator];
