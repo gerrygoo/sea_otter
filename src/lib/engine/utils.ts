@@ -16,6 +16,13 @@ export const estimateDistanceDuration = (distance: number, secondsPer100: number
   return (distance / 100) * secondsPer100;
 };
 
+export const formatDuration = (totalSeconds: number): string => {
+  const roundedSeconds = Math.round(totalSeconds);
+  const minutes = Math.floor(roundedSeconds / 60);
+  const seconds = roundedSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+};
+
 /**
  * Returns a list of strokes that are not set to 'Never' (1).
  * Implements "Smart Fallback": if all are 1, returns [Freestyle].

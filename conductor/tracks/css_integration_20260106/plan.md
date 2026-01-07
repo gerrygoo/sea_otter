@@ -27,8 +27,8 @@ This plan outlines the steps to integrate Critical Swim Speed (CSS) into the wor
 - [x] Task: Implement: Update workout generation logic to calculate set-specific target times based on CSS.
 
 ### Task 5: Pace Formatting Utility
-- [ ] Task: Write Tests: Verify formatting of target times (e.g., 90 seconds -> "1:30").
-- [ ] Task: Implement: Utility to format duration for display.
+- [x] Task: Write Tests: Verify formatting of target times (e.g., 90 seconds -> "1:30").
+- [x] Task: Implement: Utility to format duration for display.
 
 ### Phase 2 Verification
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Engine Integration' (Protocol in workflow.md)
