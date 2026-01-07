@@ -1,8 +1,0 @@
-{
-  "track_id": "workout_detail_20260105",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-01-05T12:00:00Z",
-  "updated_at": "2026-01-05T12:00:00Z",
-  "description": "Implement a detailed view for saved workouts (/history/[id]) and add functionality to re-open or duplicate a past workout into the active generator session."
-}

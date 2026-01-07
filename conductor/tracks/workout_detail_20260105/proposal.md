@@ -1,2 +1,0 @@
-To enhance the usability of saved workouts, I suggest the following track:
-- Implement a detailed view for saved workouts (`/history/[id]`) and add functionality to re-open or duplicate a past workout into the active generator session.
