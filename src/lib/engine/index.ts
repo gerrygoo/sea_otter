@@ -7,6 +7,7 @@ import { underwaterGenerator } from './generators/specialty';
 import { drillGenerator } from './generators/drills';
 import { EffortIntensity, getTargetPace } from './pace_logic';
 import { tagWorkout } from './tagging';
+import { mutateWorkout } from './mutation';
 
 const WarmupGenerators = [basicIntervalGenerator];
 const PresetGenerators = [ladderGenerator, kickGenerator, underwaterGenerator, drillGenerator];
@@ -78,6 +79,20 @@ export const generateWorkoutOptions = (params: WorkoutParameters, count: number 
     workouts.push(generateWorkout(params, true));
   }
   return workouts;
+};
+
+/**
+ * Generates similar workout variations based on an existing workout.
+ * @param workout The base workout to mutate
+ * @param params Parameters to respect during mutation (e.g. stroke preferences)
+ * @param count Number of variations to return
+ */
+export const generateSimilar = (workout: Workout, params: WorkoutParameters, count: number = 3): Workout[] => {
+  const variations: Workout[] = [];
+  for (let i = 0; i < count; i++) {
+    variations.push(mutateWorkout(workout, params));
+  }
+  return variations;
 };
 
 // --- Helper Functions ---
