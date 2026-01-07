@@ -17,7 +17,7 @@
 
 ## Phase 3: Engine Logic - Filtering & Weighting
 - [x] Task: Implement "Never" (1) exclusion logic in the workout generation engine eac439c
-- [ ] Task: Implement weighting logic for preferences 2-5 to influence stroke selection frequency
+- [x] Task: Implement weighting logic for preferences 2-5 to influence stroke selection frequency b86a04b
 - [ ] Task: Implement "Smart Fallback" logic for cases where all strokes are disabled
 - [ ] Task: Conductor - User Manual Verification 'Engine Logic - Filtering & Weighting' (Protocol in workflow.md)
 
