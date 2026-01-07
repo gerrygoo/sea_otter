@@ -25,7 +25,7 @@
   <div class="grid grid-cols-2 gap-4 text-center">
     <div class="border-2 border-black p-2">
       <span class="block text-xs uppercase text-gray-500">Distance</span>
-      <span class="text-xl font-black">{workout.totalDistance}</span>
+      <span class="text-xl font-black">{workout.totalDistance} <span class="text-sm font-normal">{workout.poolUnit === 'meters' ? 'm' : 'yds'}</span></span>
     </div>
     <div class="border-2 border-black p-2">
       <span class="block text-xs uppercase text-gray-500">Duration</span>

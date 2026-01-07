@@ -80,6 +80,7 @@ export interface Workout {
   totalDistance: number;
   estimatedDurationMinutes: number;
   tags?: string[];
+  poolUnit?: PoolSizeUnit;
 }
 
 export interface SavedWorkout extends Workout {

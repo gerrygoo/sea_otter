@@ -23,7 +23,7 @@
         <div class="bg-black text-white p-4 flex justify-between items-center">
             <h3 class="font-bold text-xl uppercase">Option {i + 1}</h3>
             <div class="flex gap-2 text-xs font-bold text-black">
-                <span class="bg-white px-2 py-1">{workout.totalDistance} yds</span>
+                <span class="bg-white px-2 py-1">{workout.totalDistance} {workout.poolUnit === 'meters' ? 'm' : 'yds'}</span>
                 <span class="bg-white px-2 py-1">~{Math.round(workout.estimatedDurationMinutes)} min</span>
             </div>
         </div>

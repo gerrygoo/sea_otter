@@ -1,4 +1,4 @@
-import type { WorkoutParameters, Workout, GeneratorContext, WorkoutBlueprint, SwimSet, BlueprintSlot } from './types';
+import type { WorkoutParameters, Workout, GeneratorContext, WorkoutBlueprint, SwimSet, BlueprintSlot, PoolSizeUnit } from './types';
 import { basicIntervalGenerator } from './generators/basic';
 import { pyramidGenerator, ladderGenerator } from './generators/patterns';
 import { hypoxicGenerator } from './generators/hypoxic';
@@ -64,7 +64,7 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
     remainingTime -= calculateDuration(workoutParts[slot.type]);
   }
 
-  return assembleWorkout(workoutParts);
+  return assembleWorkout(workoutParts, context.poolUnit);
 };
 
 /**
@@ -147,7 +147,7 @@ function calculateDuration(sets: SwimSet[]): number {
   return sets.reduce((acc, s) => acc + (s.intervalSeconds || 0) * s.reps, 0);
 }
 
-function assembleWorkout(parts: Record<string, SwimSet[]>): Workout {
+function assembleWorkout(parts: Record<string, SwimSet[]>, poolUnit: PoolSizeUnit): Workout {
   const allSets = [...parts.warmup, ...parts.preset, ...parts.mainSet, ...parts.cooldown];
   
   const workout: Workout = {
@@ -157,7 +157,8 @@ function assembleWorkout(parts: Record<string, SwimSet[]>): Workout {
     cooldown: parts.cooldown,
     totalDistance: allSets.reduce((acc, s) => acc + s.distance * s.reps, 0),
     estimatedDurationMinutes: calculateDuration(allSets) / 60,
-    tags: []
+    tags: [],
+    poolUnit
   };
 
   workout.tags = tagWorkout(workout);

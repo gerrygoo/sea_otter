@@ -4,7 +4,7 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/svelte';
 import WorkoutPicker from './WorkoutPicker.svelte';
-import { StrokeStyle } from '../engine/types';
+import { StrokeStyle, PoolSizeUnit } from '../engine/types';
 
 describe('WorkoutPicker', () => {
   afterEach(() => {
@@ -19,7 +19,8 @@ describe('WorkoutPicker', () => {
       cooldown: [],
       totalDistance: 400,
       estimatedDurationMinutes: 6,
-      tags: ['Endurance', 'Short']
+      tags: ['Endurance', 'Short'],
+      poolUnit: PoolSizeUnit.Yards
     },
     {
       warmup: [],
@@ -28,7 +29,8 @@ describe('WorkoutPicker', () => {
       cooldown: [],
       totalDistance: 500,
       estimatedDurationMinutes: 7.5,
-      tags: ['Distance']
+      tags: ['Distance'],
+      poolUnit: PoolSizeUnit.Yards
     }
   ];
 
