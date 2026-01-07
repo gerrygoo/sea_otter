@@ -27,6 +27,6 @@
 - [ ] Task: Conductor - User Manual Verification 'Engine Logic - Drill Alignment' (Protocol in workflow.md)
 
 ## Phase 5: Verification & Cleanup
-- [ ] Task: Comprehensive unit testing for all preference-based generation scenarios
-- [ ] Task: End-to-end verification of UI state persistence and engine responsiveness
-- [ ] Task: Conductor - User Manual Verification 'Verification & Cleanup' (Protocol in workflow.md)
+- [x] Task: Comprehensive unit testing for all preference-based generation scenarios d5a687c
+- [x] Task: End-to-end verification of UI state persistence and engine responsiveness d5a687c
+- [x] Task: Conductor - User Manual Verification 'Verification & Cleanup' (Protocol in workflow.md) [checkpoint: d5a687c]
