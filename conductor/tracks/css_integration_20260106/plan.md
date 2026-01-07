@@ -2,7 +2,7 @@
 
 This plan outlines the steps to integrate Critical Swim Speed (CSS) into the workout generation engine and implement local storage persistence for user settings.
 
-## Phase 1: Core Logic & Persistence
+## Phase 1: Core Logic & Persistence [checkpoint: 8a6b7fe]
 
 ### Task 1: Update Schema and Types
 - [x] Task: Update Zod schema for `GeneratorForm` to include CSS parameters.
@@ -18,7 +18,7 @@ This plan outlines the steps to integrate Critical Swim Speed (CSS) into the wor
 - [x] Task: Implement: CSS calculation utility function.
 
 ### Phase 1 Verification
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Core Logic & Persistence' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Core Logic & Persistence' (Protocol in workflow.md)
 
 ## Phase 2: Engine Integration
 
