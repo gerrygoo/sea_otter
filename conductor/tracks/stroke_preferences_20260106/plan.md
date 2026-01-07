@@ -23,7 +23,7 @@
 
 ## Phase 4: Engine Logic - Drill Alignment
 - [x] Task: Update drill selection logic to prioritize drills matching high-preference (4-5) strokes 3a851e1
-- [ ] Task: Ensure gear requirements are still respected when selecting stroke-specific drills
+- [x] Task: Ensure gear requirements are still respected when selecting stroke-specific drills 11d0835
 - [ ] Task: Conductor - User Manual Verification 'Engine Logic - Drill Alignment' (Protocol in workflow.md)
 
 ## Phase 5: Verification & Cleanup
