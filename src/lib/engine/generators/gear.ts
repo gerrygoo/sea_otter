@@ -9,6 +9,11 @@ export const pullGenerator: SetGenerator = {
     [TrainingFocus.Endurance]: 0.7
   },
   generate: (context, constraints) => {
+    // Check preference
+    if (context.strokePreferences[StrokeStyle.Pull] === 1) {
+      return null;
+    }
+
     // Requires Pull Buoy AND Paddles
     if (!context.availableGear.pullBuoy || !context.availableGear.paddles) {
       return null;
@@ -23,8 +28,8 @@ export const pullGenerator: SetGenerator = {
     return [{
       reps,
       distance,
-      stroke: StrokeStyle.Free,
-      description: `Pull Set: ${reps} x 200 Free (Pulls/Buoy)`,
+      stroke: StrokeStyle.Pull,
+      description: `Pull Set: ${reps} x 200 Pull (Buoy/Paddles)`,
       intervalSeconds: estimateDistanceDuration(distance, baseInterval),
       gearUsed: ['pullBuoy', 'paddles']
     }];
@@ -38,6 +43,11 @@ export const kickGenerator: SetGenerator = {
     [TrainingFocus.Strength]: 0.6
   },
   generate: (context, constraints) => {
+      // Check preference
+      if (context.strokePreferences[StrokeStyle.Kick] === 1) {
+        return null;
+      }
+
       // Requires Kickboard
       if (!context.availableGear.kickboard) {
         return null;
@@ -52,7 +62,7 @@ export const kickGenerator: SetGenerator = {
       return [{
         reps,
         distance,
-        stroke: StrokeStyle.Choice,
+        stroke: StrokeStyle.Kick,
         description: `Kick Set: ${reps} x 100 Kick (Board)`,
         intervalSeconds: estimateDistanceDuration(distance, baseInterval),
         gearUsed: ['kickboard']

@@ -1,5 +1,6 @@
 import type { SetGenerator } from '../types';
 import { StrokeStyle, TrainingFocus } from '../types';
+import { getAvailableStrokes, pickStroke } from '../utils';
 
 export const basicIntervalGenerator: SetGenerator = {
   name: 'Basic Interval Set',
@@ -18,11 +19,14 @@ export const basicIntervalGenerator: SetGenerator = {
       return null;
     }
 
+    const availableStrokes = getAvailableStrokes(context.strokePreferences);
+    const stroke = pickStroke(context.strokePreferences, availableStrokes);
+
     const set = {
       reps,
       distance,
-      stroke: StrokeStyle.Free,
-      description: `Basic Aerobic Set: ${reps} x 100 Free @ 1:30`,
+      stroke,
+      description: `Basic Aerobic Set: ${reps} x 100 ${stroke} @ 1:30`,
       intervalSeconds: baseIntervalPer100,
       gearUsed: []
     };

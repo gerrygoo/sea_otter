@@ -10,6 +10,11 @@ export const underwaterGenerator: SetGenerator = {
     [TrainingFocus.Strength]: 0.5
   },
   generate: (context, constraints) => {
+    // Underwater work is heavily dolphin kick (Fly/Kick). If both are Never, skip.
+    if (context.strokePreferences[StrokeStyle.Fly] === 1 && context.strokePreferences[StrokeStyle.Kick] === 1) {
+      return null;
+    }
+
     const distance = 25;
     const baseInterval = 60; // Usually generous rest for no-breath work
     

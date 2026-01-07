@@ -1,7 +1,42 @@
 import { describe, it, expect } from 'vitest';
-import { metersToYards, yardsToMeters, roundToNearest, estimateDistanceDuration } from './utils';
+import { metersToYards, yardsToMeters, roundToNearest, estimateDistanceDuration, getAvailableStrokes, pickStroke } from './utils';
+import { StrokeStyle } from './types';
 
 describe('Engine Utilities', () => {
+  const mockPrefs = {
+    [StrokeStyle.Free]: 3,
+    [StrokeStyle.Back]: 3,
+    [StrokeStyle.Breast]: 3,
+    [StrokeStyle.Fly]: 3,
+    [StrokeStyle.IM]: 3,
+    [StrokeStyle.Drill]: 3,
+    [StrokeStyle.Kick]: 3,
+    [StrokeStyle.Pull]: 3,
+  };
+
+  describe('Stroke Selection Utilities', () => {
+    it('getAvailableStrokes should filter out Never (1)', () => {
+      const prefs = { ...mockPrefs, [StrokeStyle.Fly]: 1, [StrokeStyle.Back]: 1 };
+      const available = getAvailableStrokes(prefs);
+      expect(available).not.toContain(StrokeStyle.Fly);
+      expect(available).not.toContain(StrokeStyle.Back);
+      expect(available).toContain(StrokeStyle.Free);
+    });
+
+    it('getAvailableStrokes should fallback to Freestyle if all are Never', () => {
+      const allNever = { ...mockPrefs };
+      Object.keys(allNever).forEach(k => allNever[k as StrokeStyle] = 1);
+      const available = getAvailableStrokes(allNever);
+      expect(available).toEqual([StrokeStyle.Free]);
+    });
+
+    it('pickStroke should return the only available stroke', () => {
+      const available = [StrokeStyle.Breast];
+      const picked = pickStroke(mockPrefs, available);
+      expect(picked).toBe(StrokeStyle.Breast);
+    });
+  });
+
   describe('Conversions', () => {
     it('should convert yards to meters correctly', () => {
       // 100 yards is approx 91.44 meters

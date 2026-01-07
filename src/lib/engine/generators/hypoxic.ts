@@ -9,6 +9,11 @@ export const hypoxicGenerator: SetGenerator = {
     [TrainingFocus.Technique]: 0.6 // Breath control is technique
   },
   generate: (context, constraints) => {
+    // Hypoxic is almost always Free. If Free is Never, skip this generator.
+    if (context.strokePreferences[StrokeStyle.Free] === 1) {
+      return null;
+    }
+
     const baseInterval = 100; // Slower pace for hypoxic work
     
     const steps = [

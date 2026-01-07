@@ -27,7 +27,8 @@ export const generateWorkout = (params: WorkoutParameters): Workout => {
     poolUnit: params.poolUnit,
     availableGear: params.availableGear,
     focus: params.focus,
-    effortLevel: params.effortLevel
+    effortLevel: params.effortLevel,
+    strokePreferences: params.strokePreferences
   };
 
   const totalTimeSeconds = params.totalTimeMinutes * 60;

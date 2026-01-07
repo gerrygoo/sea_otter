@@ -1,5 +1,6 @@
 import type { SetGenerator } from '../types';
 import { StrokeStyle, TrainingFocus } from '../types';
+import { getAvailableStrokes, pickStroke } from '../utils';
 
 // Helper to estimate duration (very rough, 1:30/100 default)
 const estimateDuration = (distance: number, intervalPer100: number = 90) => {
@@ -23,6 +24,9 @@ export const pyramidGenerator: SetGenerator = {
       [50, 100, 50]              // Mini
     ];
 
+    const availableStrokes = getAvailableStrokes(context.strokePreferences);
+    const stroke = pickStroke(context.strokePreferences, availableStrokes);
+
     for (const distances of variations) {
       const totalDuration = distances.reduce((acc, d) => acc + estimateDuration(d, baseInterval), 0);
       
@@ -30,8 +34,8 @@ export const pyramidGenerator: SetGenerator = {
         return distances.map(distance => ({
           reps: 1,
           distance,
-          stroke: StrokeStyle.Free,
-          description: `Pyramid part: ${distance} Free`,
+          stroke,
+          description: `Pyramid part: ${distance} ${stroke}`,
           intervalSeconds: estimateDuration(distance, baseInterval),
           gearUsed: []
         }));
@@ -59,11 +63,14 @@ export const ladderGenerator: SetGenerator = {
       return null;
     }
 
+    const availableStrokes = getAvailableStrokes(context.strokePreferences);
+    const stroke = pickStroke(context.strokePreferences, availableStrokes);
+
     return distances.map(distance => ({
       reps: 1,
       distance,
-      stroke: StrokeStyle.Free,
-      description: `Ladder part: ${distance} Free`,
+      stroke,
+      description: `Ladder part: ${distance} ${stroke}`,
       intervalSeconds: estimateDuration(distance, baseInterval),
       gearUsed: []
     }));
