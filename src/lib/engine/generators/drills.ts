@@ -2,10 +2,13 @@ import type { SetGenerator, SwimSet } from '../types';
 import { StrokeStyle, TrainingFocus } from '../types';
 import { getAvailableStrokes, pickStroke, estimateDistanceDuration } from '../utils';
 
+import { StrokeStyle, TrainingFocus, type Gear } from '../types';
+import { getAvailableStrokes, pickStroke, estimateDistanceDuration } from '../utils';
+
 interface TechnicalDrill {
   name: string;
   stroke: StrokeStyle;
-  gearRequired?: string[];
+  gearRequired?: (keyof Gear)[];
 }
 
 const DRILL_LIBRARY: TechnicalDrill[] = [
@@ -13,22 +16,22 @@ const DRILL_LIBRARY: TechnicalDrill[] = [
   { name: 'One-arm Freestyle', stroke: StrokeStyle.Free },
   { name: 'Catch-up Drill', stroke: StrokeStyle.Free },
   { name: 'Finger-tip Drag', stroke: StrokeStyle.Free },
-  { name: '6-3-6 Drill', stroke: StrokeStyle.Free },
+  { name: '6-3-6 Drill', stroke: StrokeStyle.Free, gearRequired: ['fins'] },
   
   // Backstroke
   { name: 'One-arm Backstroke', stroke: StrokeStyle.Back },
   { name: 'Double-arm Backstroke', stroke: StrokeStyle.Back },
-  { name: 'L-Drill', stroke: StrokeStyle.Back },
+  { name: 'L-Drill', stroke: StrokeStyle.Back, gearRequired: ['fins'] },
   
   // Breaststroke
   { name: '2 Kicks 1 Pull', stroke: StrokeStyle.Breast },
   { name: 'Breaststroke with Flutter Kick', stroke: StrokeStyle.Breast },
-  { name: 'Sculling', stroke: StrokeStyle.Breast },
+  { name: 'Sculling', stroke: StrokeStyle.Breast, gearRequired: ['paddles'] },
   
   // Butterfly
   { name: 'One-arm Butterfly', stroke: StrokeStyle.Fly },
   { name: 'Butterfly with Breaststroke Kick', stroke: StrokeStyle.Fly },
-  { name: 'Body Position Drill', stroke: StrokeStyle.Fly },
+  { name: 'Body Position Drill', stroke: StrokeStyle.Fly, gearRequired: ['fins', 'snorkel'] },
 ];
 
 export const drillGenerator: SetGenerator = {
@@ -51,8 +54,13 @@ export const drillGenerator: SetGenerator = {
     // Pick a stroke based on weights
     const targetStroke = pickStroke(context.strokePreferences, availableStrokes);
     
-    // Find drills for that stroke
-    const relevantDrills = DRILL_LIBRARY.filter(d => d.stroke === targetStroke);
+    // Find drills for that stroke that match available gear
+    const relevantDrills = DRILL_LIBRARY.filter(d => {
+      if (d.stroke !== targetStroke) return false;
+      if (!d.gearRequired) return true;
+      
+      return d.gearRequired.every(gear => context.availableGear[gear]);
+    });
     
     if (relevantDrills.length === 0) {
       return null;
@@ -78,7 +86,7 @@ export const drillGenerator: SetGenerator = {
       stroke: targetStroke,
       description: `Drill Set: ${finalReps} x 50 ${targetStroke} (${drill.name})`,
       intervalSeconds: baseInterval,
-      gearUsed: []
+      gearUsed: drill.gearRequired || []
     }];
   }
 };
