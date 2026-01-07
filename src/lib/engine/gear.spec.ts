@@ -45,7 +45,7 @@ describe('Gear-Based Filtering', () => {
   it('should include a Kick Set if user has a kickboard', () => {
       const workout = generateWorkout({
           ...baseParams,
-          focus: TrainingFocus.Technique,
+          focus: TrainingFocus.Strength,
           availableGear: { ...baseParams.availableGear, kickboard: true },
           totalTimeMinutes: 60
       });

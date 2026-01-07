@@ -4,10 +4,10 @@ import { render } from 'vitest-browser-svelte';
 import Page from './+page.svelte';
 
 describe('/+page.svelte', () => {
-	it('should render h1', async () => {
+	it('should render main title', async () => {
 		render(Page);
 		
-		const heading = page.getByRole('heading', { level: 1 });
+		const heading = page.getByRole('heading', { name: /Sea Otter Generator/i });
 		await expect.element(heading).toBeInTheDocument();
 	});
 });

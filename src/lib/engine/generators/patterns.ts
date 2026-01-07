@@ -35,7 +35,7 @@ export const pyramidGenerator: SetGenerator = {
           reps: 1,
           distance,
           stroke,
-          description: `Pyramid part: ${distance} ${stroke}`,
+          description: `${distance} ${stroke} (Pyramid)`,
           intervalSeconds: estimateDuration(distance, baseInterval),
           gearUsed: []
         }));
@@ -70,7 +70,7 @@ export const ladderGenerator: SetGenerator = {
       reps: 1,
       distance,
       stroke,
-      description: `Ladder part: ${distance} ${stroke}`,
+      description: `${distance} ${stroke} (Ladder)`,
       intervalSeconds: estimateDuration(distance, baseInterval),
       gearUsed: []
     }));
