@@ -9,9 +9,9 @@ This plan outlines the steps to integrate Critical Swim Speed (CSS) into the wor
 - [x] Task: Update TypeScript types to reflect schema changes.
 
 ### Task 2: Implement Local Storage Persistence
-- [ ] Task: Create/Update persistence layer (Svelte store or utility) to sync form state with `localStorage`.
-- [ ] Task: Write Tests: Verify data is saved and loaded correctly from `localStorage`.
-- [ ] Task: Implement: Connect `GeneratorForm` state to persistent storage.
+- [x] Task: Create/Update persistence layer (Svelte store or utility) to sync form state with `localStorage`.
+- [x] Task: Write Tests: Verify data is saved and loaded correctly from `localStorage`.
+- [x] Task: Implement: Connect `GeneratorForm` state to persistent storage.
 
 ### Task 3: CSS Calculation Logic
 - [ ] Task: Write Tests: Verify CSS calculation formula `(400 - 200) / (400m_time - 200m_time)` (adjusted for units).
