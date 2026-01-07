@@ -1,4 +1,4 @@
-import type { SetGenerator } from '../types';
+import type { SetGenerator, SwimSet } from '../types';
 import { StrokeStyle, TrainingFocus } from '../types';
 import { getAvailableStrokes, pickStroke } from '../utils';
 
@@ -17,32 +17,53 @@ export const pyramidGenerator: SetGenerator = {
   generate: (context, constraints) => {
     const baseInterval = 90;
     
-    // Try different pyramid scales: Standard, then Mini
     const variations = [
-      [100, 200, 300, 200, 100], // Standard
-      [50, 100, 150, 100, 50],   // Small
-      [50, 100, 50]              // Mini
+      [200, 300, 400, 500, 400, 300, 200], // Giant (2300)
+      [100, 200, 300, 400, 300, 200, 100], // Large (1600)
+      [100, 200, 300, 200, 100],           // Standard (900)
+      [50, 100, 150, 100, 50],             // Small (450)
+      [50, 100, 50]                        // Mini (200)
     ];
 
     const availableStrokes = getAvailableStrokes(context.strokePreferences);
     const stroke = pickStroke(context.strokePreferences, availableStrokes);
 
+    let bestSets: SwimSet[] | null = null;
+    let bestDuration = 0;
+
     for (const distances of variations) {
-      const totalDuration = distances.reduce((acc, d) => acc + estimateDuration(d, baseInterval), 0);
-      
-      if (totalDuration <= constraints.timeBudgetSeconds) {
-        return distances.map(distance => ({
-          reps: 1,
-          distance,
-          stroke,
-          description: `${distance} ${stroke} (Pyramid)`,
-          intervalSeconds: estimateDuration(distance, baseInterval),
-          gearUsed: []
-        }));
-      }
+        const singleDuration = distances.reduce((acc, d) => acc + estimateDuration(d, baseInterval), 0);
+        
+        // Max reps we can fit
+        const reps = Math.floor(constraints.timeBudgetSeconds / singleDuration);
+        
+        if (reps >= 1) {
+            const totalDur = reps * singleDuration;
+            
+            // We want to maximize time used.
+            // Also, we generally prefer fewer reps of larger pyramids over many reps of tiny pyramids
+            // unless the duration difference is significant.
+            // Let's just strictly maximize duration for now.
+            if (totalDur > bestDuration) {
+                bestDuration = totalDur;
+                bestSets = [];
+                for (let i = 0; i < reps; i++) {
+                    const roundDesc = reps > 1 ? ` (Round ${i+1})` : '';
+                    const roundSets = distances.map(distance => ({
+                        reps: 1,
+                        distance,
+                        stroke,
+                        description: `${distance} ${stroke} (Pyramid)${roundDesc}`,
+                        intervalSeconds: estimateDuration(distance, baseInterval),
+                        gearUsed: []
+                    }));
+                    bestSets.push(...roundSets);
+                }
+            }
+        }
     }
 
-    return null;
+    return bestSets;
   }
 };
 
@@ -54,25 +75,44 @@ export const ladderGenerator: SetGenerator = {
   },
   generate: (context, constraints) => {
     const baseInterval = 90;
-    // Standard Ladder: 100, 200, 300, 400
-    const distances = [100, 200, 300, 400];
     
-    const totalDuration = distances.reduce((acc, d) => acc + estimateDuration(d, baseInterval), 0);
-
-    if (totalDuration > constraints.timeBudgetSeconds) {
-      return null;
-    }
+    const variations = [
+      [100, 200, 300, 400, 500, 600], // Long (2100)
+      [100, 200, 300, 400, 500],      // Medium (1500)
+      [100, 200, 300, 400]            // Standard (1000)
+    ];
 
     const availableStrokes = getAvailableStrokes(context.strokePreferences);
     const stroke = pickStroke(context.strokePreferences, availableStrokes);
 
-    return distances.map(distance => ({
-      reps: 1,
-      distance,
-      stroke,
-      description: `${distance} ${stroke} (Ladder)`,
-      intervalSeconds: estimateDuration(distance, baseInterval),
-      gearUsed: []
-    }));
+    let bestSets: SwimSet[] | null = null;
+    let bestDuration = 0;
+
+    for (const distances of variations) {
+        const singleDuration = distances.reduce((acc, d) => acc + estimateDuration(d, baseInterval), 0);
+        const reps = Math.floor(constraints.timeBudgetSeconds / singleDuration);
+        
+        if (reps >= 1) {
+            const totalDur = reps * singleDuration;
+            if (totalDur > bestDuration) {
+                bestDuration = totalDur;
+                bestSets = [];
+                for (let i = 0; i < reps; i++) {
+                    const roundDesc = reps > 1 ? ` (Round ${i+1})` : '';
+                    const roundSets = distances.map(distance => ({
+                        reps: 1,
+                        distance,
+                        stroke,
+                        description: `${distance} ${stroke} (Ladder)${roundDesc}`,
+                        intervalSeconds: estimateDuration(distance, baseInterval),
+                        gearUsed: []
+                    }));
+                    bestSets.push(...roundSets);
+                }
+            }
+        }
+    }
+
+    return bestSets;
   }
 };

@@ -7,7 +7,7 @@ describe('End-to-End Workout Generation Integration', () => {
   const baseParams: WorkoutParameters = {
     poolSize: 25,
     poolUnit: PoolSizeUnit.Meters,
-    totalTimeMinutes: 60,
+    totalTimeMinutes: 45, // Changed from 60 to match test title context
     availableGear: { fins: true, kickboard: true, pullBuoy: true, paddles: true, snorkel: true },
     focus: TrainingFocus.Mixed,
     preferredStrokes: [],
@@ -44,5 +44,20 @@ describe('End-to-End Workout Generation Integration', () => {
 
     expect(shortWorkout.estimatedDurationMinutes).toBeLessThanOrEqual(15);
     expect(shortWorkout.mainSet.length).toBeGreaterThan(0);
+  });
+
+  it('should utilize available time for long workouts (90 mins)', () => {
+    const longWorkout = generateWorkout({
+        ...baseParams,
+        totalTimeMinutes: 90
+    });
+
+    // 90 mins @ 1:30/100m = ~6000m capacity.
+    // We expect at least 70% utilization = 63 mins.
+    expect(longWorkout.estimatedDurationMinutes).toBeGreaterThan(63);
+    
+    // Warmup should be substantial (e.g. >= 500m) due to slack utilization
+    const warmupDist = longWorkout.warmup.reduce((a, s) => a + s.distance * s.reps, 0);
+    expect(warmupDist).toBeGreaterThanOrEqual(500);
   });
 });

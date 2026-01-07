@@ -59,10 +59,23 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
   // 2. Fill supporting segments (Warmup, Preset, Cooldown)
   const otherSlots = StandardBlueprint.filter(s => s.type !== 'mainSet');
   
+  let currentRemainingWeight = otherSlots.reduce((sum, s) => sum + s.budgetPercentage, 0);
+
   for (const slot of otherSlots) {
-    const slotBudget = Math.min(remainingTime, totalTimeSeconds * slot.budgetPercentage);
+    // Dynamic Budgeting: Try to use available slack
+    // Calculate proportional share of remaining time
+    const proportionalShare = remainingTime * (slot.budgetPercentage / currentRemainingWeight);
+    
+    // Hard cap to prevent excessive warmups (e.g. max 30% of total time)
+    const hardCap = totalTimeSeconds * 0.30;
+    
+    const slotBudget = Math.min(remainingTime, Math.min(proportionalShare, hardCap));
+
     workoutParts[slot.type] = fillSlot(slot, context, slotBudget, randomize);
-    remainingTime -= calculateDuration(workoutParts[slot.type]);
+    const duration = calculateDuration(workoutParts[slot.type]);
+    
+    remainingTime -= duration;
+    currentRemainingWeight -= slot.budgetPercentage;
   }
 
   return assembleWorkout(workoutParts, context.poolUnit);
