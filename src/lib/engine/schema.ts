@@ -18,6 +18,7 @@ export const SwimSetSchema = z.object({
   intervalSeconds: z.number().int().positive().optional(),
   restSeconds: z.number().int().positive().optional(),
   gearUsed: z.array(z.string()).optional(),
+  targetPacePer100: z.number().positive().optional(),
 });
 
 export const WorkoutSchema = z.object({

@@ -23,8 +23,8 @@ This plan outlines the steps to integrate Critical Swim Speed (CSS) into the wor
 ## Phase 2: Engine Integration
 
 ### Task 4: Update Generation Engine
-- [ ] Task: Write Tests: Verify engine accepts `cssPace` and applies intensity scaling (Neutral, Easy, Hard).
-- [ ] Task: Implement: Update workout generation logic to calculate set-specific target times based on CSS.
+- [x] Task: Write Tests: Verify engine accepts `cssPace` and applies intensity scaling (Neutral, Easy, Hard).
+- [x] Task: Implement: Update workout generation logic to calculate set-specific target times based on CSS.
 
 ### Task 5: Pace Formatting Utility
 - [ ] Task: Write Tests: Verify formatting of target times (e.g., 90 seconds -> "1:30").

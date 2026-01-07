@@ -66,6 +66,7 @@ export interface SwimSet {
   intervalSeconds?: number;
   restSeconds?: number;
   gearUsed?: (keyof Gear)[];
+  targetPacePer100?: number; // seconds per 100 units
 }
 
 export interface Workout {

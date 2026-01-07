@@ -5,6 +5,7 @@ import { hypoxicGenerator } from './generators/hypoxic';
 import { pullGenerator, kickGenerator } from './generators/gear';
 import { underwaterGenerator } from './generators/specialty';
 import { drillGenerator } from './generators/drills';
+import { EffortIntensity, getTargetPace } from './pace_logic';
 
 const WarmupGenerators = [basicIntervalGenerator];
 const PresetGenerators = [ladderGenerator, kickGenerator, underwaterGenerator, drillGenerator];
@@ -29,7 +30,8 @@ export const generateWorkout = (params: WorkoutParameters): Workout => {
     availableGear: params.availableGear,
     focus: params.focus,
     effortLevel: params.effortLevel,
-    strokePreferences: params.strokePreferences
+    strokePreferences: params.strokePreferences,
+    cssPace: params.cssPace
   };
 
   const totalTimeSeconds = params.totalTimeMinutes * 60;
@@ -74,7 +76,18 @@ function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number
   for (const generator of sortedGenerators) {
     const sets = generator.generate(context, { timeBudgetSeconds: budget });
     if (sets) {
-      return sets;
+      const intensity = slot.type === 'warmup' || slot.type === 'cooldown' 
+        ? EffortIntensity.Easy 
+        : slot.type === 'mainSet' 
+          ? EffortIntensity.Hard 
+          : EffortIntensity.Neutral;
+      
+      const targetPace = getTargetPace(context, intensity);
+
+      return sets.map(s => ({
+        ...s,
+        targetPacePer100: targetPace ?? undefined
+      }));
     }
   }
 
