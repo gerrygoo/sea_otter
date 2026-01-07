@@ -20,7 +20,7 @@ This plan outlines the steps to integrate Critical Swim Speed (CSS) into the wor
 ### Phase 1 Verification
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Core Logic & Persistence' (Protocol in workflow.md)
 
-## Phase 2: Engine Integration
+## Phase 2: Engine Integration [checkpoint: 4dfb8c6]
 
 ### Task 4: Update Generation Engine
 - [x] Task: Write Tests: Verify engine accepts `cssPace` and applies intensity scaling (Neutral, Easy, Hard).
@@ -31,7 +31,7 @@ This plan outlines the steps to integrate Critical Swim Speed (CSS) into the wor
 - [x] Task: Implement: Utility to format duration for display.
 
 ### Phase 2 Verification
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Engine Integration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Engine Integration' (Protocol in workflow.md)
 
 ## Phase 3: UI Implementation
 
