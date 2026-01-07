@@ -64,4 +64,5 @@ export const WorkoutParametersSchema = z.object({
   preferredStrokes: z.array(z.nativeEnum(StrokeStyle)),
   strokePreferences: StrokePreferencesSchema,
   effortLevel: z.number().min(1).max(10),
+  cssPace: z.number().positive().optional(),
 });

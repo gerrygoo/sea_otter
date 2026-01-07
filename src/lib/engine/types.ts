@@ -54,6 +54,7 @@ export interface WorkoutParameters {
   preferredStrokes: StrokeStyle[]; // Deprecated in favor of strokePreferences
   strokePreferences: StrokePreferences;
   effortLevel: number; // 1-10
+  cssPace?: number; // seconds per 100 units
 }
 
 export interface SwimSet {
@@ -92,6 +93,7 @@ export interface GeneratorContext {
   focus: TrainingFocus;
   effortLevel: number;
   strokePreferences: StrokePreferences;
+  cssPace?: number;
 }
 
 export interface GeneratorConstraints {
