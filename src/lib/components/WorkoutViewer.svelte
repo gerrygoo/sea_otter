@@ -1,7 +1,23 @@
 <script lang="ts">
-  import type { Workout } from '$lib/engine/types';
+  import type { Workout, SwimSet } from '$lib/engine/types';
+  import { formatDuration } from '$lib/engine/utils';
+  import { EffortIntensity } from '$lib/engine/pace_logic';
 
   let { workout } = $props<{ workout: Workout }>();
+
+  function getTargetTime(set: SwimSet): string | null {
+    if (!set.targetPacePer100) return null;
+    const totalSeconds = (set.distance / 100) * set.targetPacePer100;
+    return formatDuration(totalSeconds);
+  }
+
+  function getIntensityColor(intensity?: string | EffortIntensity): string {
+    if (!intensity) return 'text-gray-600';
+    if (intensity === EffortIntensity.Easy) return 'text-blue-600';
+    if (intensity === EffortIntensity.Neutral) return 'text-green-600';
+    if (intensity === EffortIntensity.Hard) return 'text-red-600';
+    return 'text-gray-600';
+  }
 </script>
 
 <div class="space-y-6">
@@ -28,7 +44,15 @@
           {#each workout[segment as keyof Workout] as set}
             <li class="border-l-4 border-black pl-3 py-1">
               <div class="font-bold text-lg leading-tight">
-                {set.reps} x {set.distance} <span class="text-gray-600">@ {set.intervalSeconds ? set.intervalSeconds + 's' : 'rest'}</span>
+                {set.reps} x {set.distance} 
+                <span class="text-gray-600">@ </span>
+                {#if set.targetPacePer100}
+                  <span class="font-mono {getIntensityColor(set.intensity)}">
+                    {getTargetTime(set)}
+                  </span>
+                {:else}
+                  <span class="text-gray-600">{set.intervalSeconds ? set.intervalSeconds + 's' : 'rest'}</span>
+                {/if}
               </div>
               <div class="text-sm text-gray-800">{set.description}</div>
               {#if set.gearUsed && set.gearUsed.length > 0}

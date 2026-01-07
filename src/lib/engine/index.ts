@@ -86,6 +86,7 @@ function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number
 
       return sets.map(s => ({
         ...s,
+        intensity: intensity,
         targetPacePer100: targetPace ?? undefined
       }));
     }

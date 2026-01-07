@@ -4,6 +4,7 @@
   import type { WorkoutParameters, StrokePreferenceValue } from '$lib/engine/types';
   import StrokePreferenceSelector from './StrokePreferenceSelector.svelte';
   import { settingsStore } from '$lib/stores/settings';
+  import { calculateCSSPace } from '$lib/engine/css_utils';
 
   let { onGenerate } = $props<{ onGenerate: (params: WorkoutParameters) => void }>();
 
@@ -21,12 +22,27 @@
     focus: TrainingFocus.Mixed,
     preferredStrokes: [],
     strokePreferences: $settingsStore.strokePreferences, // Use store values for the rest
-    effortLevel: 5
+    effortLevel: 5,
+    cssPace: $settingsStore.cssPace
   });
+
+  // CSS UI State
+  let cssMode = $state<'manual' | 'calc'>('manual');
+  let manualMin = $state(0);
+  let manualSec = $state(0);
+  let calc400Min = $state(0);
+  let calc400Sec = $state(0);
+  let calc200Min = $state(0);
+  let calc200Sec = $state(0);
 
   onMount(() => {
     settingsStore.load();
     params = $settingsStore;
+    
+    if (params.cssPace) {
+      manualMin = Math.floor(params.cssPace / 60);
+      manualSec = Math.round(params.cssPace % 60);
+    }
   });
 
   const focusOptions = Object.values(TrainingFocus);
@@ -49,6 +65,23 @@
   function handlePreferenceChange(stroke: StrokeStyle, val: StrokePreferenceValue) {
     params.strokePreferences[stroke] = val;
     settingsStore.set($state.snapshot(params));
+  }
+
+  function handleManualCSSChange() {
+    params.cssPace = manualMin * 60 + manualSec;
+    if (params.cssPace === 0) params.cssPace = undefined;
+  }
+
+  function handleCalculateCSS() {
+    const t400 = calc400Min * 60 + calc400Sec;
+    const t200 = calc200Min * 60 + calc200Sec;
+    const result = calculateCSSPace(t400, t200);
+    if (result !== null) {
+      params.cssPace = result;
+      manualMin = Math.floor(result / 60);
+      manualSec = Math.round(result % 60);
+      cssMode = 'manual';
+    }
   }
 
   // Update store when other params change (we could also use $settingsStore directly but params is easier for binding)
@@ -94,6 +127,81 @@
         </select>
       </div>
     </div>
+  </div>
+
+  <!-- Performance (CSS) -->
+  <div class="border-2 border-black p-4 bg-gray-50">
+    <div class="flex justify-between items-center mb-4">
+      <span class="block text-sm font-bold uppercase">Performance (CSS)</span>
+      <div class="flex bg-white border-2 border-black text-xs">
+        <button 
+          type="button"
+          class="px-2 py-1 {cssMode === 'manual' ? 'bg-black text-white' : ''}"
+          onclick={() => cssMode = 'manual'}
+        >Manual</button>
+        <button 
+          type="button"
+          class="px-2 py-1 {cssMode === 'calc' ? 'bg-black text-white' : ''}"
+          onclick={() => cssMode = 'calc'}
+        >Calc</button>
+      </div>
+    </div>
+
+    {#if cssMode === 'manual'}
+      <div class="flex items-end space-x-2">
+        <div class="flex-1">
+          <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1">Pace per 100 ({params.poolUnit === PoolSizeUnit.Meters ? 'm' : 'yd'})</label>
+          <div class="flex items-center space-x-1">
+            <input 
+              type="number" 
+              bind:value={manualMin} 
+              oninput={handleManualCSSChange}
+              class="w-full border-2 border-black p-2 rounded-none font-mono text-center"
+              placeholder="MM"
+            />
+            <span class="font-bold">:</span>
+            <input 
+              type="number" 
+              bind:value={manualSec} 
+              oninput={handleManualCSSChange}
+              class="w-full border-2 border-black p-2 rounded-none font-mono text-center"
+              placeholder="SS"
+            />
+          </div>
+        </div>
+      </div>
+    {:else}
+      <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1">400 Best Time</label>
+            <div class="flex items-center space-x-1">
+              <input type="number" bind:value={calc400Min} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="MM" />
+              <span>:</span>
+              <input type="number" bind:value={calc400Sec} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="SS" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1">200 Best Time</label>
+            <div class="flex items-center space-x-1">
+              <input type="number" bind:value={calc200Min} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="MM" />
+              <span>:</span>
+              <input type="number" bind:value={calc200Sec} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="SS" />
+            </div>
+          </div>
+        </div>
+        <button 
+          type="button" 
+          onclick={handleCalculateCSS}
+          class="w-full bg-white border-2 border-black py-1 font-bold text-sm uppercase hover:bg-gray-100"
+        >
+          Calculate CSS
+        </button>
+      </div>
+    {/if}
+    <p class="text-[10px] text-gray-500 mt-2 leading-tight italic">
+      CSS (Critical Swim Speed) is used to generate personalized target times.
+    </p>
   </div>
 
   <!-- Stroke Preferences -->

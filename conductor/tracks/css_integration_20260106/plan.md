@@ -36,13 +36,13 @@ This plan outlines the steps to integrate Critical Swim Speed (CSS) into the wor
 ## Phase 3: UI Implementation
 
 ### Task 6: Update Generator Form UI
-- [ ] Task: Implement "Performance (CSS)" section in `GeneratorForm.svelte`.
-- [ ] Task: Implement toggle for Manual Entry vs. Calculator.
-- [ ] Task: Connect UI inputs to the persistent store.
+- [x] Task: Implement "Performance (CSS)" section in `GeneratorForm.svelte`.
+- [x] Task: Implement toggle for Manual Entry vs. Calculator.
+- [x] Task: Connect UI inputs to the persistent store.
 
 ### Task 7: Update Workout Viewer UI
-- [ ] Task: Implement display of target times in `WorkoutCard.svelte` or `WorkoutViewer.svelte`.
-- [ ] Task: Apply color coding based on intensity relative to CSS (Blue/Green/Red).
+- [x] Task: Implement display of target times in `WorkoutCard.svelte` or `WorkoutViewer.svelte`.
+- [x] Task: Apply color coding based on intensity relative to CSS (Blue/Green/Red).
 
 ### Phase 3 Verification
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: UI Implementation' (Protocol in workflow.md)

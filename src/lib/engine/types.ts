@@ -57,12 +57,14 @@ export interface WorkoutParameters {
   cssPace?: number; // seconds per 100 units
 }
 
+import { EffortIntensity } from './pace_logic';
+
 export interface SwimSet {
   reps: number;
   distance: number;
   stroke: StrokeStyle | string;
   description: string;
-  intensity?: string;
+  intensity?: EffortIntensity | string;
   intervalSeconds?: number;
   restSeconds?: number;
   gearUsed?: (keyof Gear)[];
