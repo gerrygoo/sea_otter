@@ -3,7 +3,7 @@
 ## Frontend Framework
 *   **Framework:** [SvelteKit](https://kit.svelte.dev/)
 *   **Language:** [TypeScript](https://www.typescriptlang.org/)
-*   **Deployment:** [GitHub Pages](https://pages.github.com/) using `@sveltejs/adapter-static` for static site generation (SSG).
+*   **Deployment:** [GitHub Pages](https://pages.github.com/) via GitHub Actions, using `@sveltejs/adapter-static` for static site generation (SSG).
 
 ## State Management & Logic
 *   **State Management:** [Svelte Stores](https://svelte.dev/docs/svelte-store) for reactive application state.
