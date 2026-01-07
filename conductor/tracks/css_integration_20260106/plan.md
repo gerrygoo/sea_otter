@@ -14,8 +14,8 @@ This plan outlines the steps to integrate Critical Swim Speed (CSS) into the wor
 - [x] Task: Implement: Connect `GeneratorForm` state to persistent storage.
 
 ### Task 3: CSS Calculation Logic
-- [ ] Task: Write Tests: Verify CSS calculation formula `(400 - 200) / (400m_time - 200m_time)` (adjusted for units).
-- [ ] Task: Implement: CSS calculation utility function.
+- [x] Task: Write Tests: Verify CSS calculation formula `(400 - 200) / (400m_time - 200m_time)` (adjusted for units).
+- [x] Task: Implement: CSS calculation utility function.
 
 ### Phase 1 Verification
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Core Logic & Persistence' (Protocol in workflow.md)
