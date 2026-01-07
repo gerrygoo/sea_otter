@@ -78,6 +78,7 @@ export interface Workout {
   cooldown: SwimSet[];
   totalDistance: number;
   estimatedDurationMinutes: number;
+  tags?: string[];
 }
 
 export interface SavedWorkout extends Workout {

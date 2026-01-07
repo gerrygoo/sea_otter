@@ -6,6 +6,7 @@ import { pullGenerator, kickGenerator } from './generators/gear';
 import { underwaterGenerator } from './generators/specialty';
 import { drillGenerator } from './generators/drills';
 import { EffortIntensity, getTargetPace } from './pace_logic';
+import { tagWorkout } from './tagging';
 
 const WarmupGenerators = [basicIntervalGenerator];
 const PresetGenerators = [ladderGenerator, kickGenerator, underwaterGenerator, drillGenerator];
@@ -134,12 +135,17 @@ function calculateDuration(sets: SwimSet[]): number {
 function assembleWorkout(parts: Record<string, SwimSet[]>): Workout {
   const allSets = [...parts.warmup, ...parts.preset, ...parts.mainSet, ...parts.cooldown];
   
-  return {
+  const workout: Workout = {
     warmup: parts.warmup,
     preset: parts.preset,
     mainSet: parts.mainSet,
     cooldown: parts.cooldown,
     totalDistance: allSets.reduce((acc, s) => acc + s.distance * s.reps, 0),
-    estimatedDurationMinutes: calculateDuration(allSets) / 60
+    estimatedDurationMinutes: calculateDuration(allSets) / 60,
+    tags: []
   };
+
+  workout.tags = tagWorkout(workout);
+
+  return workout;
 }
