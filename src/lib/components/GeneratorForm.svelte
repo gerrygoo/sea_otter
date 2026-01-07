@@ -7,7 +7,22 @@
 
   let { onGenerate } = $props<{ onGenerate: (params: WorkoutParameters) => void }>();
 
-  let params = $state<WorkoutParameters>($settingsStore);
+  let params = $state<WorkoutParameters>({
+    poolSize: 25,
+    poolUnit: PoolSizeUnit.Meters,
+    totalTimeMinutes: 60,
+    availableGear: {
+      fins: false,
+      kickboard: false,
+      pullBuoy: false,
+      paddles: false,
+      snorkel: false
+    },
+    focus: TrainingFocus.Mixed,
+    preferredStrokes: [],
+    strokePreferences: $settingsStore.strokePreferences, // Use store values for the rest
+    effortLevel: 5
+  });
 
   onMount(() => {
     settingsStore.load();

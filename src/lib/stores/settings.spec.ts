@@ -30,8 +30,9 @@ describe('Settings Store', () => {
 
   it('should initialize with default values', () => {
     const value = get(settingsStore);
-    expect(value.totalTimeMinutes).toBe(30);
+    expect(value.totalTimeMinutes).toBe(60);
     expect(value.poolUnit).toBe(PoolSizeUnit.Meters);
+    expect(value.focus).toBe(TrainingFocus.Mixed);
     expect(value.strokePreferences[StrokeStyle.Free]).toBe(3);
   });
 

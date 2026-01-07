@@ -7,7 +7,7 @@ const STORAGE_KEY = 'sea-otter-settings';
 const DEFAULT_SETTINGS: WorkoutParameters = {
   poolSize: 25,
   poolUnit: PoolSizeUnit.Meters,
-  totalTimeMinutes: 30,
+  totalTimeMinutes: 60,
   availableGear: {
     fins: false,
     kickboard: false,
@@ -15,7 +15,7 @@ const DEFAULT_SETTINGS: WorkoutParameters = {
     paddles: false,
     snorkel: false
   },
-  focus: TrainingFocus.Aerobic,
+  focus: TrainingFocus.Mixed,
   preferredStrokes: [],
   strokePreferences: {
     [StrokeStyle.Free]: 3,

@@ -7,11 +7,11 @@ import { writable } from 'svelte/store';
 // Mock settingsStore
 vi.mock('$lib/stores/settings', () => {
   const store = writable({
-    totalTimeMinutes: 30,
+    totalTimeMinutes: 60,
     poolSize: 25,
     poolUnit: 'meters',
     availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-    focus: 'Aerobic',
+    focus: 'Mixed',
     preferredStrokes: [],
     strokePreferences: {
       'Free': 3, 'Back': 3, 'Breast': 3, 'Fly': 3, 'IM': 3, 'Drill': 3, 'Kick': 3, 'Pull': 3
