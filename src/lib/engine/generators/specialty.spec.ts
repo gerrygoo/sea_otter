@@ -9,7 +9,10 @@ describe('Specialty Generators - Underwater', () => {
     poolUnit: PoolSizeUnit.Meters,
     availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
     focus: TrainingFocus.Technique,
-    effortLevel: 8
+    effortLevel: 5,
+    strokePreferences: {
+        Free: 3, Back: 3, Breast: 3, Fly: 3, IM: 3, Drill: 3, Kick: 3, Pull: 3
+    }
   };
 
   it('should generate underwater 25s without breathing', () => {

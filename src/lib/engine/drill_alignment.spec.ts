@@ -1,9 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { generateWorkout } from './index';
 import { PoolSizeUnit, TrainingFocus, StrokeStyle } from './types';
+import type { WorkoutParameters } from './types';
 
 describe('Drill Alignment', () => {
-  const baseParams = {
+  const baseParams: WorkoutParameters = {
     poolSize: 25,
     poolUnit: PoolSizeUnit.Meters,
     totalTimeMinutes: 60,

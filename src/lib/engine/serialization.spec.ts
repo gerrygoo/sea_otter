@@ -12,7 +12,10 @@ describe('Serialization & Validation', () => {
       availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
       focus: TrainingFocus.Aerobic,
       preferredStrokes: [],
-      effortLevel: 5
+      effortLevel: 5,
+      strokePreferences: {
+        Free: 3, Back: 3, Breast: 3, Fly: 3, IM: 3, Drill: 3, Kick: 3, Pull: 3
+      }
     });
 
     // Validate using Zod
@@ -33,7 +36,10 @@ describe('Serialization & Validation', () => {
       availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
       focus: TrainingFocus.Aerobic,
       preferredStrokes: [],
-      effortLevel: 5
+      effortLevel: 5,
+      strokePreferences: {
+        Free: 3, Back: 3, Breast: 3, Fly: 3, IM: 3, Drill: 3, Kick: 3, Pull: 3
+      }
     });
 
     const savedWorkout = {
@@ -55,7 +61,10 @@ describe('Serialization & Validation', () => {
         availableGear: { fins: true, kickboard: true, pullBuoy: true, paddles: true, snorkel: true },
         focus: TrainingFocus.Mixed,
         preferredStrokes: [],
-        effortLevel: 5
+        effortLevel: 5,
+        strokePreferences: {
+            Free: 3, Back: 3, Breast: 3, Fly: 3, IM: 3, Drill: 3, Kick: 3, Pull: 3
+        }
       });
 
       const json = JSON.stringify(workout);

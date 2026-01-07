@@ -11,7 +11,10 @@ describe('Workout Engine Orchestrator', () => {
     availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
     focus: TrainingFocus.Aerobic,
     preferredStrokes: [],
-    effortLevel: 5
+    effortLevel: 5,
+    strokePreferences: {
+        Free: 3, Back: 3, Breast: 3, Fly: 3, IM: 3, Drill: 3, Kick: 3, Pull: 3
+    }
   };
 
   it('should generate a full workout with 4 segments', () => {

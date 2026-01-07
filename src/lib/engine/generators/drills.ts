@@ -1,8 +1,5 @@
-import type { SetGenerator, SwimSet } from '../types';
+import type { SetGenerator, SwimSet, Gear } from '../types';
 import { StrokeStyle, TrainingFocus } from '../types';
-import { getAvailableStrokes, pickStroke, estimateDistanceDuration } from '../utils';
-
-import { StrokeStyle, TrainingFocus, type Gear } from '../types';
 import { getAvailableStrokes, pickStroke, estimateDistanceDuration } from '../utils';
 
 interface TechnicalDrill {

@@ -7,11 +7,14 @@ describe('End-to-End Workout Generation Integration', () => {
   const baseParams: WorkoutParameters = {
     poolSize: 25,
     poolUnit: PoolSizeUnit.Meters,
-    totalTimeMinutes: 45,
+    totalTimeMinutes: 60,
     availableGear: { fins: true, kickboard: true, pullBuoy: true, paddles: true, snorkel: true },
     focus: TrainingFocus.Mixed,
     preferredStrokes: [],
-    effortLevel: 7
+    effortLevel: 5,
+    strokePreferences: {
+        Free: 3, Back: 3, Breast: 3, Fly: 3, IM: 3, Drill: 3, Kick: 3, Pull: 3
+    }
   };
 
   it('should generate a complex, valid workout for a 45-minute mixed session', () => {

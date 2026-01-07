@@ -33,7 +33,7 @@ export const getAvailableStrokes = (
     StrokeStyle.Free, StrokeStyle.Back, StrokeStyle.Breast, StrokeStyle.Fly, StrokeStyle.IM
   ]
 ): StrokeStyle[] => {
-  const available = allowedStyles.filter(s => prefs[s] > 1);
+  const available = allowedStyles.filter(s => prefs[s as keyof StrokePreferences] > 1);
   
   if (available.length === 0) {
     return [StrokeStyle.Free];
@@ -53,12 +53,12 @@ export const pickStroke = (
   if (availableStrokes.length === 1) return availableStrokes[0];
 
   // Calculate total weight
-  const totalWeight = availableStrokes.reduce((acc, s) => acc + prefs[s], 0);
+  const totalWeight = availableStrokes.reduce((acc, s) => acc + prefs[s as keyof StrokePreferences], 0);
   
   let random = Math.random() * totalWeight;
   
   for (const stroke of availableStrokes) {
-    random -= prefs[stroke];
+    random -= prefs[stroke as keyof StrokePreferences];
     if (random <= 0) {
       return stroke;
     }

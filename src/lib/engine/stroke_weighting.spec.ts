@@ -1,9 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { generateWorkout } from './index';
 import { PoolSizeUnit, TrainingFocus, StrokeStyle } from './types';
+import type { WorkoutParameters } from './types';
 
 describe('Stroke Weighting (2-5)', () => {
-  const baseParams = {
+  const baseParams: WorkoutParameters = {
     poolSize: 25,
     poolUnit: PoolSizeUnit.Meters,
     totalTimeMinutes: 60,
@@ -28,14 +29,14 @@ describe('Stroke Weighting (2-5)', () => {
       ...baseParams,
       strokePreferences: {
         ...baseParams.strokePreferences,
-        [StrokeStyle.Free]: 5, // Primary Focus
-        [StrokeStyle.Back]: 2, // Rarely
-        [StrokeStyle.Breast]: 1,
-        [StrokeStyle.Fly]: 1,
-        [StrokeStyle.IM]: 1,
-        [StrokeStyle.Drill]: 1,
-        [StrokeStyle.Kick]: 1,
-        [StrokeStyle.Pull]: 1,
+        [StrokeStyle.Free]: 5 as const, // Primary Focus
+        [StrokeStyle.Back]: 2 as const, // Rarely
+        [StrokeStyle.Breast]: 1 as const,
+        [StrokeStyle.Fly]: 1 as const,
+        [StrokeStyle.IM]: 1 as const,
+        [StrokeStyle.Drill]: 1 as const,
+        [StrokeStyle.Kick]: 1 as const,
+        [StrokeStyle.Pull]: 1 as const,
       }
     };
 

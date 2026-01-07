@@ -1,9 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { metersToYards, yardsToMeters, roundToNearest, estimateDistanceDuration, getAvailableStrokes, pickStroke } from './utils';
 import { StrokeStyle } from './types';
+import type { StrokePreferences } from './types';
 
 describe('Engine Utilities', () => {
-  const mockPrefs = {
+  const mockPrefs: StrokePreferences = {
     [StrokeStyle.Free]: 3,
     [StrokeStyle.Back]: 3,
     [StrokeStyle.Breast]: 3,
@@ -17,7 +18,7 @@ describe('Engine Utilities', () => {
   describe('Stroke Selection Utilities', () => {
     it('getAvailableStrokes should filter out Never (1)', () => {
       const prefs = { ...mockPrefs, [StrokeStyle.Fly]: 1, [StrokeStyle.Back]: 1 };
-      const available = getAvailableStrokes(prefs);
+      const available = getAvailableStrokes(prefs as unknown as StrokePreferences);
       expect(available).not.toContain(StrokeStyle.Fly);
       expect(available).not.toContain(StrokeStyle.Back);
       expect(available).toContain(StrokeStyle.Free);
@@ -25,8 +26,8 @@ describe('Engine Utilities', () => {
 
     it('getAvailableStrokes should fallback to Freestyle if all are Never', () => {
       const allNever = { ...mockPrefs };
-      Object.keys(allNever).forEach(k => allNever[k as StrokeStyle] = 1);
-      const available = getAvailableStrokes(allNever);
+      Object.keys(allNever).forEach(k => allNever[k as keyof typeof allNever] = 1 as any);
+      const available = getAvailableStrokes(allNever as unknown as StrokePreferences);
       expect(available).toEqual([StrokeStyle.Free]);
     });
 

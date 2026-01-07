@@ -63,7 +63,7 @@
   ];
 
   function handlePreferenceChange(stroke: StrokeStyle, val: StrokePreferenceValue) {
-    params.strokePreferences[stroke] = val;
+    params.strokePreferences[stroke as keyof typeof params.strokePreferences] = val;
     settingsStore.set($state.snapshot(params));
   }
 
@@ -150,10 +150,11 @@
     {#if cssMode === 'manual'}
       <div class="flex items-end space-x-2">
         <div class="flex-1">
-          <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1">Pace per 100 ({params.poolUnit === PoolSizeUnit.Meters ? 'm' : 'yd'})</label>
+          <label for="manualMin" class="block text-[10px] font-bold uppercase text-gray-500 mb-1">Pace per 100 ({params.poolUnit === PoolSizeUnit.Meters ? 'm' : 'yd'})</label>
           <div class="flex items-center space-x-1">
             <input 
               type="number" 
+              id="manualMin"
               bind:value={manualMin} 
               oninput={handleManualCSSChange}
               class="w-full border-2 border-black p-2 rounded-none font-mono text-center"
@@ -162,6 +163,8 @@
             <span class="font-bold">:</span>
             <input 
               type="number" 
+              id="manualSec"
+              aria-label="Pace Seconds"
               bind:value={manualSec} 
               oninput={handleManualCSSChange}
               class="w-full border-2 border-black p-2 rounded-none font-mono text-center"
@@ -174,19 +177,19 @@
       <div class="space-y-3">
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1">400 Best Time</label>
+            <label for="calc400Min" class="block text-[10px] font-bold uppercase text-gray-500 mb-1">400 Best Time</label>
             <div class="flex items-center space-x-1">
-              <input type="number" bind:value={calc400Min} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="MM" />
+              <input type="number" id="calc400Min" bind:value={calc400Min} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="MM" />
               <span>:</span>
-              <input type="number" bind:value={calc400Sec} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="SS" />
+              <input type="number" aria-label="400 Best Time Seconds" bind:value={calc400Sec} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="SS" />
             </div>
           </div>
           <div>
-            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1">200 Best Time</label>
+            <label for="calc200Min" class="block text-[10px] font-bold uppercase text-gray-500 mb-1">200 Best Time</label>
             <div class="flex items-center space-x-1">
-              <input type="number" bind:value={calc200Min} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="MM" />
+              <input type="number" id="calc200Min" bind:value={calc200Min} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="MM" />
               <span>:</span>
-              <input type="number" bind:value={calc200Sec} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="SS" />
+              <input type="number" aria-label="200 Best Time Seconds" bind:value={calc200Sec} class="w-full border-2 border-black p-1 rounded-none font-mono text-sm text-center" placeholder="SS" />
             </div>
           </div>
         </div>
@@ -211,7 +214,7 @@
       {#each standardStrokes as stroke}
         <StrokePreferenceSelector 
           {stroke} 
-          value={params.strokePreferences[stroke]} 
+          value={params.strokePreferences[stroke as keyof typeof params.strokePreferences]} 
           handleChange={(val) => handlePreferenceChange(stroke, val)}
         />
       {/each}
@@ -242,7 +245,7 @@
       {#each techniqueStrokes as stroke}
         <StrokePreferenceSelector 
           {stroke} 
-          value={params.strokePreferences[stroke]} 
+          value={params.strokePreferences[stroke as keyof typeof params.strokePreferences]} 
           handleChange={(val) => handlePreferenceChange(stroke, val)}
         />
       {/each}

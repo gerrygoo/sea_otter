@@ -1,9 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { generateWorkout } from './index';
 import { PoolSizeUnit, TrainingFocus, StrokeStyle } from './types';
+import type { WorkoutParameters } from './types';
 
 describe('Stroke Exclusion (Never)', () => {
-  const baseParams = {
+  const baseParams: WorkoutParameters = {
     poolSize: 25,
     poolUnit: PoolSizeUnit.Meters,
     totalTimeMinutes: 60,
@@ -28,11 +29,11 @@ describe('Stroke Exclusion (Never)', () => {
       ...baseParams,
       strokePreferences: {
         ...baseParams.strokePreferences,
-        [StrokeStyle.Free]: 1, // Exclude Freestyle
-        [StrokeStyle.Back]: 5,
-        [StrokeStyle.Breast]: 5,
-        [StrokeStyle.Fly]: 5,
-        [StrokeStyle.IM]: 5,
+        [StrokeStyle.Free]: 1 as const, // Exclude Freestyle
+        [StrokeStyle.Back]: 5 as const,
+        [StrokeStyle.Breast]: 5 as const,
+        [StrokeStyle.Fly]: 5 as const,
+        [StrokeStyle.IM]: 5 as const,
       }
     };
 
