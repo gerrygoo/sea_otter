@@ -21,7 +21,7 @@
 - [x] Task: Implement "Smart Fallback" logic for cases where all strokes are disabled 32f5cb6
 - [ ] Task: Conductor - User Manual Verification 'Engine Logic - Filtering & Weighting' (Protocol in workflow.md)
 
-## Phase 4: Engine Logic - Drill Alignment
+## Phase 4: Engine Logic - Drill Alignment [checkpoint: d5a687c]
 - [x] Task: Update drill selection logic to prioritize drills matching high-preference (4-5) strokes 3a851e1
 - [x] Task: Ensure gear requirements are still respected when selecting stroke-specific drills 11d0835
 - [ ] Task: Conductor - User Manual Verification 'Engine Logic - Drill Alignment' (Protocol in workflow.md)
