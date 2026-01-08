@@ -9,16 +9,16 @@
     - If generators return empty, insert fallback sets (e.g. `100 Free Easy`).
 - [x] Task: Conductor - User Manual Verification 'Engine Refactor & Enforcement' (Protocol in workflow.md) 424c433
 
-## Phase 2: Structured Protocols
-- [ ] Task: Create `src/lib/engine/generators/protocol_warmup.ts`
+## Phase 2: Structured Protocols [checkpoint: 41eae00]
+- [x] Task: Create `src/lib/engine/generators/protocol_warmup.ts` 41eae00
     - Implement `ProtocolWarmupGenerator` with 3 phases: Loosening, Activation, Priming.
     - Implement logic to branch Priming based on `context.focus`.
-- [ ] Task: Create `src/lib/engine/generators/protocol_cooldown.ts`
+- [x] Task: Create `src/lib/engine/generators/protocol_cooldown.ts` 41eae00
     - Implement `ProtocolCooldownGenerator`.
     - Implement logic to scale volume based on main set intensity (passed via context or assumed based on focus).
-- [ ] Task: Register new generators in `src/lib/engine/index.ts`
+- [x] Task: Register new generators in `src/lib/engine/index.ts` 41eae00
     - Replace existing `WarmupGenerators` and `CooldownGenerators` with the new protocol generators (or add them with high priority).
-- [ ] Task: Conductor - User Manual Verification 'Structured Protocols' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Structured Protocols' (Protocol in workflow.md) 41eae00
 
 ## Phase 3: Validation & Cleanup
 - [ ] Task: Create `src/lib/engine/protocol.spec.ts`
