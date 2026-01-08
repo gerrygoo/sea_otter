@@ -4,11 +4,11 @@ export enum PoolSizeUnit {
 }
 
 export enum TrainingFocus {
-  Aerobic = 'Aerobic',
+  Endurance = 'Endurance',
   Speed = 'Speed',
   Strength = 'Strength',
   Technique = 'Technique',
-  Endurance = 'Endurance',
+  Threshold = 'Threshold',
   Mixed = 'Mixed'
 }
 
@@ -22,6 +22,24 @@ export enum StrokeStyle {
   Kick = 'Kick',
   Pull = 'Pull',
   Choice = 'Choice'
+}
+
+export enum Modality {
+  Swim = 'Swim',
+  Pull = 'Pull',
+  Kick = 'Kick',
+  Drill = 'Drill',
+  Hypoxic = 'Hypoxic',
+  Underwater = 'Underwater'
+}
+
+export enum SetStructure {
+  Basic = 'Basic',
+  Pyramid = 'Pyramid',
+  Ladder = 'Ladder',
+  Descending = 'Descending',
+  Build = 'Build',
+  Test = 'Test'
 }
 
 export type StrokePreferenceValue = 1 | 2 | 3 | 4 | 5;
@@ -70,6 +88,9 @@ export interface SwimSet {
   restSeconds?: number;
   gearUsed?: (keyof Gear)[];
   targetPacePer100?: number; // seconds per 100 units
+  modality?: Modality;
+  structure?: SetStructure;
+  isTest?: boolean;
 }
 
 export interface Workout {

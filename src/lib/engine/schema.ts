@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PoolSizeUnit, TrainingFocus, StrokeStyle } from './types';
+import { PoolSizeUnit, TrainingFocus, StrokeStyle, Modality, SetStructure } from './types';
 
 export const GearSchema = z.object({
   fins: z.boolean(),
@@ -19,6 +19,9 @@ export const SwimSetSchema = z.object({
   restSeconds: z.number().int().positive().optional(),
   gearUsed: z.array(z.string()).optional(),
   targetPacePer100: z.number().positive().optional(),
+  modality: z.nativeEnum(Modality).optional(),
+  structure: z.nativeEnum(SetStructure).optional(),
+  isTest: z.boolean().optional(),
 });
 
 export const WorkoutSchema = z.object({
