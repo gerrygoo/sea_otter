@@ -6,7 +6,8 @@ export const pullGenerator: SetGenerator = {
   name: 'Pull Set',
   focusAlignment: {
     [TrainingFocus.Strength]: 1.0,
-    [TrainingFocus.Endurance]: 0.7
+    [TrainingFocus.Endurance]: 0.7,
+    [TrainingFocus.Threshold]: 0.8
   },
   generate: (context, constraints) => {
     // Check preference

@@ -127,6 +127,7 @@ export interface GeneratorConstraints {
   timeBudgetSeconds: number;
   minDistance?: number;
   maxDistance?: number;
+  modality?: Modality;
 }
 
 export type SetGeneratorFunction = (

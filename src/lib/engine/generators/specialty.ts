@@ -1,6 +1,7 @@
 import type { SetGenerator } from '../types';
-import { StrokeStyle, TrainingFocus } from '../types';
+import { StrokeStyle, TrainingFocus, SetStructure, Modality } from '../types';
 import { estimateDistanceDuration } from '../utils';
+import { applyModality } from '../modality';
 
 export const underwaterGenerator: SetGenerator = {
   name: 'Underwater No-Breath',
@@ -25,13 +26,17 @@ export const underwaterGenerator: SetGenerator = {
     // We can cap it at 8 reps to avoid over-exhaustion in a single set
     const finalReps = Math.min(reps, 8);
 
-    return [{
+    const set = {
       reps: finalReps,
       distance,
       stroke: 'Dolphin Kick Underwater',
       description: `Underwater 25s: No breath, focused on tight streamline and powerful dolphin kick.`,
       intervalSeconds: baseInterval,
-      gearUsed: []
-    }];
+      gearUsed: [],
+      structure: SetStructure.Basic,
+      modality: Modality.Underwater
+    };
+
+    return [applyModality(set, Modality.Underwater)];
   }
 };

@@ -1,24 +1,29 @@
-import type { WorkoutParameters, Workout, GeneratorContext, WorkoutBlueprint, SwimSet, BlueprintSlot, PoolSizeUnit } from './types';
 import { basicIntervalGenerator } from './generators/basic';
 import { pyramidGenerator, ladderGenerator } from './generators/patterns';
 import { hypoxicGenerator } from './generators/hypoxic';
-import { pullGenerator, kickGenerator } from './generators/gear';
 import { underwaterGenerator } from './generators/specialty';
 import { drillGenerator } from './generators/drills';
-import { EffortIntensity, getTargetPace } from './pace_logic';
+import { EffortIntensity, getTargetPace, getFocusIntensity, getRestSeconds } from './pace_logic';
 import { tagWorkout } from './tagging';
 import { mutateWorkout } from './mutation';
 import { mixedWarmupGenerator, pyramidWarmupGenerator } from './generators/warmup';
+import { Modality, TrainingFocus } from './types';
+import { isModalityAvailable } from './modality';
 
-const WarmupGenerators = [basicIntervalGenerator, mixedWarmupGenerator, pyramidWarmupGenerator];
-const PresetGenerators = [ladderGenerator, kickGenerator, underwaterGenerator, drillGenerator];
-const MainSetGenerators = [pyramidGenerator, basicIntervalGenerator, hypoxicGenerator, pullGenerator];
+const WarmupGenerators = [mixedWarmupGenerator, pyramidWarmupGenerator, basicIntervalGenerator];
+const MainSetGenerators = [
+  pyramidGenerator, 
+  ladderGenerator,
+  basicIntervalGenerator, 
+  hypoxicGenerator, 
+  underwaterGenerator,
+  drillGenerator
+];
 const CooldownGenerators = [basicIntervalGenerator];
 
 const StandardBlueprint: WorkoutBlueprint = [
-  { type: 'warmup', budgetPercentage: 0.15, generators: WarmupGenerators },
-  { type: 'preset', budgetPercentage: 0.15, generators: PresetGenerators },
-  { type: 'mainSet', budgetPercentage: 0.60, generators: MainSetGenerators },
+  { type: 'warmup', budgetPercentage: 0.20, generators: WarmupGenerators },
+  { type: 'mainSet', budgetPercentage: 0.70, generators: MainSetGenerators },
   { type: 'cooldown', budgetPercentage: 0.10, generators: CooldownGenerators }
 ];
 
@@ -53,7 +58,23 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
   const mainSetSlot = StandardBlueprint.find(s => s.type === 'mainSet')!;
   const mainSetBudget = totalTimeSeconds * mainSetSlot.budgetPercentage;
   
-  workoutParts.mainSet = fillSlot(mainSetSlot, context, mainSetBudget, randomize);
+  // Decide on modality for main set based on focus
+  let mainSetModality = Modality.Swim;
+  if (context.focus === TrainingFocus.Strength) {
+    if (isModalityAvailable(context, Modality.Pull)) {
+      mainSetModality = Modality.Pull;
+    } else if (isModalityAvailable(context, Modality.Kick)) {
+      mainSetModality = Modality.Kick;
+    }
+  } else if (context.focus === TrainingFocus.Technique) {
+    if (isModalityAvailable(context, Modality.Drill)) {
+      mainSetModality = Modality.Drill;
+    } else if (isModalityAvailable(context, Modality.Kick)) {
+      mainSetModality = Modality.Kick;
+    }
+  }
+
+  workoutParts.mainSet = fillSlot(mainSetSlot, context, mainSetBudget, randomize, mainSetModality);
   remainingTime -= calculateDuration(workoutParts.mainSet);
 
   // 2. Fill supporting segments (Warmup, Preset, Cooldown)
@@ -111,7 +132,7 @@ export const generateSimilar = (workout: Workout, params: WorkoutParameters, cou
 
 // --- Helper Functions ---
 
-function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number, randomize: boolean = false): SwimSet[] {
+function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number, randomize: boolean = false, modality?: Modality): SwimSet[] {
   // Sort generators by Focus Alignment
   let sortedGenerators = [...slot.generators].sort((a, b) => {
     const scoreA = a.focusAlignment[context.focus] || 0;
@@ -136,21 +157,30 @@ function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number
   }
 
   for (const generator of sortedGenerators) {
-    const sets = generator.generate(context, { timeBudgetSeconds: budget });
+    const sets = generator.generate(context, { timeBudgetSeconds: budget, modality });
     if (sets) {
       const intensity = slot.type === 'warmup' || slot.type === 'cooldown' 
         ? EffortIntensity.Easy 
-        : slot.type === 'mainSet' 
-          ? EffortIntensity.Hard 
-          : EffortIntensity.Neutral;
+        : getFocusIntensity(context.focus);
       
       const targetPace = getTargetPace(context, intensity);
 
-      return sets.map(s => ({
-        ...s,
-        intensity: intensity,
-        targetPacePer100: targetPace ?? undefined
-      }));
+      return sets.map(s => {
+        const pace = targetPace ?? 100; // Fallback to 1:40 if no CSS
+        const rest = getRestSeconds(context.focus, s.distance, pace);
+        const swimTime = (s.distance / 100) * pace;
+        
+        // Round interval to nearest 5s for realism in swimming
+        const interval = Math.ceil((swimTime + rest) / 5) * 5;
+
+        return {
+          ...s,
+          intensity: intensity,
+          targetPacePer100: targetPace ?? undefined,
+          restSeconds: rest,
+          intervalSeconds: interval
+        };
+      });
     }
   }
 

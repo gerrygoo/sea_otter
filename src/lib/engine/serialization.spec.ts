@@ -10,7 +10,7 @@ describe('Serialization & Validation', () => {
       poolUnit: PoolSizeUnit.Yards,
       totalTimeMinutes: 30,
       availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-      focus: TrainingFocus.Aerobic,
+      focus: TrainingFocus.Endurance,
       preferredStrokes: [],
       effortLevel: 5,
       strokePreferences: {
@@ -34,7 +34,7 @@ describe('Serialization & Validation', () => {
       poolUnit: PoolSizeUnit.Yards,
       totalTimeMinutes: 30,
       availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-      focus: TrainingFocus.Aerobic,
+      focus: TrainingFocus.Endurance,
       preferredStrokes: [],
       effortLevel: 5,
       strokePreferences: {

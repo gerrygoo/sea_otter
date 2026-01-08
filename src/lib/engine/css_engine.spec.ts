@@ -15,7 +15,7 @@ describe('Engine Integration with CSS', () => {
       paddles: false,
       snorkel: false
     },
-    focus: TrainingFocus.Aerobic,
+    focus: TrainingFocus.Endurance,
     preferredStrokes: [],
     strokePreferences: {
       [StrokeStyle.Free]: 3,
@@ -34,18 +34,13 @@ describe('Engine Integration with CSS', () => {
     const params = { ...baseParams, cssPace: 100 }; // 1:40/100m
     const workout = generateWorkout(params);
 
-    // Check main set - Hard (CSS - 5)
+    // Check main set - Endurance (CSS + 6)
     expect(workout.mainSet.length).toBeGreaterThan(0);
-    expect(workout.mainSet[0].targetPacePer100).toBe(95);
+    expect(workout.mainSet[0].targetPacePer100).toBe(106);
     
-    // Check warmup - Easy (CSS + 10)
+    // Check warmup - Easy (CSS + 15)
     if (workout.warmup.length > 0) {
-        expect(workout.warmup[0].targetPacePer100).toBe(110);
-    }
-
-    // Check preset - Neutral (CSS)
-    if (workout.preset.length > 0) {
-        expect(workout.preset[0].targetPacePer100).toBe(100);
+        expect(workout.warmup[0].targetPacePer100).toBe(115);
     }
   });
 });

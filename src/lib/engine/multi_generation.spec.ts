@@ -9,13 +9,22 @@ describe('generateWorkoutOptions', () => {
     totalTimeMinutes: 60,
     focus: TrainingFocus.Endurance,
     effortLevel: 5,
-    availableGear: [],
+    availableGear: {
+      fins: false,
+      kickboard: false,
+      pullBuoy: false,
+      paddles: false,
+      snorkel: false
+    },
     strokePreferences: {
-      free: 5,
-      back: 3,
-      breast: 3,
-      fly: 1,
-      im: 1
+      Free: 5,
+      Back: 3,
+      Breast: 3,
+      Fly: 1,
+      IM: 1,
+      Drill: 3,
+      Kick: 3,
+      Pull: 3
     }
   };
 

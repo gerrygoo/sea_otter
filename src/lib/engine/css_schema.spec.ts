@@ -15,7 +15,7 @@ describe('CSS Parameters in Schema', () => {
         paddles: true,
         snorkel: true,
       },
-      focus: TrainingFocus.Aerobic,
+      focus: TrainingFocus.Endurance,
       preferredStrokes: [StrokeStyle.Free],
       strokePreferences: {
         [StrokeStyle.Free]: 5,
@@ -47,7 +47,7 @@ describe('CSS Parameters in Schema', () => {
         paddles: true,
         snorkel: true,
       },
-      focus: TrainingFocus.Aerobic,
+      focus: TrainingFocus.Endurance,
       preferredStrokes: [StrokeStyle.Free],
       strokePreferences: {
         [StrokeStyle.Free]: 5,
@@ -79,7 +79,7 @@ describe('CSS Parameters in Schema', () => {
         paddles: true,
         snorkel: true,
       },
-      focus: TrainingFocus.Aerobic,
+      focus: TrainingFocus.Endurance,
       preferredStrokes: [StrokeStyle.Free],
       strokePreferences: {
         [StrokeStyle.Free]: 5,

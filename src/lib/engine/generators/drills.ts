@@ -1,6 +1,7 @@
 import type { SetGenerator, SwimSet, Gear } from '../types';
-import { StrokeStyle, TrainingFocus } from '../types';
+import { StrokeStyle, TrainingFocus, SetStructure, Modality } from '../types';
 import { getAvailableStrokes, pickStroke, estimateDistanceDuration } from '../utils';
+import { applyModality } from '../modality';
 
 interface TechnicalDrill {
   name: string;
@@ -35,7 +36,7 @@ export const drillGenerator: SetGenerator = {
   name: 'Technical Drill Set',
   focusAlignment: {
     [TrainingFocus.Technique]: 1.1, // Prioritize over other technical sets
-    [TrainingFocus.Aerobic]: 0.4
+    [TrainingFocus.Endurance]: 0.4
   },
   generate: (context, constraints) => {
     // Check if Drill is disabled
@@ -77,13 +78,17 @@ export const drillGenerator: SetGenerator = {
     // Limit reps for drills
     const finalReps = Math.min(reps, 8);
 
-    return [{
+    const set: SwimSet = {
       reps: finalReps,
       distance,
       stroke: targetStroke,
       description: `Drill Set: ${finalReps} x 50 ${targetStroke} (${drill.name})`,
       intervalSeconds: baseInterval,
-      gearUsed: drill.gearRequired || []
-    }];
+      gearUsed: drill.gearRequired || [],
+      structure: SetStructure.Basic,
+      modality: Modality.Drill
+    };
+
+    return [applyModality(set, Modality.Drill)];
   }
 };

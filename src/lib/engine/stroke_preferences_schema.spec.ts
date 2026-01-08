@@ -9,7 +9,7 @@ describe('Stroke Preferences Schema', () => {
       poolUnit: PoolSizeUnit.Yards,
       totalTimeMinutes: 60,
       availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-      focus: TrainingFocus.Aerobic,
+      focus: TrainingFocus.Endurance,
       preferredStrokes: [], // deprecated but still there
       strokePreferences: {
         [StrokeStyle.Free]: 3,
@@ -38,7 +38,7 @@ describe('Stroke Preferences Schema', () => {
       poolUnit: PoolSizeUnit.Yards,
       totalTimeMinutes: 60,
       availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-      focus: TrainingFocus.Aerobic,
+      focus: TrainingFocus.Endurance,
       preferredStrokes: [],
       effortLevel: 5
     };

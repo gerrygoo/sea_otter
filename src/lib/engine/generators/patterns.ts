@@ -1,6 +1,7 @@
 import type { SetGenerator, SwimSet } from '../types';
-import { StrokeStyle, TrainingFocus } from '../types';
+import { StrokeStyle, TrainingFocus, SetStructure, Modality } from '../types';
 import { getAvailableStrokes, pickStroke } from '../utils';
+import { applyModality } from '../modality';
 
 // Helper to estimate duration (very rough, 1:30/100 default)
 const estimateDuration = (distance: number, intervalPer100: number = 90) => {
@@ -11,11 +12,13 @@ export const pyramidGenerator: SetGenerator = {
   name: 'Pyramid Set',
   focusAlignment: {
     [TrainingFocus.Endurance]: 0.9,
-    [TrainingFocus.Aerobic]: 0.8,
+    [TrainingFocus.Threshold]: 0.8,
+    [TrainingFocus.Strength]: 0.8,
     [TrainingFocus.Mixed]: 1.0
   },
   generate: (context, constraints) => {
     const baseInterval = 90;
+    const modality = constraints.modality || Modality.Swim;
     
     const variations = [
       [200, 300, 400, 500, 400, 300, 200], // Giant (2300)
@@ -34,29 +37,31 @@ export const pyramidGenerator: SetGenerator = {
     for (const distances of variations) {
         const singleDuration = distances.reduce((acc, d) => acc + estimateDuration(d, baseInterval), 0);
         
-        // Max reps we can fit
-        const reps = Math.floor(constraints.timeBudgetSeconds / singleDuration);
+        // Max reps we can fit, but cap at 2 for pyramids to avoid excessive repetition of small ones
+        const reps = Math.min(2, Math.floor(constraints.timeBudgetSeconds / singleDuration));
         
         if (reps >= 1) {
             const totalDur = reps * singleDuration;
             
             // We want to maximize time used.
-            // Also, we generally prefer fewer reps of larger pyramids over many reps of tiny pyramids
-            // unless the duration difference is significant.
-            // Let's just strictly maximize duration for now.
             if (totalDur > bestDuration) {
                 bestDuration = totalDur;
                 bestSets = [];
                 for (let i = 0; i < reps; i++) {
                     const roundDesc = reps > 1 ? ` (Round ${i+1})` : '';
-                    const roundSets = distances.map(distance => ({
-                        reps: 1,
-                        distance,
-                        stroke,
-                        description: `${distance} ${stroke} (Pyramid)${roundDesc}`,
-                        intervalSeconds: estimateDuration(distance, baseInterval),
-                        gearUsed: []
-                    }));
+                    const roundSets = distances.map(distance => {
+                        const set: SwimSet = {
+                            reps: 1,
+                            distance,
+                            stroke,
+                            description: `${distance} ${stroke} (Pyramid)${roundDesc}`,
+                            intervalSeconds: estimateDuration(distance, baseInterval),
+                            gearUsed: [],
+                            structure: SetStructure.Pyramid,
+                            modality
+                        };
+                        return applyModality(set, modality);
+                    });
                     bestSets.push(...roundSets);
                 }
             }
@@ -71,10 +76,12 @@ export const ladderGenerator: SetGenerator = {
   name: 'Ladder Set',
   focusAlignment: {
     [TrainingFocus.Endurance]: 1.0,
-    [TrainingFocus.Aerobic]: 0.8
+    [TrainingFocus.Threshold]: 0.9,
+    [TrainingFocus.Strength]: 0.8
   },
   generate: (context, constraints) => {
     const baseInterval = 90;
+    const modality = constraints.modality || Modality.Swim;
     
     const variations = [
       [100, 200, 300, 400, 500, 600], // Long (2100)
@@ -90,7 +97,7 @@ export const ladderGenerator: SetGenerator = {
 
     for (const distances of variations) {
         const singleDuration = distances.reduce((acc, d) => acc + estimateDuration(d, baseInterval), 0);
-        const reps = Math.floor(constraints.timeBudgetSeconds / singleDuration);
+        const reps = Math.min(2, Math.floor(constraints.timeBudgetSeconds / singleDuration));
         
         if (reps >= 1) {
             const totalDur = reps * singleDuration;
@@ -99,14 +106,19 @@ export const ladderGenerator: SetGenerator = {
                 bestSets = [];
                 for (let i = 0; i < reps; i++) {
                     const roundDesc = reps > 1 ? ` (Round ${i+1})` : '';
-                    const roundSets = distances.map(distance => ({
-                        reps: 1,
-                        distance,
-                        stroke,
-                        description: `${distance} ${stroke} (Ladder)${roundDesc}`,
-                        intervalSeconds: estimateDuration(distance, baseInterval),
-                        gearUsed: []
-                    }));
+                    const roundSets = distances.map(distance => {
+                        const set: SwimSet = {
+                            reps: 1,
+                            distance,
+                            stroke,
+                            description: `${distance} ${stroke} (Ladder)${roundDesc}`,
+                            intervalSeconds: estimateDuration(distance, baseInterval),
+                            gearUsed: [],
+                            structure: SetStructure.Ladder,
+                            modality
+                        };
+                        return applyModality(set, modality);
+                    });
                     bestSets.push(...roundSets);
                 }
             }

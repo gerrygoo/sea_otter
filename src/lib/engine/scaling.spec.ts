@@ -8,7 +8,7 @@ describe('Scaling Logic (Pyramid)', () => {
     poolSize: 25,
     poolUnit: PoolSizeUnit.Yards,
     availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-    focus: TrainingFocus.Aerobic,
+    focus: TrainingFocus.Endurance,
     effortLevel: 5,
     strokePreferences: {
         Free: 3, Back: 3, Breast: 3, Fly: 3, IM: 3, Drill: 3, Kick: 3, Pull: 3

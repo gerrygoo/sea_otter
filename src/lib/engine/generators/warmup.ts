@@ -5,12 +5,16 @@ import { estimateDistanceDuration } from '../utils';
 export const mixedWarmupGenerator: SetGenerator = {
   name: 'Mixed Warmup (Swim/Kick/Pull)',
   focusAlignment: {
-    [TrainingFocus.Aerobic]: 1.0,
-    [TrainingFocus.Endurance]: 0.9,
+    [TrainingFocus.Endurance]: 1.0,
     [TrainingFocus.Technique]: 0.8,
     [TrainingFocus.Mixed]: 1.0
   },
   generate: (context, constraints) => {
+    // Standard warmup is Free. If Free is disabled, skip this generator.
+    if (context.strokePreferences[StrokeStyle.Free] === 1) {
+      return null;
+    }
+
     // Check if Kick or Pull are disabled
     const canKick = context.strokePreferences[StrokeStyle.Kick] > 1 && context.availableGear.kickboard;
     const canPull = context.strokePreferences[StrokeStyle.Pull] > 1 && context.availableGear.pullBuoy;
@@ -119,10 +123,14 @@ export const pyramidWarmupGenerator: SetGenerator = {
   name: 'Pyramid Warmup',
   focusAlignment: {
     [TrainingFocus.Endurance]: 1.0,
-    [TrainingFocus.Aerobic]: 0.9,
     [TrainingFocus.Mixed]: 0.8
   },
   generate: (context, constraints) => {
+    // Standard warmup is Free. If Free is disabled, skip this generator.
+    if (context.strokePreferences[StrokeStyle.Free] === 1) {
+      return null;
+    }
+
     const baseInterval = 100;
     
     // Define scalable variations

@@ -8,7 +8,7 @@ describe('Warmup Generators', () => {
     poolSize: 25,
     poolUnit: PoolSizeUnit.Meters,
     availableGear: { fins: true, kickboard: true, pullBuoy: true, paddles: true, snorkel: false },
-    focus: TrainingFocus.Aerobic,
+    focus: TrainingFocus.Endurance,
     effortLevel: 5,
     strokePreferences: {
       Free: 5, Back: 3, Breast: 3, Fly: 3, IM: 3, Drill: 3, Kick: 3, Pull: 3

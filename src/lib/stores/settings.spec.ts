@@ -48,7 +48,7 @@ describe('Settings Store', () => {
       poolUnit: PoolSizeUnit.Yards,
       totalTimeMinutes: 50,
       availableGear: { fins: true, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-      focus: TrainingFocus.Aerobic,
+      focus: TrainingFocus.Endurance,
       preferredStrokes: [],
       strokePreferences: {
         [StrokeStyle.Free]: 5,

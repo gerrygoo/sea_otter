@@ -8,7 +8,7 @@ describe('Pattern Generators', () => {
     poolSize: 25,
     poolUnit: PoolSizeUnit.Yards,
     availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-    focus: TrainingFocus.Aerobic,
+    focus: TrainingFocus.Endurance,
     effortLevel: 5,
     strokePreferences: {
         Free: 3, Back: 3, Breast: 3, Fly: 3, IM: 3, Drill: 3, Kick: 3, Pull: 3
@@ -18,7 +18,7 @@ describe('Pattern Generators', () => {
   describe('Pyramid Generator', () => {
     it('should generate a pyramid set (100, 200, 300, 200, 100) if time allows', () => {
       const constraints: GeneratorConstraints = {
-        timeBudgetSeconds: 1800 // 30 minutes, plenty of time
+        timeBudgetSeconds: 1200 // Enough for 1 round (900m ~ 13.5m), not 2
       };
 
       const result = pyramidGenerator.generate(mockContext, constraints);
@@ -45,7 +45,7 @@ describe('Pattern Generators', () => {
   describe('Ladder Generator', () => {
     it('should generate a ladder set (100, 200, 300, 400) if time allows', () => {
       const constraints: GeneratorConstraints = {
-        timeBudgetSeconds: 1800 
+        timeBudgetSeconds: 1200 
       };
 
       const result = ladderGenerator.generate(mockContext, constraints);

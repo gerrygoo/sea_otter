@@ -9,7 +9,7 @@ describe('Training Focus Prioritization', () => {
     poolUnit: PoolSizeUnit.Yards,
     totalTimeMinutes: 45,
     availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-    focus: TrainingFocus.Aerobic,
+    focus: TrainingFocus.Endurance,
     preferredStrokes: [],
     effortLevel: 5,
     strokePreferences: {
@@ -22,27 +22,21 @@ describe('Training Focus Prioritization', () => {
     // For now, let's just assert that the result is valid.
     const workout = generateWorkout({
         ...baseParams,
-        focus: TrainingFocus.Aerobic
+        focus: TrainingFocus.Endurance
     });
     expect(workout).not.toBeNull();
   });
 
-  it('should prioritize Ladder (Endurance=1.0) over Basic (Endurance=0.9) when focus is Endurance', () => {
-    // Note: Ladder is in PresetGenerators, Basic is in MainSetGenerators. 
-    // This is tricky because they are in different slots.
-    // However, MainSetGenerators has: Pyramid (Endurance 0.9), Basic (0.9), Hypoxic (0.8), Pull (0.7).
-    
-    // Let's check Pyramid vs Basic. Both are 0.9. Stable sort? Or random?
-    // Let's check Pull (Strength 1.0) vs Basic (Strength 0.0)
-    
+  it('should prioritize Pull modality for Strength focus when gear is available', () => {
     const workout = generateWorkout({
         ...baseParams,
         availableGear: { ...baseParams.availableGear, pullBuoy: true, paddles: true },
         focus: TrainingFocus.Strength
     });
 
-    // Pull generator should be #1 for Strength
+    // We now decouple structure and modality. 
+    // Strength focus should trigger Pull modality if gear is available.
     const mainSetDescription = workout.mainSet[0].description;
-    expect(mainSetDescription).toContain('Pull Set');
+    expect(mainSetDescription).toContain('(Pull)');
   });
 });

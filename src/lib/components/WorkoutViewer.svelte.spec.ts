@@ -59,7 +59,7 @@ describe('WorkoutViewer', () => {
     const easyTime = screen.getByText('0:50');
     const hardTime = screen.getByText('1:25');
 
-    expect(easyTime.className).toContain('text-blue-600');
-    expect(hardTime.className).toContain('text-red-600');
+    expect(easyTime.className).toContain('text-blue-500');
+    expect(hardTime.className).toContain('text-orange-600');
   });
 });

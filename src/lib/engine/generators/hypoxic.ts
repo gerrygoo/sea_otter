@@ -1,6 +1,7 @@
 import type { SetGenerator } from '../types';
-import { StrokeStyle, TrainingFocus } from '../types';
+import { StrokeStyle, TrainingFocus, SetStructure, Modality } from '../types';
 import { estimateDistanceDuration } from '../utils';
+import { applyModality } from '../modality';
 
 export const hypoxicGenerator: SetGenerator = {
   name: 'Hypoxic Ladder',
@@ -31,13 +32,18 @@ export const hypoxicGenerator: SetGenerator = {
       return null;
     }
 
-    return steps.map(step => ({
-      reps: 1,
-      distance: step.distance,
-      stroke: StrokeStyle.Free,
-      description: `Hypoxic Ladder: Breathe every ${step.breathe}`,
-      intervalSeconds: estimateDistanceDuration(step.distance, baseInterval),
-      gearUsed: []
-    }));
+    return steps.map(step => {
+      const set = {
+        reps: 1,
+        distance: step.distance,
+        stroke: StrokeStyle.Free,
+        description: `Hypoxic Ladder: Breathe every ${step.breathe}`,
+        intervalSeconds: estimateDistanceDuration(step.distance, baseInterval),
+        gearUsed: [],
+        structure: SetStructure.Ladder,
+        modality: Modality.Hypoxic
+      };
+      return applyModality(set, Modality.Hypoxic);
+    });
   }
 };

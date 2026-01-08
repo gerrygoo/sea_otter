@@ -13,10 +13,14 @@
 
   function getIntensityColor(intensity?: string | EffortIntensity): string {
     if (!intensity) return 'text-gray-600';
-    if (intensity === EffortIntensity.Easy) return 'text-blue-600';
-    if (intensity === EffortIntensity.Neutral) return 'text-green-600';
-    if (intensity === EffortIntensity.Hard) return 'text-red-600';
-    return 'text-gray-600';
+    switch (intensity) {
+      case EffortIntensity.Easy: return 'text-blue-500'; // Z1
+      case EffortIntensity.ModerateEasy: return 'text-blue-700'; // Z2
+      case EffortIntensity.Normal: return 'text-green-600'; // Z3 (Threshold)
+      case EffortIntensity.Hard: return 'text-orange-600'; // Z4 (VO2)
+      case EffortIntensity.MaxEffort: return 'text-red-700'; // Z5 (Sprint)
+      default: return 'text-gray-600';
+    }
   }
 </script>
 

@@ -13,7 +13,7 @@
 - [x] Task: Conductor - User Manual Verification 'Schema Updates & Core Types' (Protocol in workflow.md) b70fe2c
 
 ## Phase 2: Engine Refactor (Decoupling)
-- [ ] Task: Refactor `pace_logic.ts`
+- [~] Task: Refactor `pace_logic.ts`
     - Implement `getDescendingTargetTimes(cssPace, distance, reps, decrement)`
     - Implement logic for `Build` intensity strings (e.g., "Z1 -> Z5")
 - [ ] Task: Refactor `generators/basic.ts` to support Modality injection

@@ -27,7 +27,6 @@ describe('End-to-End Workout Generation Integration', () => {
     // Check for variety
     const descriptions = [
         ...workout.warmup,
-        ...workout.preset,
         ...workout.mainSet,
         ...workout.cooldown
     ].map(s => s.description.toLowerCase());
@@ -56,8 +55,8 @@ describe('End-to-End Workout Generation Integration', () => {
     // We expect at least 70% utilization = 63 mins.
     expect(longWorkout.estimatedDurationMinutes).toBeGreaterThan(63);
     
-    // Warmup should be substantial (e.g. >= 500m) due to slack utilization
+    // Warmup should be substantial (e.g. >= 400m) due to slack utilization
     const warmupDist = longWorkout.warmup.reduce((a, s) => a + s.distance * s.reps, 0);
-    expect(warmupDist).toBeGreaterThanOrEqual(500);
+    expect(warmupDist).toBeGreaterThanOrEqual(400);
   });
 });

@@ -31,3 +31,47 @@ I want to build an app (ideally a web app) that helps me generate lap swimming w
     *   **Workout Detail View:** Review full details of any past workout from your history.
     *   **Offline Support:** Progressive Web App (PWA) capabilities for reliable use in pool environments with poor connectivity.
     *   **Serialization:** Support for exporting workouts to standard formats (e.g., JSON) with future potential for direct Garmin integration.
+# Workout Generation Logic (CSS & Pacing)
+
+## 1. Core Logic: The CSS Pacing Model
+The engine calculates target times based on the user's **Critical Swim Speed (CSS)**. All intensities are defined as a deviation from CSS.
+
+* **CSS Definition:** The pace a swimmer can maintain for a 1500m time trial (Threshold).
+* **Time Unit:** Seconds per 100m.
+
+### Intensity Zones Table
+| Zone ID | Name | Relation to CSS (per 100m) | Description | Engine Logic |
+| :--- | :--- | :--- | :--- | :--- |
+| **Z1** | **Recovery** | `CSS + 15s` (or slower) | Active recovery, warm-up, cool-down. | `easy` |
+| **Z2** | **Endurance** | `CSS + 4s` to `CSS + 8s` | Aerobic base building. | `moderate-easy` |
+| **Z3** | **Threshold** | `CSS` to `CSS + 2s` | The "Red Line". Hard but sustainable. | `normal` |
+| **Z4** | **VO2 Max** | `CSS - 2s` to `CSS - 4s` | Anaerobic threshold. | `hard` |
+| **Z5** | **Sprint** | `CSS - 6s` (or faster) | Pure speed and power. | `max-effort` |
+
+## 2. Training Focus Categories
+The engine selects one "Primary Focus" per workout.
+* **Endurance:** Aerobic capacity. Z2/Z3 focus. Short rest.
+* **Speed:** Anaerobic power. Z5/Z1 focus. Long rest.
+* **Strength:** Power endurance. Z3/Z4 focus. Paddles/Pull Buoy emphasis.
+* **Technique:** Efficiency. Z1/Z2 focus. Drills emphasis.
+* **Threshold:** Raising the CSS ceiling. Z3 focus strictly.
+* **Mixed:** IM/Medley versatility. Variable zones.
+
+## 3. Pacing Structures (Exercise Types)
+* **Basic:** Steady state (constant pace).
+* **Descending:** Each repetition gets faster than the previous one (`Target Time_N = Target Time_(N-1) - Decrement`).
+* **Build:** Acceleration *within* a single repetition (Start Z1 -> Finish Z5).
+* **Test:** Max-effort time trial (e.g., 400m) to update CSS data. `isTest: true`.
+* **Pyramid:** Distance increases then decreases.
+* **Ladder:** Distance increases sequentially.
+
+## 4. Architectural Separation: Structure vs. Modality
+To allow for complex combinations (e.g., "Descending Pull Set"), the engine separates:
+1. **Structure (The Shape):** Basic, Pyramid, Ladder, Descending, Build, Test.
+2. **Modality (The Constraint):** Swim, Pull, Kick, Drill, Hypoxic, Underwater.
+3. **Stroke (The Style):** Free, Back, Breast, Fly, IM.
+
+## 5. Workout Construction Blocks
+* **Warm-Up:** 15-20% of distance. Z1 focus.
+* **Main Set:** 60-70% of distance. Driven by Primary Focus and Structure/Modality mix.
+* **Cool Down:** 10-15% of distance. Z1 focus.

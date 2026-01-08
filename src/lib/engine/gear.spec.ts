@@ -9,7 +9,7 @@ describe('Gear-Based Filtering', () => {
     poolUnit: PoolSizeUnit.Yards,
     totalTimeMinutes: 45,
     availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
-    focus: TrainingFocus.Aerobic,
+    focus: TrainingFocus.Endurance,
     preferredStrokes: [],
     effortLevel: 5,
     strokePreferences: {
@@ -50,7 +50,7 @@ describe('Gear-Based Filtering', () => {
           totalTimeMinutes: 60
       });
   
-      const hasKickSet = workout.preset.some(s => s.description.includes('Kick Set'));
+      const hasKickSet = workout.mainSet.some(s => s.description.includes('(Kick)'));
       expect(hasKickSet).toBe(true);
   });
 });
