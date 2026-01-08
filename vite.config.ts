@@ -11,22 +11,22 @@ export default defineConfig({
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
 			manifest: {
-				name: 'Sea Otter',
-				short_name: 'Sea Otter',
+				name: "G's Swimming Generator",
+				short_name: "G's Swim",
 				description: 'Personal Lap Swimming Workout Generator',
 				theme_color: '#ffffff',
 				background_color: '#ffffff',
 				display: 'standalone',
 				icons: [
 					{
-						src: 'favicon.svg',
+						src: 'pwa-192x192.png',
 						sizes: '192x192',
-						type: 'image/svg+xml'
+						type: 'image/png'
 					},
 					{
-						src: 'favicon.svg',
+						src: 'pwa-512x512.png',
 						sizes: '512x512',
-						type: 'image/svg+xml'
+						type: 'image/png'
 					}
 				]
 			}

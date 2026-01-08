@@ -15,6 +15,7 @@
 </script>
 
 <svelte:head>
+	<title>G's Swimming Generator</title>
 	<link rel="icon" href={favicon} />
 	{@html pwaInfo?.webManifest.linkTag}
 </svelte:head>

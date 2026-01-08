@@ -7,7 +7,7 @@ describe('/+page.svelte', () => {
 	it('should render main title', async () => {
 		render(Page);
 		
-		const heading = page.getByRole('heading', { name: /Swimming Generator/i });
+		const heading = page.getByRole('heading', { name: /G's Swimming Generator/i });
 		await expect.element(heading).toBeInTheDocument();
 	});
 });
