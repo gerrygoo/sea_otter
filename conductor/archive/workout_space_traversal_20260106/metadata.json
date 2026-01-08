@@ -1,0 +1,8 @@
+{
+  "track_id": "workout_space_traversal_20260106",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-06T00:00:00Z",
+  "updated_at": "2026-01-06T00:00:00Z",
+  "description": "Update engine to generate multiple varied workout options from the infinite parameter space. Implement a selection UI for users to choose. Enable generation of 'adjacent' or similar workouts based on a saved workout to allow traversing the workout space."
+}

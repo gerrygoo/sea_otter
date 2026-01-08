@@ -1,0 +1,8 @@
+{
+  "track_id": "pacing_refactor_20260107",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-07T17:35:00Z",
+  "updated_at": "2026-01-07T17:35:00Z",
+  "description": "Implement advanced pacing structures (Descending, Build, Test) and refactor engine to separate Structure vs Modality."
+}
