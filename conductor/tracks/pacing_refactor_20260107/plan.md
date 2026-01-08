@@ -39,13 +39,13 @@
     - [x] Sub-task: Write unit tests in `test_sets.spec.ts` 9be0074
 - [x] Task: Conductor - User Manual Verification 'New Pacing Structures' (Protocol in workflow.md) 9be0074
 
-## Phase 4: Integration & Cleanup
-- [ ] Task: Update `src/lib/engine/index.ts` (Orchestrator)
+## Phase 4: Integration & Cleanup [checkpoint: d8ebccb]
+- [x] Task: Update `src/lib/engine/index.ts` (Orchestrator) d8ebccb
     - Register new generators (`Descending`, `Build`, `Test`)
     - Update logic to mix-and-match Structure + Modality based on user preferences (e.g., if User likes Pull, generate a Descending Pull set)
-- [ ] Task: Update `src/lib/components/WorkoutViewer.svelte`
+- [x] Task: Update `src/lib/components/WorkoutViewer.svelte` d8ebccb
     - Display new `structure` and `modality` fields (e.g., badges or text prefix)
     - Highlight `Test` sets visually
-- [ ] Task: Verify all legacy tests pass
+- [x] Task: Verify all legacy tests pass d8ebccb
     - Run full test suite and fix any regressions in existing specs
-- [ ] Task: Conductor - User Manual Verification 'Integration & Cleanup' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Integration & Cleanup' (Protocol in workflow.md) d8ebccb
