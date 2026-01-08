@@ -26,18 +26,18 @@
     - Allow them to accept `modality` arguments to generate "Pyramid Kick", etc.
 - [x] Task: Conductor - User Manual Verification 'Engine Refactor (Decoupling)' (Protocol in workflow.md) 174040c
 
-## Phase 3: New Pacing Structures
-- [ ] Task: Create `generators/descending.ts`
+## Phase 3: New Pacing Structures [checkpoint: 9be0074]
+- [x] Task: Create `generators/descending.ts` 9be0074
     - Implement `descendingGenerator` that creates sets with decreasing target times
-    - [ ] Sub-task: Write unit tests in `descending.spec.ts`
-- [ ] Task: Create `generators/build.ts`
+    - [x] Sub-task: Write unit tests in `descending.spec.ts` 9be0074
+- [x] Task: Create `generators/build.ts` 9be0074
     - Implement `buildGenerator` for intra-rep acceleration
-    - [ ] Sub-task: Write unit tests in `build.spec.ts`
-- [ ] Task: Create `generators/test_sets.ts`
+    - [x] Sub-task: Write unit tests in `build.spec.ts` 9be0074
+- [x] Task: Create `generators/test_sets.ts` 9be0074
     - Implement `testSetGenerator` for max effort sets (e.g., 400m CSS Test)
     - Ensure `isTest: true` is set
-    - [ ] Sub-task: Write unit tests in `test_sets.spec.ts`
-- [ ] Task: Conductor - User Manual Verification 'New Pacing Structures' (Protocol in workflow.md)
+    - [x] Sub-task: Write unit tests in `test_sets.spec.ts` 9be0074
+- [x] Task: Conductor - User Manual Verification 'New Pacing Structures' (Protocol in workflow.md) 9be0074
 
 ## Phase 4: Integration & Cleanup
 - [ ] Task: Update `src/lib/engine/index.ts` (Orchestrator)
