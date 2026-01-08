@@ -1,0 +1,8 @@
+{
+  "track_id": "warmup_fix_20260107",
+  "type": "bug",
+  "status": "new",
+  "created_at": "2026-01-07T18:45:00Z",
+  "updated_at": "2026-01-07T18:45:00Z",
+  "description": "Fix missing warmup/cooldown bug and implement structured training protocols."
+}

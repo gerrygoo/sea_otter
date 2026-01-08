@@ -20,9 +20,9 @@
     - Replace existing `WarmupGenerators` and `CooldownGenerators` with the new protocol generators (or add them with high priority).
 - [x] Task: Conductor - User Manual Verification 'Structured Protocols' (Protocol in workflow.md) 41eae00
 
-## Phase 3: Validation & Cleanup
-- [ ] Task: Create `src/lib/engine/protocol.spec.ts`
+## Phase 3: Validation & Cleanup [checkpoint: aa35db5]
+- [x] Task: Create `src/lib/engine/protocol.spec.ts` aa35db5
     - Verify that `ProtocolWarmupGenerator` produces 3 phases.
     - Verify Priming logic matches Focus (Build for Endurance, Fast for Speed).
-- [ ] Task: Run full test suite and ensure no regressions.
-- [ ] Task: Conductor - User Manual Verification 'Validation & Cleanup' (Protocol in workflow.md)
+- [x] Task: Run full test suite and ensure no regressions. aa35db5
+- [x] Task: Conductor - User Manual Verification 'Validation & Cleanup' (Protocol in workflow.md) aa35db5

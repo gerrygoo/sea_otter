@@ -1,5 +1,5 @@
 # Initial Concept
-I want to build an app (ideally a web app) that helps me generate lap swimming workouts. I want the main focus to be a feature-rich engine that can capture many parameters such as available drill gear and training goals. The ouput should be a collection of reasonable workouts given the parameters. I've more ideas to add around/on top of this but that's the core.
+I want to build an app (ideally a web app) called **"G's Swimming Generator"** that helps me generate lap swimming workouts. I want the main focus to be a feature-rich engine that can capture many parameters such as available drill gear and training goals. The ouput should be a collection of reasonable workouts given the parameters. I've more ideas to add around/on top of this but that's the core.
 
 # Target Audience
 *   **Primary User:** Former competitive swimmers (specifically yourself) who now swim for fitness and personal enjoyment.
@@ -72,6 +72,6 @@ To allow for complex combinations (e.g., "Descending Pull Set"), the engine sepa
 3. **Stroke (The Style):** Free, Back, Breast, Fly, IM.
 
 ## 5. Workout Construction Blocks
-* **Warm-Up:** 15-20% of distance. Z1 focus.
+* **Warm-Up:** 15-20% of distance. Structured in 3 phases: Loosening (Z1), Activation (Kick/Drill), and Priming (Build/Speed). Mandatory for workouts ≥ 40 mins.
 * **Main Set:** 60-70% of distance. Driven by Primary Focus and Structure/Modality mix.
-* **Cool Down:** 10-15% of distance. Z1 focus.
+* **Cool Down:** 10-15% of distance. Z1 focus. Volume scales with Main Set intensity. Mandatory for workouts ≥ 40 mins.
