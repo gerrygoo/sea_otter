@@ -12,19 +12,19 @@
     - Write tests to verify it fails for invalid enum values
 - [x] Task: Conductor - User Manual Verification 'Schema Updates & Core Types' (Protocol in workflow.md) b70fe2c
 
-## Phase 2: Engine Refactor (Decoupling)
-- [~] Task: Refactor `pace_logic.ts`
+## Phase 2: Engine Refactor (Decoupling) [checkpoint: 174040c]
+- [x] Task: Refactor `pace_logic.ts` 174040c
     - Implement `getDescendingTargetTimes(cssPace, distance, reps, decrement)`
     - Implement logic for `Build` intensity strings (e.g., "Z1 -> Z5")
-- [ ] Task: Refactor `generators/basic.ts` to support Modality injection
+- [x] Task: Refactor `generators/basic.ts` to support Modality injection 174040c
     - Update `basicIntervalGenerator` to accept a `modality` constraint/parameter
-- [ ] Task: Refactor `generators/gear.ts` (Pull/Kick)
+- [x] Task: Refactor `generators/gear.ts` (Pull/Kick) 174040c
     - **CRITICAL:** Deprecate standalone `pullGenerator` and `kickGenerator`.
     - Create a `ModalityApplicator` or updated logic that applies "Pull" gear/stroke constraints to *any* structure.
-- [ ] Task: Update `generators/patterns.ts` (Pyramid/Ladder)
+- [x] Task: Update `generators/patterns.ts` (Pyramid/Ladder) 174040c
     - Update generators to set `structure: 'Pyramid'` / `'Ladder'` in output
     - Allow them to accept `modality` arguments to generate "Pyramid Kick", etc.
-- [ ] Task: Conductor - User Manual Verification 'Engine Refactor (Decoupling)' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Engine Refactor (Decoupling)' (Protocol in workflow.md) 174040c
 
 ## Phase 3: New Pacing Structures
 - [ ] Task: Create `generators/descending.ts`
