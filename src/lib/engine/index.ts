@@ -10,10 +10,12 @@ import { EffortIntensity, getTargetPace, getFocusIntensity, getRestSeconds } fro
 import { tagWorkout } from './tagging';
 import { mutateWorkout } from './mutation';
 import { mixedWarmupGenerator, pyramidWarmupGenerator } from './generators/warmup';
+import { protocolWarmupGenerator } from './generators/protocol_warmup';
+import { protocolCooldownGenerator } from './generators/protocol_cooldown';
 import { Modality, TrainingFocus, StrokeStyle, SetStructure } from './types';
 import { isModalityAvailable } from './modality';
 
-const WarmupGenerators = [mixedWarmupGenerator, pyramidWarmupGenerator, basicIntervalGenerator];
+const WarmupGenerators = [protocolWarmupGenerator, mixedWarmupGenerator, pyramidWarmupGenerator, basicIntervalGenerator];
 const MainSetGenerators = [
   pyramidGenerator, 
   ladderGenerator,
@@ -25,7 +27,7 @@ const MainSetGenerators = [
   underwaterGenerator,
   drillGenerator
 ];
-const CooldownGenerators = [basicIntervalGenerator];
+const CooldownGenerators = [protocolCooldownGenerator, basicIntervalGenerator];
 
 const StandardBlueprint: WorkoutBlueprint = [
   { type: 'warmup', budgetPercentage: 0.20, generators: WarmupGenerators },
