@@ -46,7 +46,18 @@
         </h2>
         <ul class="space-y-3">
           {#each workout[segment as keyof Workout] as set}
-            <li class="border-l-4 border-black pl-3 py-1">
+            <li class="border-l-4 border-black pl-3 py-1 {set.isTest ? 'bg-yellow-50' : ''}">
+              <div class="flex flex-wrap gap-1 mb-1">
+                {#if set.isTest}
+                  <span class="bg-red-600 text-white text-[10px] font-black px-1 leading-tight uppercase">Test</span>
+                {/if}
+                {#if set.structure && set.structure !== 'Basic'}
+                  <span class="bg-black text-white text-[10px] font-bold px-1 leading-tight uppercase">{set.structure}</span>
+                {/if}
+                {#if set.modality && set.modality !== 'Swim'}
+                  <span class="bg-blue-600 text-white text-[10px] font-bold px-1 leading-tight uppercase">{set.modality}</span>
+                {/if}
+              </div>
               <div class="font-bold text-lg leading-tight">
                 {set.reps} x {set.distance} 
                 <span class="text-gray-600">@ </span>

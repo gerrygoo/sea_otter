@@ -1,6 +1,9 @@
 import { basicIntervalGenerator } from './generators/basic';
 import { pyramidGenerator, ladderGenerator } from './generators/patterns';
 import { hypoxicGenerator } from './generators/hypoxic';
+import { descendingGenerator } from './generators/descending';
+import { buildGenerator } from './generators/build';
+import { testSetGenerator } from './generators/test_sets';
 import { underwaterGenerator } from './generators/specialty';
 import { drillGenerator } from './generators/drills';
 import { EffortIntensity, getTargetPace, getFocusIntensity, getRestSeconds } from './pace_logic';
@@ -15,6 +18,9 @@ const MainSetGenerators = [
   pyramidGenerator, 
   ladderGenerator,
   basicIntervalGenerator, 
+  descendingGenerator,
+  buildGenerator,
+  testSetGenerator,
   hypoxicGenerator, 
   underwaterGenerator,
   drillGenerator
@@ -60,6 +66,7 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
   
   // Decide on modality for main set based on focus
   let mainSetModality = Modality.Swim;
+  
   if (context.focus === TrainingFocus.Strength) {
     if (isModalityAvailable(context, Modality.Pull)) {
       mainSetModality = Modality.Pull;
