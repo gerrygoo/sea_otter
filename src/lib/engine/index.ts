@@ -10,7 +10,7 @@ import { EffortIntensity, getTargetPace, getFocusIntensity, getRestSeconds } fro
 import { tagWorkout } from './tagging';
 import { mutateWorkout } from './mutation';
 import { mixedWarmupGenerator, pyramidWarmupGenerator } from './generators/warmup';
-import { Modality, TrainingFocus } from './types';
+import { Modality, TrainingFocus, StrokeStyle, SetStructure } from './types';
 import { isModalityAvailable } from './modality';
 
 const WarmupGenerators = [mixedWarmupGenerator, pyramidWarmupGenerator, basicIntervalGenerator];
@@ -104,6 +104,34 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
     
     remainingTime -= duration;
     currentRemainingWeight -= slot.budgetPercentage;
+  }
+
+  // Enforcement of mandatory segments (>= 40 mins)
+  if (params.totalTimeMinutes >= 40) {
+    if (workoutParts.warmup.length === 0) {
+      workoutParts.warmup.push({
+        reps: 1,
+        distance: 300,
+        stroke: StrokeStyle.Free,
+        description: "Warmup: 300 Free Easy (Fallback)",
+        intensity: EffortIntensity.Easy,
+        intervalSeconds: 300, // Approx 5 mins
+        structure: SetStructure.Basic,
+        modality: Modality.Swim
+      });
+    }
+    if (workoutParts.cooldown.length === 0) {
+      workoutParts.cooldown.push({
+        reps: 1,
+        distance: 200,
+        stroke: StrokeStyle.Free,
+        description: "Cooldown: 200 Free Easy (Fallback)",
+        intensity: EffortIntensity.Easy,
+        intervalSeconds: 240, // Approx 4 mins
+        structure: SetStructure.Basic,
+        modality: Modality.Swim
+      });
+    }
   }
 
   return assembleWorkout(workoutParts, context.poolUnit);
