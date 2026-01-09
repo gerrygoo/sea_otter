@@ -14,6 +14,7 @@ import { protocolWarmupGenerator } from './generators/protocol_warmup';
 import { protocolCooldownGenerator } from './generators/protocol_cooldown';
 import { Modality, TrainingFocus, StrokeStyle, SetStructure } from './types';
 import { isModalityAvailable } from './modality';
+import { roundToNearestWall } from './utils';
 
 const WarmupGenerators = [protocolWarmupGenerator, mixedWarmupGenerator, pyramidWarmupGenerator, basicIntervalGenerator];
 const MainSetGenerators = [
@@ -52,7 +53,16 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
     cssPace: params.cssPace
   };
 
-  const totalTimeSeconds = params.totalTimeMinutes * 60;
+  // Handle Distance Target
+  let targetDistance = params.targetDistance;
+  const isDistanceBased = params.targetType === 'distance' && targetDistance !== undefined;
+  
+  if (isDistanceBased && targetDistance) {
+    targetDistance = roundToNearestWall(targetDistance, params.poolSize);
+    if (targetDistance < params.poolSize * 4) targetDistance = params.poolSize * 4;
+  }
+
+  const totalTimeSeconds = (params.totalTimeMinutes || 60) * 60;
   const workoutParts: Record<string, SwimSet[]> = {
     warmup: [],
     preset: [],
@@ -61,10 +71,12 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
   };
 
   let remainingTime = totalTimeSeconds;
+  let remainingDistance = isDistanceBased ? targetDistance : undefined;
 
   // 1. Process Main Set First (The anchor of the workout)
   const mainSetSlot = StandardBlueprint.find(s => s.type === 'mainSet')!;
   const mainSetBudget = totalTimeSeconds * mainSetSlot.budgetPercentage;
+  const mainSetDistanceBudget = isDistanceBased ? targetDistance! * mainSetSlot.budgetPercentage : undefined;
   
   // Decide on modality for main set based on focus
   let mainSetModality = Modality.Swim;
@@ -83,8 +95,11 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
     }
   }
 
-  workoutParts.mainSet = fillSlot(mainSetSlot, context, mainSetBudget, randomize, mainSetModality);
+  workoutParts.mainSet = fillSlot(mainSetSlot, context, mainSetBudget, randomize, mainSetModality, mainSetDistanceBudget);
   remainingTime -= calculateDuration(workoutParts.mainSet);
+  if (isDistanceBased && remainingDistance !== undefined) {
+    remainingDistance -= calculateDistance(workoutParts.mainSet);
+  }
 
   // 2. Fill supporting segments (Warmup, Preset, Cooldown)
   const otherSlots = StandardBlueprint.filter(s => s.type !== 'mainSet');
@@ -100,16 +115,28 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
     const hardCap = totalTimeSeconds * 0.30;
     
     const slotBudget = Math.min(remainingTime, Math.min(proportionalShare, hardCap));
+    
+    let slotDistanceBudget: number | undefined;
+    if (isDistanceBased && remainingDistance !== undefined) {
+         const propDist = remainingDistance * (slot.budgetPercentage / currentRemainingWeight);
+         slotDistanceBudget = propDist; 
+    }
 
-    workoutParts[slot.type] = fillSlot(slot, context, slotBudget, randomize);
+    workoutParts[slot.type] = fillSlot(slot, context, slotBudget, randomize, undefined, slotDistanceBudget);
     const duration = calculateDuration(workoutParts[slot.type]);
     
     remainingTime -= duration;
+    if (isDistanceBased && remainingDistance !== undefined) {
+        remainingDistance -= calculateDistance(workoutParts[slot.type]);
+    }
+
     currentRemainingWeight -= slot.budgetPercentage;
   }
 
   // Enforcement of mandatory segments (>= 40 mins)
-  if (params.totalTimeMinutes >= 40) {
+  // Only check if we have a time constraint or if it's explicitly time-based
+  // If distance-based, we trust the distance generation
+  if (params.totalTimeMinutes && params.totalTimeMinutes >= 40) {
     if (workoutParts.warmup.length === 0) {
       workoutParts.warmup.push({
         reps: 1,
@@ -169,7 +196,7 @@ export const generateSimilar = (workout: Workout, params: WorkoutParameters, cou
 
 // --- Helper Functions ---
 
-function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number, randomize: boolean = false, modality?: Modality): SwimSet[] {
+function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number, randomize: boolean = false, modality?: Modality, distanceBudget?: number): SwimSet[] {
   // Sort generators by Focus Alignment
   let sortedGenerators = [...slot.generators].sort((a, b) => {
     const scoreA = a.focusAlignment[context.focus] || 0;
@@ -194,7 +221,7 @@ function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number
   }
 
   for (const generator of sortedGenerators) {
-    const sets = generator.generate(context, { timeBudgetSeconds: budget, modality });
+    const sets = generator.generate(context, { timeBudgetSeconds: budget, distanceBudget, modality });
     if (sets) {
       const intensity = slot.type === 'warmup' || slot.type === 'cooldown' 
         ? EffortIntensity.Easy 
@@ -226,6 +253,10 @@ function fillSlot(slot: BlueprintSlot, context: GeneratorContext, budget: number
 
 function calculateDuration(sets: SwimSet[]): number {
   return sets.reduce((acc, s) => acc + (s.intervalSeconds || 0) * s.reps, 0);
+}
+
+function calculateDistance(sets: SwimSet[]): number {
+  return sets.reduce((acc, s) => acc + s.distance * s.reps, 0);
 }
 
 function assembleWorkout(parts: Record<string, SwimSet[]>, poolUnit: PoolSizeUnit): Workout {

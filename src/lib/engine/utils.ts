@@ -23,6 +23,11 @@ export const formatDuration = (totalSeconds: number): string => {
   return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 };
 
+export const roundToNearestWall = (distance: number, poolLength: number): number => {
+  const roundTrip = poolLength * 2;
+  return Math.floor(distance / roundTrip) * roundTrip;
+};
+
 /**
  * Returns a list of strokes that are not set to 'Never' (1).
  * Implements "Smart Fallback": if all are 1, returns [Freestyle].

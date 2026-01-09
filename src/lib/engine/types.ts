@@ -66,7 +66,9 @@ export interface Gear {
 export interface WorkoutParameters {
   poolSize: number;
   poolUnit: PoolSizeUnit;
-  totalTimeMinutes: number;
+  targetType?: 'time' | 'distance';
+  totalTimeMinutes?: number;
+  targetDistance?: number;
   availableGear: Gear;
   focus: TrainingFocus;
   preferredStrokes: StrokeStyle[]; // Deprecated in favor of strokePreferences
@@ -125,6 +127,7 @@ export interface GeneratorContext {
 
 export interface GeneratorConstraints {
   timeBudgetSeconds: number;
+  distanceBudget?: number;
   minDistance?: number;
   maxDistance?: number;
   modality?: Modality;

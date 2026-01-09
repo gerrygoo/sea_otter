@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { metersToYards, yardsToMeters, roundToNearest, estimateDistanceDuration, getAvailableStrokes, pickStroke } from './utils';
+import { metersToYards, yardsToMeters, roundToNearest, estimateDistanceDuration, getAvailableStrokes, pickStroke, roundToNearestWall } from './utils';
 import { StrokeStyle } from './types';
 import type { StrokePreferences } from './types';
 
@@ -64,5 +64,23 @@ describe('Engine Utilities', () => {
           // 2 * 90 = 180 seconds
           expect(estimateDistanceDuration(200, 90)).toBe(180);
       });
+  });
+
+  describe('Wall Return Rounding', () => {
+    it('should round down to the nearest multiple of 2 * poolLength', () => {
+      // 25m pool -> 50m increments
+      expect(roundToNearestWall(2010, 25)).toBe(2000);
+      expect(roundToNearestWall(2040, 25)).toBe(2000);
+      expect(roundToNearestWall(2049, 25)).toBe(2000);
+      expect(roundToNearestWall(2050, 25)).toBe(2050);
+
+      // 50m pool -> 100m increments
+      expect(roundToNearestWall(1090, 50)).toBe(1000);
+      expect(roundToNearestWall(1110, 50)).toBe(1100);
+    });
+
+    it('should handle small distances gracefully (return 0 if less than 2*poolLength)', () => {
+      expect(roundToNearestWall(40, 25)).toBe(0);
+    });
   });
 });

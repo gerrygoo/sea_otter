@@ -62,7 +62,9 @@ export const StrokePreferencesSchema = z.object({
 export const WorkoutParametersSchema = z.object({
   poolSize: z.number().positive(),
   poolUnit: z.nativeEnum(PoolSizeUnit),
-  totalTimeMinutes: z.number().positive(),
+  targetType: z.enum(['time', 'distance']).optional(),
+  targetDistance: z.number().positive().optional(),
+  totalTimeMinutes: z.number().positive().optional(),
   availableGear: GearSchema,
   focus: z.nativeEnum(TrainingFocus),
   preferredStrokes: z.array(z.nativeEnum(StrokeStyle)),
