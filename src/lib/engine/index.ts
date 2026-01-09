@@ -65,7 +65,6 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
   const totalTimeSeconds = (params.totalTimeMinutes || 60) * 60;
   const workoutParts: Record<string, SwimSet[]> = {
     warmup: [],
-    preset: [],
     mainSet: [],
     cooldown: []
   };
@@ -297,11 +296,10 @@ function calculateDistance(sets: SwimSet[]): number {
 }
 
 function assembleWorkout(parts: Record<string, SwimSet[]>, poolUnit: PoolSizeUnit): Workout {
-  const allSets = [...parts.warmup, ...parts.preset, ...parts.mainSet, ...parts.cooldown];
+  const allSets = [...parts.warmup, ...parts.mainSet, ...parts.cooldown];
   
   const workout: Workout = {
     warmup: parts.warmup,
-    preset: parts.preset,
     mainSet: parts.mainSet,
     cooldown: parts.cooldown,
     totalDistance: allSets.reduce((acc, s) => acc + s.distance * s.reps, 0),

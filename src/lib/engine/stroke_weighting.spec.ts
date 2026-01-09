@@ -46,7 +46,7 @@ describe('Stroke Weighting (2-5)', () => {
 
     for (let i = 0; i < iterations; i++) {
       const workout = generateWorkout(params);
-      const allSets = [...workout.warmup, ...workout.preset, ...workout.mainSet, ...workout.cooldown];
+      const allSets = [...workout.warmup, ...workout.mainSet, ...workout.cooldown];
       
       allSets.forEach(s => {
         if (s.stroke === StrokeStyle.Free) freeCount++;

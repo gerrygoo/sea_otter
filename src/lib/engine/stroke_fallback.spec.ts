@@ -26,7 +26,7 @@ describe('Stroke Fallback (All Never)', () => {
 
   it('should fallback to Freestyle when all strokes are set to Never', () => {
     const workout = generateWorkout(baseParams);
-    const allSets = [...workout.warmup, ...workout.preset, ...workout.mainSet, ...workout.cooldown];
+    const allSets = [...workout.warmup, ...workout.mainSet, ...workout.cooldown];
     
     // Check that we have sets (generation didn't crash or return empty)
     expect(allSets.length).toBeGreaterThan(0);

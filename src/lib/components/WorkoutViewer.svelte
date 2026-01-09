@@ -38,7 +38,7 @@
   </div>
 
   <!-- Segments -->
-  {#each ['warmup', 'preset', 'mainSet', 'cooldown'] as segment}
+  {#each ['warmup', 'mainSet', 'cooldown'] as segment}
     {#if workout[segment as keyof Workout] && (workout[segment as keyof Workout] as any[]).length > 0}
       <div class="space-y-2">
         <h2 class="font-black uppercase bg-black text-white px-2 py-1 inline-block">

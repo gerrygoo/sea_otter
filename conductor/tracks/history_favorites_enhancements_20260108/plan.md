@@ -41,7 +41,7 @@ Focus: Analyzing and deciding on the Pre-set slot.
 ## Phase 5: Preset Cleanup
 Focus: Removing the unused 'preset' slot from the engine and UI.
 
-- [ ] Task: Remove `preset` property from `Workout` interface in `src/lib/engine/types.ts` and `src/lib/engine/schema.ts`.
+- [~] Task: Remove `preset` property from `Workout` interface in `src/lib/engine/types.ts` and `src/lib/engine/schema.ts`.
 - [ ] Task: Remove `preset` handling from `src/lib/engine/index.ts` (initialization and assembly).
 - [ ] Task: Remove `preset` rendering from `src/lib/components/WorkoutViewer.svelte` and `WorkoutCard.svelte`.
 - [ ] Task: Update tests to remove `preset` expectations.

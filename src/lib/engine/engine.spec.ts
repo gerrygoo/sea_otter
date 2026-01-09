@@ -17,12 +17,11 @@ describe('Workout Engine Orchestrator', () => {
     }
   };
 
-  it('should generate a full workout with 4 segments', () => {
+  it('should generate a full workout with 3 segments', () => {
     const workout = generateWorkout(mockParams);
 
     expect(workout).not.toBeNull();
     expect(workout.warmup.length).toBeGreaterThan(0);
-    // Preset might be empty if main set is huge, but usually not with 30 mins
     expect(workout.mainSet.length).toBeGreaterThan(0);
     expect(workout.cooldown.length).toBeGreaterThan(0);
     

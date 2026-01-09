@@ -14,7 +14,6 @@ describe('tagWorkout', () => {
 
   const emptyWorkout: Workout = {
     warmup: [],
-    preset: [],
     mainSet: [],
     cooldown: [],
     totalDistance: 0,

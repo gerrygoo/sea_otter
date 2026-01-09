@@ -4,7 +4,6 @@ import { storage } from './storage';
 describe('Storage Utility', () => {
   const mockWorkout = {
     warmup: [],
-    preset: [],
     mainSet: [],
     cooldown: [],
     totalDistance: 1000,

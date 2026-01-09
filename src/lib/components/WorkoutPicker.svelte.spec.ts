@@ -14,7 +14,6 @@ describe('WorkoutPicker', () => {
   const mockWorkouts = [
     {
       warmup: [],
-      preset: [],
       mainSet: [{ reps: 4, distance: 100, stroke: StrokeStyle.Free, description: '4 x 100 Free', intervalSeconds: 90 }],
       cooldown: [],
       totalDistance: 400,
@@ -24,7 +23,6 @@ describe('WorkoutPicker', () => {
     },
     {
       warmup: [],
-      preset: [],
       mainSet: [{ reps: 1, distance: 500, stroke: StrokeStyle.Free, description: '500 Free', intervalSeconds: 450 }],
       cooldown: [],
       totalDistance: 500,

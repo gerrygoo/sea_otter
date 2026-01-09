@@ -26,7 +26,6 @@ describe('mutateWorkout', () => {
     warmup: [
       { reps: 1, distance: 200, stroke: StrokeStyle.Free, description: 'Warmup Free', intervalSeconds: 180 }
     ],
-    preset: [],
     mainSet: [
       { reps: 4, distance: 100, stroke: StrokeStyle.Free, description: 'Main Set', intervalSeconds: 90 }
     ],

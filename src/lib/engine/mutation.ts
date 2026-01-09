@@ -24,7 +24,7 @@ export const mutateWorkout = (workout: Workout, params: WorkoutParameters): Work
   }
 
   // Recalculate distance and tags
-  const allSets = [...result.warmup, ...result.preset, ...result.mainSet, ...result.cooldown];
+  const allSets = [...result.warmup, ...result.mainSet, ...result.cooldown];
   result.totalDistance = allSets.reduce((acc, s) => acc + s.distance * s.reps, 0);
   result.tags = tagWorkout(result);
   
@@ -32,7 +32,7 @@ export const mutateWorkout = (workout: Workout, params: WorkoutParameters): Work
 };
 
 function mutateStroke(workout: Workout, params: WorkoutParameters): Workout {
-    const parts: (keyof Workout)[] = ['mainSet', 'preset', 'warmup'];
+    const parts: (keyof Workout)[] = ['mainSet', 'warmup'];
     for (const part of parts) {
         const sets = workout[part] as SwimSet[];
         if (sets && sets.length > 0) {

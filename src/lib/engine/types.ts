@@ -97,7 +97,6 @@ export interface SwimSet {
 
 export interface Workout {
   warmup: SwimSet[];
-  preset: SwimSet[];
   mainSet: SwimSet[];
   cooldown: SwimSet[];
   totalDistance: number;
@@ -145,7 +144,7 @@ export interface SetGenerator {
 }
 
 export interface BlueprintSlot {
-  type: 'warmup' | 'preset' | 'mainSet' | 'cooldown';
+  type: 'warmup' | 'mainSet' | 'cooldown';
   budgetPercentage: number;
   generators: SetGenerator[];
 }

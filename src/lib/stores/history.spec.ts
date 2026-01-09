@@ -5,7 +5,6 @@ import { history, favorites } from './history';
 describe('History Store', () => {
   const mockWorkout = {
     warmup: [],
-    preset: [],
     mainSet: [],
     cooldown: [],
     totalDistance: 1000,

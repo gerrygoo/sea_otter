@@ -122,16 +122,12 @@
        </div>
 
        <!-- Other Parts Summary -->
-       <div class="grid grid-cols-3 gap-2 text-xs text-gray-600 pt-2 border-t-2 border-black/10">
+       <div class="grid grid-cols-2 gap-2 text-xs text-gray-600 pt-2 border-t-2 border-black/10">
           <div>
               <span class="block font-bold uppercase text-[10px] text-gray-400">Warmup</span>
               {getSegmentSummary(workout.warmup, workout.poolUnit)}
           </div>
-          <div>
-              <span class="block font-bold uppercase text-[10px] text-gray-400">Preset</span>
-              {getSegmentSummary(workout.preset, workout.poolUnit)}
-          </div>
-          <div>
+          <div class="text-right">
               <span class="block font-bold uppercase text-[10px] text-gray-400">Cooldown</span>
               {getSegmentSummary(workout.cooldown, workout.poolUnit)}
           </div>

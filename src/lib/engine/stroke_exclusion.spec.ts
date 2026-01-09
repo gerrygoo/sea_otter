@@ -38,7 +38,7 @@ describe('Stroke Exclusion (Never)', () => {
     };
 
     const workout = generateWorkout(params);
-    const allSets = [...workout.warmup, ...workout.preset, ...workout.mainSet, ...workout.cooldown];
+    const allSets = [...workout.warmup, ...workout.mainSet, ...workout.cooldown];
     
     const freeSets = allSets.filter(s => s.stroke === StrokeStyle.Free);
     expect(freeSets).toHaveLength(0);

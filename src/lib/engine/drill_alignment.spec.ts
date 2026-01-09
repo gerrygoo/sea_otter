@@ -26,7 +26,7 @@ describe('Drill Alignment', () => {
 
   it('should generate Fly drills when Fly is prioritized and Drill is enabled', () => {
     const workout = generateWorkout(baseParams);
-    const allSets = [...workout.warmup, ...workout.preset, ...workout.mainSet, ...workout.cooldown];
+    const allSets = [...workout.warmup, ...workout.mainSet, ...workout.cooldown];
     
     const drillSets = allSets.filter(s => s.description.toLowerCase().includes('drill'));
     expect(drillSets.length).toBeGreaterThan(0);

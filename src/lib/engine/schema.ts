@@ -26,7 +26,6 @@ export const SwimSetSchema = z.object({
 
 export const WorkoutSchema = z.object({
   warmup: z.array(SwimSetSchema),
-  preset: z.array(SwimSetSchema),
   mainSet: z.array(SwimSetSchema),
   cooldown: z.array(SwimSetSchema),
   totalDistance: z.number().nonnegative(),

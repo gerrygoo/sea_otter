@@ -9,7 +9,6 @@ import { history } from '../stores/history';
 describe('Engine Actions', () => {
   const mockWorkout = {
     warmup: [],
-    preset: [],
     mainSet: [],
     cooldown: [],
     totalDistance: 1000,

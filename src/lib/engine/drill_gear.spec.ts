@@ -35,7 +35,7 @@ describe('Drill Gear Filtering', () => {
 
     for (let i = 0; i < 20; i++) {
       const workout = generateWorkout(params);
-      const allSets = [...workout.warmup, ...workout.preset, ...workout.mainSet, ...workout.cooldown];
+      const allSets = [...workout.warmup, ...workout.mainSet, ...workout.cooldown];
       const drillSets = allSets.filter(s => s.description.toLowerCase().includes('drill'));
       
       drillSets.forEach(s => {
@@ -53,7 +53,7 @@ describe('Drill Gear Filtering', () => {
     let found636 = false;
     for (let i = 0; i < 50; i++) {
       const workout = generateWorkout(params);
-      const allSets = [...workout.warmup, ...workout.preset, ...workout.mainSet, ...workout.cooldown];
+      const allSets = [...workout.warmup, ...workout.mainSet, ...workout.cooldown];
       const drillSets = allSets.filter(s => s.description.toLowerCase().includes('6-3-6'));
       if (drillSets.length > 0) {
         found636 = true;

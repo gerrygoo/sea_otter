@@ -23,7 +23,6 @@ describe('WorkoutViewer', () => {
         targetPacePer100: 100 // 1:40
       }
     ],
-    preset: [],
     mainSet: [
       {
         reps: 10,
