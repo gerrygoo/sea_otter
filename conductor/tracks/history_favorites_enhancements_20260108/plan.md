@@ -33,7 +33,16 @@ Focus: Generating variations from saved workouts.
 ## Phase 4: Pre-set Investigation
 Focus: Analyzing and deciding on the Pre-set slot.
 
-- [ ] Task: Analyze `src/lib/engine/index.ts` and `src/lib/engine/types.ts` to see how `preset` is populated.
-- [ ] Task: Create a test case in `src/lib/engine/preset_investigation.spec.ts` that specifically tries to trigger pre-set generation.
-- [ ] Task: Document findings in `conductor/tracks/history_favorites_enhancements_20260108/preset_report.md` and propose a decision (Fix or Deprecate) to the user.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Pre-set Investigation' (Protocol in workflow.md)
+- [x] Task: Analyze `src/lib/engine/index.ts` and `src/lib/engine/types.ts` to see how `preset` is populated.
+- [x] Task: Create a test case in `src/lib/engine/preset_investigation.spec.ts` that specifically tries to trigger pre-set generation.
+- [x] Task: Document findings in `conductor/tracks/history_favorites_enhancements_20260108/preset_report.md` and propose a decision (Fix or Deprecate) to the user.
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Pre-set Investigation' (Protocol in workflow.md) [manual_confirm]
+
+## Phase 5: Preset Cleanup
+Focus: Removing the unused 'preset' slot from the engine and UI.
+
+- [ ] Task: Remove `preset` property from `Workout` interface in `src/lib/engine/types.ts` and `src/lib/engine/schema.ts`.
+- [ ] Task: Remove `preset` handling from `src/lib/engine/index.ts` (initialization and assembly).
+- [ ] Task: Remove `preset` rendering from `src/lib/components/WorkoutViewer.svelte` and `WorkoutCard.svelte`.
+- [ ] Task: Update tests to remove `preset` expectations.
+- [ ] Task: Conductor - User Manual Verification 'Phase 5: Preset Cleanup' (Protocol in workflow.md)
