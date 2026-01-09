@@ -19,14 +19,14 @@ Focus: Ensuring Warm-up, Main Set, and Cool Down blocks adhere to the new distan
 - [x] Task: Write tests in `src/lib/engine/integration.spec.ts` to verify total workout distance is always a multiple of `2 * poolLength`.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Block-Level Distance Distribution' (Protocol in workflow.md) [cac08ff]
 
-## Phase 3: UI Implementation
+## Phase 3: UI Implementation [checkpoint: df7bdfc]
 Focus: Adding the toggle and distance input to the Generator Form.
 
 - [x] Task: Update `GeneratorForm.svelte` to include the Time/Distance toggle.
 - [x] Task: Update state management to handle the toggled input unit.
 - [x] Task: Ensure the UI correctly displays the rounded "Actual Target" when a non-multiple distance is entered.
 - [x] Task: Update `GeneratorForm.svelte.spec.ts` with component tests for the new toggle.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: UI Implementation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: UI Implementation' (Protocol in workflow.md) [df7bdfc]
 
 ## Phase 4: Final Integration & E2E
 Focus: Verifying the end-to-end flow.
