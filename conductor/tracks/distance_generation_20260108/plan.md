@@ -2,14 +2,14 @@
 
 This plan covers the implementation of distance-based workout generation and the fix for "Distance Integrity" (ensuring workouts return to the starting wall).
 
-## Phase 1: Core Engine Updates (Logic & Validation)
+## Phase 1: Core Engine Updates (Logic & Validation) [checkpoint: 679a910]
 Focus: Updating the engine to handle distance parameters and rounding logic.
 
 - [x] Task: Update `WorkoutConstraints` schema in `src/lib/engine/types.ts` to support optional `targetDistance`.
 - [x] Task: Implement `roundToNearestWall` utility in `src/lib/engine/utils.ts` and write tests in `src/lib/engine/utils.spec.ts`.
 - [x] Task: Update `generateWorkout` in `src/lib/engine/index.ts` to handle the distance-based scaling path.
 - [x] Task: Write unit tests in `src/lib/engine/distance_generation.spec.ts` to verify rounding and scaling logic.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Core Engine Updates' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Core Engine Updates' (Protocol in workflow.md) [679a910]
 
 ## Phase 2: Block-Level Distance Distribution
 Focus: Ensuring Warm-up, Main Set, and Cool Down blocks adhere to the new distance constraints.
