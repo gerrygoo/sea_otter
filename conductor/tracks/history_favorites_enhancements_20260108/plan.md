@@ -2,7 +2,7 @@
 
 This plan addresses the implementation of similarity generation, workout renaming, UI parity, and an investigation into the pre-set generation logic.
 
-## Phase 1: UI Refactoring & Parity
+## Phase 1: UI Refactoring & Parity [checkpoint: 4e8851e]
 Focus: Extracting the reusable WorkoutCard and updating History/Favorites lists.
 
 - [x] Task: Create `src/lib/components/WorkoutCard.svelte` by extracting the card UI from `WorkoutPicker.svelte`.
@@ -10,7 +10,7 @@ Focus: Extracting the reusable WorkoutCard and updating History/Favorites lists.
 - [x] Task: Update `src/routes/history/+page.svelte` to use `WorkoutCard` for the list view.
 - [x] Task: Update `src/routes/favorites/+page.svelte` to use `WorkoutCard` for the list view.
 - [x] Task: Verify visually that History/Favorites now look identical to the Generator results.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: UI Refactoring & Parity' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: UI Refactoring & Parity' (Protocol in workflow.md) [4e8851e]
 
 ## Phase 2: Workout Renaming & Actions
 Focus: Adding the context menu, rename dialog, and storage updates.
