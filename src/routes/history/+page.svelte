@@ -1,11 +1,18 @@
 <script lang="ts">
   import { history } from '$lib/stores/history';
   import WorkoutCard from '$lib/components/WorkoutCard.svelte';
+  import { goto } from '$app/navigation';
 
   // Sort by newest first
-  let sortedHistory = $derived($history.sort((a, b) => 
+  let sortedHistory = $derived([...$history].sort((a, b) => 
     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   ));
+
+  function formatDate(iso: string) {
+    return new Date(iso).toLocaleDateString(undefined, { 
+      weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' 
+    });
+  }
 </script>
 
 <div class="space-y-6">
@@ -33,7 +40,12 @@
   {:else}
     <div class="space-y-4">
       {#each sortedHistory as workout (workout.id)}
-        <WorkoutCard {workout} />
+        <WorkoutCard 
+          {workout} 
+          title={workout.name || formatDate(workout.createdAt)}
+          onClick={() => goto(`/history/${workout.id}`)}
+          actionLabel="View Details"
+        />
       {/each}
     </div>
   {/if}

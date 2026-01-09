@@ -1,6 +1,13 @@
 <script lang="ts">
   import { favorites } from '$lib/stores/history';
   import WorkoutCard from '$lib/components/WorkoutCard.svelte';
+  import { goto } from '$app/navigation';
+
+  function formatDate(iso: string) {
+    return new Date(iso).toLocaleDateString(undefined, { 
+      weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' 
+    });
+  }
 </script>
 
 <div class="space-y-6">
@@ -18,7 +25,12 @@
   {:else}
     <div class="space-y-4">
       {#each $favorites as workout (workout.id)}
-        <WorkoutCard {workout} />
+        <WorkoutCard 
+          {workout}
+          title={workout.name || formatDate(workout.createdAt)}
+          onClick={() => goto(`/history/${workout.id}`)}
+          actionLabel="View Details"
+        />
       {/each}
     </div>
   {/if}
