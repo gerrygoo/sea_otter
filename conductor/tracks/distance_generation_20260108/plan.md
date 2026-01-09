@@ -28,9 +28,9 @@ Focus: Adding the toggle and distance input to the Generator Form.
 - [x] Task: Update `GeneratorForm.svelte.spec.ts` with component tests for the new toggle.
 - [x] Task: Conductor - User Manual Verification 'Phase 3: UI Implementation' (Protocol in workflow.md) [df7bdfc]
 
-## Phase 4: Final Integration & E2E
+## Phase 4: Final Integration & E2E [checkpoint: 3aa0b29]
 Focus: Verifying the end-to-end flow.
 
 - [x] Task: Run full suite of engine and UI tests.
 - [x] Task: Add a Playwright E2E test in `e2e/distance_flow.test.ts` for generating a distance-based workout.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Final Integration & E2E' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Final Integration & E2E' (Protocol in workflow.md) [3aa0b29]
