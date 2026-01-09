@@ -19,7 +19,12 @@ export const underwaterGenerator: SetGenerator = {
     const distance = 25;
     const baseInterval = 60; // Usually generous rest for no-breath work
     
-    const reps = Math.floor(constraints.timeBudgetSeconds / baseInterval);
+    let reps: number;
+    if (constraints.distanceBudget) {
+      reps = Math.floor(constraints.distanceBudget / distance);
+    } else {
+      reps = Math.floor(constraints.timeBudgetSeconds / baseInterval);
+    }
 
     if (reps < 1) return null;
 

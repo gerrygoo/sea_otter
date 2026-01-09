@@ -50,4 +50,22 @@ describe('Distance-Based Generation Logic', () => {
 
     expect(spy).toHaveBeenCalledWith(2010, 25);
   });
+
+  it('should generate exact distance for a basic workout', () => {
+    const workout = generateWorkout(baseParams);
+    // Even if generators aren't perfect, we want to see it attempting to reach 2000
+    // Currently they use time budget, so it will be approximate.
+    expect(workout.totalDistance).toBe(2000);
+  });
+
+  it('should ensure time-based workouts also return to wall', () => {
+    const timeParams: WorkoutParameters = {
+      ...baseParams,
+      targetType: 'time',
+      totalTimeMinutes: 30
+    };
+    
+    const workout = generateWorkout(timeParams);
+    expect(workout.totalDistance % (timeParams.poolSize * 2)).toBe(0);
+  });
 });

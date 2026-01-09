@@ -19,9 +19,12 @@ export const testSetGenerator: SetGenerator = {
     // Full recovery rest (e.g. 5 minutes)
     const restSeconds = 300;
     
-    const totalDuration = estimateDistanceDuration(distance, 100) + restSeconds;
+    const totalDistance = reps * distance;
+    const isWithinBudget = constraints.distanceBudget
+      ? totalDistance <= constraints.distanceBudget
+      : estimateDistanceDuration(distance, 100) + restSeconds <= constraints.timeBudgetSeconds;
 
-    if (totalDuration > constraints.timeBudgetSeconds) {
+    if (!isWithinBudget) {
       return null;
     }
 

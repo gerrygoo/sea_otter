@@ -69,7 +69,12 @@ export const drillGenerator: SetGenerator = {
     
     const distance = 50;
     const baseInterval = 60; // Drills are slow
-    const reps = Math.floor(constraints.timeBudgetSeconds / baseInterval);
+    let reps: number;
+    if (constraints.distanceBudget) {
+      reps = Math.floor(constraints.distanceBudget / distance);
+    } else {
+      reps = Math.floor(constraints.timeBudgetSeconds / baseInterval);
+    }
     
     if (reps < 1) {
       return null;

@@ -14,7 +14,7 @@ import { protocolWarmupGenerator } from './generators/protocol_warmup';
 import { protocolCooldownGenerator } from './generators/protocol_cooldown';
 import { Modality, TrainingFocus, StrokeStyle, SetStructure } from './types';
 import { isModalityAvailable } from './modality';
-import { roundToNearestWall } from './utils';
+import { roundToNearestWall, estimateDistanceDuration, getAvailableStrokes } from './utils';
 
 const WarmupGenerators = [protocolWarmupGenerator, mixedWarmupGenerator, pyramidWarmupGenerator, basicIntervalGenerator];
 const MainSetGenerators = [
@@ -131,6 +131,43 @@ export const generateWorkout = (params: WorkoutParameters, randomize: boolean = 
     }
 
     currentRemainingWeight -= slot.budgetPercentage;
+  }
+
+  // 3. Final Distance Top-off (Ensure we hit the wall and target)
+  const currentTotal = calculateDistance(workoutParts.warmup) + 
+                       calculateDistance(workoutParts.mainSet) + 
+                       calculateDistance(workoutParts.cooldown);
+  
+  const wallRequirement = params.poolSize * 2;
+  const availableStrokes = getAvailableStrokes(context.strokePreferences);
+  const topOffStroke = availableStrokes[0];
+  
+  if (isDistanceBased && targetDistance && currentTotal < targetDistance) {
+    const diff = targetDistance - currentTotal;
+    workoutParts.cooldown.push({
+      reps: 1,
+      distance: diff,
+      stroke: topOffStroke,
+      description: `Final Loosening to reach target`,
+      intensity: EffortIntensity.Easy,
+      intervalSeconds: estimateDistanceDuration(diff, 100),
+      structure: SetStructure.Basic,
+      modality: Modality.Swim
+    });
+  } else if (currentTotal % wallRequirement !== 0) {
+    const remainder = currentTotal % wallRequirement;
+    const adjustment = wallRequirement - remainder;
+    
+    workoutParts.cooldown.push({
+      reps: 1,
+      distance: adjustment,
+      stroke: topOffStroke,
+      description: `Final Loosening to return to wall`,
+      intensity: EffortIntensity.Easy,
+      intervalSeconds: estimateDistanceDuration(adjustment, 100),
+      structure: SetStructure.Basic,
+      modality: Modality.Swim
+    });
   }
 
   // Enforcement of mandatory segments (>= 40 mins)

@@ -12,10 +12,15 @@ export const basicIntervalGenerator: SetGenerator = {
     [TrainingFocus.Technique]: 0.6
   },
   generate: (context, constraints) => {
-    const baseIntervalPer100 = 90; // Default 1:30 pace
-    const distance = 100;
+    const distancePerRep = 100;
+    let reps: number;
     
-    const reps = Math.floor(constraints.timeBudgetSeconds / baseIntervalPer100);
+    if (constraints.distanceBudget) {
+      reps = Math.floor(constraints.distanceBudget / distancePerRep);
+    } else {
+      const baseIntervalPer100 = 90; // Default 1:30 pace
+      reps = Math.floor(constraints.timeBudgetSeconds / baseIntervalPer100);
+    }
 
     if (reps < 1) {
       return null;
@@ -28,10 +33,10 @@ export const basicIntervalGenerator: SetGenerator = {
 
     const set: SwimSet = {
       reps,
-      distance,
+      distance: distancePerRep,
       stroke,
-      description: `Basic Set: ${reps} x 100 ${stroke} @ 1:30`,
-      intervalSeconds: baseIntervalPer100,
+      description: `Basic Set: ${reps} x ${distancePerRep} ${stroke} @ 1:30`,
+      intervalSeconds: 90,
       gearUsed: [],
       structure: SetStructure.Basic,
       modality

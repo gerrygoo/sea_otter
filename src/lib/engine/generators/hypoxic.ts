@@ -26,9 +26,11 @@ export const hypoxicGenerator: SetGenerator = {
     ];
 
     const totalDistance = steps.reduce((acc, s) => acc + s.distance, 0);
-    const totalDuration = estimateDistanceDuration(totalDistance, baseInterval);
+    const isWithinBudget = constraints.distanceBudget 
+      ? totalDistance <= constraints.distanceBudget 
+      : estimateDistanceDuration(totalDistance, baseInterval) <= constraints.timeBudgetSeconds;
 
-    if (totalDuration > constraints.timeBudgetSeconds) {
+    if (!isWithinBudget) {
       return null;
     }
 

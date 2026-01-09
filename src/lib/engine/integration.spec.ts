@@ -59,4 +59,17 @@ describe('End-to-End Workout Generation Integration', () => {
     const warmupDist = longWorkout.warmup.reduce((a, s) => a + s.distance * s.reps, 0);
     expect(warmupDist).toBeGreaterThanOrEqual(400);
   });
+
+  it('should ensure all generated workouts return to wall (multiple of 2*poolLength)', () => {
+    const params: WorkoutParameters = {
+      ...baseParams,
+      totalTimeMinutes: 37, // Odd time to force potential odd distance
+      poolSize: 25
+    };
+    
+    for (let i = 0; i < 5; i++) {
+      const workout = generateWorkout(params, true);
+      expect(workout.totalDistance % 50).toBe(0);
+    }
+  });
 });

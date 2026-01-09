@@ -14,9 +14,9 @@ Focus: Updating the engine to handle distance parameters and rounding logic.
 ## Phase 2: Block-Level Distance Distribution
 Focus: Ensuring Warm-up, Main Set, and Cool Down blocks adhere to the new distance constraints.
 
-- [ ] Task: Update block generators (Warm-up, Main Set, Cool Down) to accept distance targets.
-- [ ] Task: Implement logic to ensure the sum of all blocks equals the adjusted target distance.
-- [ ] Task: Write tests in `src/lib/engine/integration.spec.ts` to verify total workout distance is always a multiple of `2 * poolLength`.
+- [x] Task: Update block generators (Warm-up, Main Set, Cool Down) to accept distance targets.
+- [x] Task: Implement logic to ensure the sum of all blocks equals the adjusted target distance.
+- [x] Task: Write tests in `src/lib/engine/integration.spec.ts` to verify total workout distance is always a multiple of `2 * poolLength`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Block-Level Distance Distribution' (Protocol in workflow.md)
 
 ## Phase 3: UI Implementation

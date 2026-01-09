@@ -21,9 +21,12 @@ export const descendingGenerator: SetGenerator = {
     const basePace = getTargetPace(context, EffortIntensity.Normal) || 100;
     
     const baseInterval = basePace + 20; 
-    const totalDuration = reps * estimateDistanceDuration(distance, baseInterval);
+    const totalDistance = reps * distance;
+    const isWithinBudget = constraints.distanceBudget
+      ? totalDistance <= constraints.distanceBudget
+      : reps * estimateDistanceDuration(distance, baseInterval) <= constraints.timeBudgetSeconds;
 
-    if (totalDuration > constraints.timeBudgetSeconds) {
+    if (!isWithinBudget) {
       return null;
     }
 

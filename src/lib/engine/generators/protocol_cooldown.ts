@@ -14,8 +14,13 @@ export const protocolCooldownGenerator: SetGenerator = {
     [TrainingFocus.Mixed]: 1.0
   },
   generate: (context, constraints) => {
-    const totalBudget = constraints.timeBudgetSeconds;
-    if (totalBudget < 120) return null; // Min 2 mins
+    const isDistanceBased = constraints.distanceBudget !== undefined;
+    const effectiveBudget = isDistanceBased 
+      ? constraints.distanceBudget! 
+      : Math.floor(constraints.timeBudgetSeconds / 110) * 100;
+    
+    if (!isDistanceBased && constraints.timeBudgetSeconds < 120) return null;
+    if (isDistanceBased && effectiveBudget < 100) return null;
 
     // Scale volume based on focus (as proxy for intensity)
     const intensity = getFocusIntensity(context.focus);
@@ -29,7 +34,7 @@ export const protocolCooldownGenerator: SetGenerator = {
     const availableStrokes = getAvailableStrokes(context.strokePreferences, [...standardStrokes, StrokeStyle.Choice]);
     const stroke = pickStroke(context.strokePreferences, availableStrokes);
 
-    const dist = Math.max(100, Math.floor((totalBudget / 100) * 100));
+    const dist = Math.max(100, Math.floor(effectiveBudget / 50) * 50);
 
     const set: SwimSet = {
         reps: 1,

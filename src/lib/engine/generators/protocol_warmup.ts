@@ -16,10 +16,14 @@ export const protocolWarmupGenerator: SetGenerator = {
   },
   generate: (context, constraints) => {
     const sets: SwimSet[] = [];
-    const totalBudget = constraints.timeBudgetSeconds;
+    const isDistanceBased = constraints.distanceBudget !== undefined;
+    const effectiveBudget = isDistanceBased 
+      ? constraints.distanceBudget! 
+      : Math.floor(constraints.timeBudgetSeconds / 100) * 100;
     
-    // Min budget for structured warmup: 5 mins
-    if (totalBudget < 300) return null;
+    // Min budget for structured warmup: 200m or 5 mins
+    if (!isDistanceBased && constraints.timeBudgetSeconds < 300) return null;
+    if (isDistanceBased && effectiveBudget < 200) return null;
 
     // Get available strokes for different phases
     const standardStrokes = [StrokeStyle.Free, StrokeStyle.Back, StrokeStyle.Breast, StrokeStyle.Fly];
@@ -32,8 +36,7 @@ export const protocolWarmupGenerator: SetGenerator = {
     const primingStroke = pickStroke(context.strokePreferences, primingStrokes);
 
     // 1. Loosening (45%)
-    const looseningBudget = totalBudget * 0.45;
-    const looseningDist = Math.max(100, Math.floor((looseningBudget / 100) * 100)); 
+    const looseningDist = Math.max(100, Math.floor(((effectiveBudget * 0.45) / 50) ) * 50); 
     sets.push({
         reps: 1,
         distance: looseningDist,
@@ -46,9 +49,9 @@ export const protocolWarmupGenerator: SetGenerator = {
     });
 
     // 2. Activation (35%)
-    const activationBudget = totalBudget * 0.35;
+    const activationBudget = effectiveBudget * 0.35;
     const activationRepDist = 50;
-    const activationReps = Math.max(2, Math.floor(activationBudget / 60)); 
+    const activationReps = Math.max(2, Math.floor(activationBudget / activationRepDist)); 
     sets.push(applyModality({
         reps: activationReps,
         distance: activationRepDist,
@@ -61,9 +64,9 @@ export const protocolWarmupGenerator: SetGenerator = {
     }, Modality.Drill));
 
     // 3. Priming (20%)
-    const primingBudget = totalBudget * 0.20;
+    const primingBudget = effectiveBudget * 0.20;
     const primingRepDist = 25;
-    const primingReps = Math.max(2, Math.floor(primingBudget / 40)); 
+    const primingReps = Math.max(2, Math.floor(primingBudget / primingRepDist)); 
     
     if (context.focus === TrainingFocus.Speed) {
         sets.push({

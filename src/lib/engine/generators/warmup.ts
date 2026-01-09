@@ -22,10 +22,11 @@ export const mixedWarmupGenerator: SetGenerator = {
     const sets: SwimSet[] = [];
     let remainingTime = constraints.timeBudgetSeconds;
     
-    // Calculate potential total distance based on a conservative warmup pace (e.g. 100s/100m)
-    // We aim to fill ~90% of the budget to be safe
+    // Calculate potential total distance
     const estPace = 100;
-    const totalCapacity = Math.floor((constraints.timeBudgetSeconds * 0.95) / estPace) * 100;
+    const totalCapacity = constraints.distanceBudget 
+      ? constraints.distanceBudget 
+      : Math.floor((constraints.timeBudgetSeconds * 0.95) / estPace) * 100;
     
     // Distribute capacity
     // If we have kick/pull, ratio: 50% Swim, 25% Kick, 25% Pull
@@ -142,9 +143,12 @@ export const pyramidWarmupGenerator: SetGenerator = {
 
     for (const distances of variations) {
         const totalDist = distances.reduce((a,b) => a+b, 0);
-        const totalDur = estimateDistanceDuration(totalDist, baseInterval);
         
-        if (totalDur <= constraints.timeBudgetSeconds) {
+        const isWithinBudget = constraints.distanceBudget 
+          ? totalDist <= constraints.distanceBudget 
+          : estimateDistanceDuration(totalDist, baseInterval) <= constraints.timeBudgetSeconds;
+        
+        if (isWithinBudget) {
              // If we have massive slack (e.g. can fit > 2x the largest), maybe repeat?
              // Or just stick to one pyramid for warmup to avoid exhaustion.
              return distances.map(d => ({

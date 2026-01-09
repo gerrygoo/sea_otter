@@ -35,17 +35,22 @@ export const pyramidGenerator: SetGenerator = {
     let bestDuration = 0;
 
     for (const distances of variations) {
-        const singleDuration = distances.reduce((acc, d) => acc + estimateDuration(d, baseInterval), 0);
+        const totalDist = distances.reduce((acc, d) => acc + d, 0);
+        const singleDuration = estimateDuration(totalDist, baseInterval);
         
-        // Max reps we can fit, but cap at 2 for pyramids to avoid excessive repetition of small ones
-        const reps = Math.min(2, Math.floor(constraints.timeBudgetSeconds / singleDuration));
+        let reps: number;
+        if (constraints.distanceBudget) {
+            reps = Math.min(2, Math.floor(constraints.distanceBudget / totalDist));
+        } else {
+            reps = Math.min(2, Math.floor(constraints.timeBudgetSeconds / singleDuration));
+        }
         
         if (reps >= 1) {
-            const totalDur = reps * singleDuration;
+            const totalUsed = constraints.distanceBudget ? reps * totalDist : reps * singleDuration;
             
-            // We want to maximize time used.
-            if (totalDur > bestDuration) {
-                bestDuration = totalDur;
+            // We want to maximize budget used.
+            if (totalUsed > bestDuration) {
+                bestDuration = totalUsed;
                 bestSets = [];
                 for (let i = 0; i < reps; i++) {
                     const roundDesc = reps > 1 ? ` (Round ${i+1})` : '';
@@ -96,13 +101,20 @@ export const ladderGenerator: SetGenerator = {
     let bestDuration = 0;
 
     for (const distances of variations) {
-        const singleDuration = distances.reduce((acc, d) => acc + estimateDuration(d, baseInterval), 0);
-        const reps = Math.min(2, Math.floor(constraints.timeBudgetSeconds / singleDuration));
+        const totalDist = distances.reduce((acc, d) => acc + d, 0);
+        const singleDuration = estimateDuration(totalDist, baseInterval);
+        
+        let reps: number;
+        if (constraints.distanceBudget) {
+            reps = Math.min(2, Math.floor(constraints.distanceBudget / totalDist));
+        } else {
+            reps = Math.min(2, Math.floor(constraints.timeBudgetSeconds / singleDuration));
+        }
         
         if (reps >= 1) {
-            const totalDur = reps * singleDuration;
-            if (totalDur > bestDuration) {
-                bestDuration = totalDur;
+            const totalUsed = constraints.distanceBudget ? reps * totalDist : reps * singleDuration;
+            if (totalUsed > bestDuration) {
+                bestDuration = totalUsed;
                 bestSets = [];
                 for (let i = 0; i < reps; i++) {
                     const roundDesc = reps > 1 ? ` (Round ${i+1})` : '';
