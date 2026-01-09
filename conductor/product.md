@@ -18,7 +18,7 @@ I want to build an app (ideally a web app) called **"G's Swimming Generator"** t
     *   **Generic/Extensible Interface:** Design the engine to accept a wide array of input parameters, allowing for easy addition of new variables.
     *   **Input Parameters:**
         *   **Pool Configuration:** Pool size (yards/meters).
-        *   **Constraints:** Total available time.
+        *   **Constraints:** Total available time OR target distance.
         *   **Performance:** Critical Swim Speed (CSS) integration for personalized pace targets.
         *   **Stroke Preferences:** Granular control (1-5 scale) for each stroke type (Free, Back, Breast, Fly, IM).
         *   **Technique Focus:** Explicit preference settings for Drill, Kick, and Pull sets.

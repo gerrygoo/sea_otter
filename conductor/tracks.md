@@ -4,7 +4,7 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [~] Track: Distance-Based Workout Generation & Integrity
+## [x] Track: Distance-Based Workout Generation & Integrity
 *Link: [./conductor/tracks/distance_generation_20260108/](./conductor/tracks/distance_generation_20260108/)*
 
 
