@@ -22,13 +22,13 @@ Focus: Adding the context menu, rename dialog, and storage updates.
 - [x] Task: Wire up the Rename action to open the dialog and save the new name.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Workout Renaming & Actions' (Protocol in workflow.md)
 
-## Phase 3: Similarity Generation
+## Phase 3: Similarity Generation [checkpoint: c704ab4]
 Focus: Generating variations from saved workouts.
 
 - [x] Task: Add "Generate Similar" button to `src/lib/components/WorkoutViewer.svelte` (used in Detail view).
 - [x] Task: Implement the handler to call `generateSimilar(workout)` (from existing engine) and navigate to the `WorkoutPicker` (or reuse the results view).
 - [x] Task: Verify that clicking "Generate Similar" correctly populates the results with new options.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Similarity Generation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Similarity Generation' (Protocol in workflow.md) [c704ab4]
 
 ## Phase 4: Pre-set Investigation
 Focus: Analyzing and deciding on the Pre-set slot.
