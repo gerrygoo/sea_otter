@@ -31,6 +31,6 @@ Focus: Adding the toggle and distance input to the Generator Form.
 ## Phase 4: Final Integration & E2E
 Focus: Verifying the end-to-end flow.
 
-- [ ] Task: Run full suite of engine and UI tests.
-- [ ] Task: Add a Playwright E2E test in `e2e/distance_flow.test.ts` for generating a distance-based workout.
+- [x] Task: Run full suite of engine and UI tests.
+- [x] Task: Add a Playwright E2E test in `e2e/distance_flow.test.ts` for generating a distance-based workout.
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Final Integration & E2E' (Protocol in workflow.md)
