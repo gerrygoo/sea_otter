@@ -8,6 +8,8 @@ import { writable } from 'svelte/store';
 vi.mock('$lib/stores/settings', () => {
   const store = writable({
     totalTimeMinutes: 60,
+    targetType: 'time',
+    targetDistance: 2000,
     poolSize: 25,
     poolUnit: 'meters',
     availableGear: { fins: false, kickboard: false, pullBuoy: false, paddles: false, snorkel: false },
@@ -82,6 +84,27 @@ describe('GeneratorForm', () => {
     expect(onGenerate).toHaveBeenCalled();
     const submittedParams = onGenerate.mock.calls[0][0];
     expect(submittedParams.cssPace).toBe(90);
+  });
+
+  it('should toggle to distance goal and submit distance', async () => {
+    const onGenerate = vi.fn();
+    const { getByText, getByLabelText } = render(GeneratorForm, { onGenerate });
+
+    const distanceToggle = getByText(/Distance Goal/i);
+    await fireEvent.click(distanceToggle);
+
+    const distanceInput = getByLabelText(/Distance/i);
+    expect(distanceInput).toBeTruthy();
+
+    await fireEvent.input(distanceInput, { target: { value: '2500' } });
+
+    const submitButton = getByText(/Generate \d+ Workout/i);
+    await fireEvent.click(submitButton);
+
+    expect(onGenerate).toHaveBeenCalled();
+    const submittedParams = onGenerate.mock.calls[0][0];
+    expect(submittedParams.targetType).toBe('distance');
+    expect(submittedParams.targetDistance).toBe(2500);
   });
 
   it('should calculate CSS using the calculator', async () => {

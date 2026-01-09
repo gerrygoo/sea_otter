@@ -11,6 +11,8 @@
   let params = $state<WorkoutParameters>({
     poolSize: 25,
     poolUnit: PoolSizeUnit.Meters,
+    targetType: 'time',
+    targetDistance: 2000,
     totalTimeMinutes: 60,
     availableGear: {
       fins: false,
@@ -97,18 +99,49 @@
 </script>
 
 <form onsubmit={handleSubmit} class="space-y-6 w-full max-w-md mx-auto pb-12">
-  <!-- Time & Pool -->
+  <!-- Goal Toggle -->
+  <div class="flex border-2 border-black p-1 bg-gray-100">
+    <button 
+      type="button"
+      class="flex-1 py-2 font-bold uppercase text-sm transition-colors {params.targetType === 'time' || !params.targetType ? 'bg-black text-white' : 'hover:bg-gray-200'}"
+      onclick={() => params.targetType = 'time'}
+    >Time Goal</button>
+    <button 
+      type="button"
+      class="flex-1 py-2 font-bold uppercase text-sm transition-colors {params.targetType === 'distance' ? 'bg-black text-white' : 'hover:bg-gray-200'}"
+      onclick={() => params.targetType = 'distance'}
+    >Distance Goal</button>
+  </div>
+
+  <!-- Time/Distance & Pool -->
   <div class="grid grid-cols-2 gap-4">
     <div>
-      <label for="time" class="block text-sm font-bold uppercase mb-1">Time (mins)</label>
-      <input 
-        type="number" 
-        id="time" 
-        bind:value={params.totalTimeMinutes} 
-        min="10" 
-        max="120"
-        class="w-full border-2 border-black p-2 rounded-none focus:ring-2 focus:ring-blue-500 outline-none font-mono text-lg"
-      />
+      {#if params.targetType === 'distance'}
+        <label for="distance" class="block text-sm font-bold uppercase mb-1">Distance ({params.poolUnit === PoolSizeUnit.Meters ? 'm' : 'yds'})</label>
+        <input 
+          type="number" 
+          id="distance" 
+          bind:value={params.targetDistance} 
+          min={params.poolSize * 4} 
+          step={params.poolSize * 2}
+          class="w-full border-2 border-black p-2 rounded-none focus:ring-2 focus:ring-blue-500 outline-none font-mono text-lg"
+        />
+        {#if params.targetDistance && params.targetDistance % (params.poolSize * 2) !== 0}
+          <p class="text-[10px] text-red-600 mt-1 italic leading-tight">
+            Will be rounded to {Math.floor(params.targetDistance / (params.poolSize * 2)) * (params.poolSize * 2)}{params.poolUnit === PoolSizeUnit.Meters ? 'm' : 'yds'}
+          </p>
+        {/if}
+      {:else}
+        <label for="time" class="block text-sm font-bold uppercase mb-1">Time (mins)</label>
+        <input 
+          type="number" 
+          id="time" 
+          bind:value={params.totalTimeMinutes} 
+          min="10" 
+          max="120"
+          class="w-full border-2 border-black p-2 rounded-none focus:ring-2 focus:ring-blue-500 outline-none font-mono text-lg"
+        />
+      {/if}
     </div>
     <div>
       <label for="poolSize" class="block text-sm font-bold uppercase mb-1">Pool Size</label>

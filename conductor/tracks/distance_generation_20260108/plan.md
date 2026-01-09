@@ -22,10 +22,10 @@ Focus: Ensuring Warm-up, Main Set, and Cool Down blocks adhere to the new distan
 ## Phase 3: UI Implementation
 Focus: Adding the toggle and distance input to the Generator Form.
 
-- [ ] Task: Update `GeneratorForm.svelte` to include the Time/Distance toggle.
-- [ ] Task: Update state management to handle the toggled input unit.
-- [ ] Task: Ensure the UI correctly displays the rounded "Actual Target" when a non-multiple distance is entered.
-- [ ] Task: Update `GeneratorForm.svelte.spec.ts` with component tests for the new toggle.
+- [x] Task: Update `GeneratorForm.svelte` to include the Time/Distance toggle.
+- [x] Task: Update state management to handle the toggled input unit.
+- [x] Task: Ensure the UI correctly displays the rounded "Actual Target" when a non-multiple distance is entered.
+- [x] Task: Update `GeneratorForm.svelte.spec.ts` with component tests for the new toggle.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: UI Implementation' (Protocol in workflow.md)
 
 ## Phase 4: Final Integration & E2E

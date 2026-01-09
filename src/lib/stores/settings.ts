@@ -7,6 +7,8 @@ const STORAGE_KEY = 'sea-otter-settings';
 const DEFAULT_SETTINGS: WorkoutParameters = {
   poolSize: 25,
   poolUnit: PoolSizeUnit.Meters,
+  targetType: 'time',
+  targetDistance: 2000,
   totalTimeMinutes: 60,
   availableGear: {
     fins: false,
