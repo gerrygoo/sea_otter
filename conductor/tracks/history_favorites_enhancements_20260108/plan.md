@@ -30,13 +30,13 @@ Focus: Generating variations from saved workouts.
 - [x] Task: Verify that clicking "Generate Similar" correctly populates the results with new options.
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Similarity Generation' (Protocol in workflow.md) [c704ab4]
 
-## Phase 4: Pre-set Investigation
+## Phase 4: Pre-set Investigation [checkpoint: e1b7184]
 Focus: Analyzing and deciding on the Pre-set slot.
 
 - [x] Task: Analyze `src/lib/engine/index.ts` and `src/lib/engine/types.ts` to see how `preset` is populated.
 - [x] Task: Create a test case in `src/lib/engine/preset_investigation.spec.ts` that specifically tries to trigger pre-set generation.
 - [x] Task: Document findings in `conductor/tracks/history_favorites_enhancements_20260108/preset_report.md` and propose a decision (Fix or Deprecate) to the user.
-- [x] Task: Conductor - User Manual Verification 'Phase 4: Pre-set Investigation' (Protocol in workflow.md) [manual_confirm]
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Pre-set Investigation' (Protocol in workflow.md) [e1b7184]
 
 ## Phase 5: Preset Cleanup
 Focus: Removing the unused 'preset' slot from the engine and UI.
