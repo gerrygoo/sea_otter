@@ -38,11 +38,11 @@ Focus: Analyzing and deciding on the Pre-set slot.
 - [x] Task: Document findings in `conductor/tracks/history_favorites_enhancements_20260108/preset_report.md` and propose a decision (Fix or Deprecate) to the user.
 - [x] Task: Conductor - User Manual Verification 'Phase 4: Pre-set Investigation' (Protocol in workflow.md) [e1b7184]
 
-## Phase 5: Preset Cleanup
+## Phase 5: Preset Cleanup [checkpoint: 3fe6eab]
 Focus: Removing the unused 'preset' slot from the engine and UI.
 
-- [~] Task: Remove `preset` property from `Workout` interface in `src/lib/engine/types.ts` and `src/lib/engine/schema.ts`.
-- [ ] Task: Remove `preset` handling from `src/lib/engine/index.ts` (initialization and assembly).
-- [ ] Task: Remove `preset` rendering from `src/lib/components/WorkoutViewer.svelte` and `WorkoutCard.svelte`.
-- [ ] Task: Update tests to remove `preset` expectations.
-- [ ] Task: Conductor - User Manual Verification 'Phase 5: Preset Cleanup' (Protocol in workflow.md)
+- [x] Task: Remove `preset` property from `Workout` interface in `src/lib/engine/types.ts` and `src/lib/engine/schema.ts`.
+- [x] Task: Remove `preset` handling from `src/lib/engine/index.ts` (initialization and assembly).
+- [x] Task: Remove `preset` rendering from `src/lib/components/WorkoutViewer.svelte` and `WorkoutCard.svelte`.
+- [x] Task: Update tests to remove `preset` expectations.
+- [x] Task: Conductor - User Manual Verification 'Phase 5: Preset Cleanup' (Protocol in workflow.md) [3fe6eab]
