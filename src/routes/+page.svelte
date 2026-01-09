@@ -1,14 +1,23 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import GeneratorForm from '$lib/components/GeneratorForm.svelte';
   import WorkoutViewer from '$lib/components/WorkoutViewer.svelte';
   import WorkoutPicker from '$lib/components/WorkoutPicker.svelte';
   import { generateWorkoutOptions, generateSimilar } from '$lib/engine';
   import { saveWorkout } from '$lib/engine/actions';
+  import { generationStore } from '$lib/stores/generation';
   import type { Workout, WorkoutParameters } from '$lib/engine/types';
 
   let workoutOptions = $state<Workout[]>([]);
   let selectedWorkout = $state<Workout | null>(null);
   let currentParams = $state<WorkoutParameters | null>(null);
+
+  onMount(() => {
+    if ($generationStore.length > 0) {
+      workoutOptions = $generationStore;
+      generationStore.set([]);
+    }
+  });
 
   function handleGenerate(params: WorkoutParameters) {
     currentParams = params;
@@ -31,6 +40,9 @@
     if (currentParams) {
       workoutOptions = generateWorkoutOptions(currentParams, currentParams.optionCount || 3);
       selectedWorkout = null;
+    } else {
+        // If we don't have params (e.g. from history generation), reset
+        workoutOptions = [];
     }
   }
 
@@ -58,9 +70,11 @@
     <div class="flex justify-between items-center border-b-2 border-black pb-2">
       <h1 class="text-xl font-bold uppercase">Results</h1>
       <div class="space-x-4">
-        <button onclick={handleRegenerate} class="text-sm font-bold underline">
-          Try Again
-        </button>
+        {#if currentParams}
+          <button onclick={handleRegenerate} class="text-sm font-bold underline">
+            Try Again
+          </button>
+        {/if}
         <button onclick={reset} class="text-sm font-bold underline">
           Back to form
         </button>
@@ -93,12 +107,14 @@
         Save Workout
       </button>
       
-      <button 
-        onclick={handleFindSimilar}
-        class="w-full bg-yellow-400 text-black text-lg font-bold uppercase py-3 hover:bg-yellow-500 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black"
-      >
-        Find Similar Variations
-      </button>
+      {#if currentParams}
+        <button 
+          onclick={handleFindSimilar}
+          class="w-full bg-yellow-400 text-black text-lg font-bold uppercase py-3 hover:bg-yellow-500 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black"
+        >
+          Find Similar Variations
+        </button>
+      {/if}
     </div>
   </div>
 {/if}

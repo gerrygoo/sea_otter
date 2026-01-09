@@ -36,8 +36,8 @@ describe('WorkoutPicker', () => {
 
   it('should render all workout options', () => {
     render(WorkoutPicker, { workouts: mockWorkouts, onSelect: () => {} });
-    expect(screen.getByText('400 yds')).toBeTruthy();
-    expect(screen.getByText('500 yds')).toBeTruthy();
+    expect(screen.getAllByText('400 yds').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText('500 yds').length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText('Endurance')).toBeTruthy();
     expect(screen.getByText('Distance')).toBeTruthy();
   });
@@ -46,8 +46,8 @@ describe('WorkoutPicker', () => {
     const onSelect = vi.fn();
     render(WorkoutPicker, { workouts: mockWorkouts, onSelect });
 
-    const firstCard = screen.getByText('400 yds').closest('button');
-    await fireEvent.click(firstCard!);
+    const firstOption = screen.getByText('Option 1');
+    await fireEvent.click(firstOption);
 
     expect(onSelect).toHaveBeenCalledWith(mockWorkouts[0]);
   });

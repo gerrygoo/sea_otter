@@ -1,7 +1,9 @@
 <script lang="ts">
   import { history } from '$lib/stores/history';
   import WorkoutCard from '$lib/components/WorkoutCard.svelte';
+  import RenameDialog from '$lib/components/RenameDialog.svelte';
   import { goto } from '$app/navigation';
+  import type { SavedWorkout } from '$lib/engine/types';
 
   // Sort by newest first
   let sortedHistory = $derived([...$history].sort((a, b) => 
@@ -12,6 +14,15 @@
     return new Date(iso).toLocaleDateString(undefined, { 
       weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' 
     });
+  }
+
+  let renamingWorkout = $state<SavedWorkout | null>(null);
+
+  function handleRenameSave(newName: string) {
+    if (renamingWorkout) {
+      history.rename(renamingWorkout.id, newName);
+      renamingWorkout = null;
+    }
   }
 </script>
 
@@ -45,8 +56,23 @@
           title={workout.name || formatDate(workout.createdAt)}
           onClick={() => goto(`/history/${workout.id}`)}
           actionLabel="View Details"
+          actions={[
+            { 
+              label: 'Rename', 
+              onClick: () => { renamingWorkout = workout } 
+            }
+          ]}
         />
       {/each}
     </div>
   {/if}
 </div>
+
+{#if renamingWorkout}
+  <RenameDialog 
+    isOpen={!!renamingWorkout}
+    initialName={renamingWorkout.name || formatDate(renamingWorkout.createdAt)}
+    onSave={handleRenameSave}
+    onCancel={() => renamingWorkout = null}
+  />
+{/if}

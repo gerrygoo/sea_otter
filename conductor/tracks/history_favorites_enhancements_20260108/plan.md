@@ -15,19 +15,19 @@ Focus: Extracting the reusable WorkoutCard and updating History/Favorites lists.
 ## Phase 2: Workout Renaming & Actions
 Focus: Adding the context menu, rename dialog, and storage updates.
 
-- [ ] Task: Implement a `RenameDialog.svelte` component (simple modal).
-- [ ] Task: Add `renameWorkout(id, newName)` method to `src/lib/stores/history.ts` and write unit tests in `src/lib/stores/history.spec.ts`.
-- [ ] Task: Update `WorkoutCard.svelte` to support an optional "Actions Menu" (slot or prop).
-- [ ] Task: Implement the "..." menu with a "Rename" option in the History/Favorites usage of `WorkoutCard`.
-- [ ] Task: Wire up the Rename action to open the dialog and save the new name.
+- [x] Task: Implement a `RenameDialog.svelte` component (simple modal).
+- [x] Task: Add `renameWorkout(id, newName)` method to `src/lib/stores/history.ts` and write unit tests in `src/lib/stores/history.spec.ts`.
+- [x] Task: Update `WorkoutCard.svelte` to support an optional "Actions Menu" (slot or prop).
+- [x] Task: Implement the "..." menu with a "Rename" option in the History/Favorites usage of `WorkoutCard`.
+- [x] Task: Wire up the Rename action to open the dialog and save the new name.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Workout Renaming & Actions' (Protocol in workflow.md)
 
 ## Phase 3: Similarity Generation
 Focus: Generating variations from saved workouts.
 
-- [ ] Task: Add "Generate Similar" button to `src/lib/components/WorkoutViewer.svelte` (used in Detail view).
-- [ ] Task: Implement the handler to call `generateSimilar(workout)` (from existing engine) and navigate to the `WorkoutPicker` (or reuse the results view).
-- [ ] Task: Verify that clicking "Generate Similar" correctly populates the results with new options.
+- [x] Task: Add "Generate Similar" button to `src/lib/components/WorkoutViewer.svelte` (used in Detail view).
+- [x] Task: Implement the handler to call `generateSimilar(workout)` (from existing engine) and navigate to the `WorkoutPicker` (or reuse the results view).
+- [x] Task: Verify that clicking "Generate Similar" correctly populates the results with new options.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Similarity Generation' (Protocol in workflow.md)
 
 ## Phase 4: Pre-set Investigation

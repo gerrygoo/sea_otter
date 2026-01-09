@@ -39,6 +39,20 @@ function createHistoryStore() {
       });
     },
     /**
+     * Renames a workout.
+     */
+    rename(id: string, newName: string) {
+      update((all) => {
+        const index = all.findIndex((w) => w.id === id);
+        if (index === -1) return all;
+        
+        const updated = [...all];
+        updated[index] = { ...updated[index], name: newName };
+        storage.save(updated[index]);
+        return updated;
+      });
+    },
+    /**
      * Removes a workout from history and storage.
      */
     remove(id: string) {

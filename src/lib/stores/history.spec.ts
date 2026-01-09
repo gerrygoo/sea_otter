@@ -71,6 +71,13 @@ describe('History Store', () => {
     expect(get(history)).toHaveLength(0);
   });
 
+  it('should rename a workout', () => {
+    history.add(mockWorkout);
+    history.rename(mockWorkout.id, 'New Name');
+    expect(get(history)[0].name).toBe('New Name');
+    expect(localStorageMock.setItem).toHaveBeenCalled();
+  });
+
   it('should load data from storage on init', () => {
     localStorageMock.getItem.mockReturnValueOnce(JSON.stringify([mockWorkout]));
     history.init();
