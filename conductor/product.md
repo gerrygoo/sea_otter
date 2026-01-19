@@ -27,7 +27,7 @@ I want to build an app (ideally a web app) called **"G's Swimming Generator"** t
     *   **User Interface:**
     *   **Mobile-First Design:** A responsive web interface optimized for readability and quick reference at the pool deck. Includes a **Workout Selection** flow for comparing multiple generated options.
     *   **Space Traversal:** Explore "adjacent" workouts by requesting variations similar to a selected set.
-    *   **History & Favorites:** Save workouts locally to track progress and bookmark favorite sessions.
+    *   **History & Favorites:** Save workouts locally, rename them, and generate new variations based on saved sessions.
     *   **Workout Detail View:** Review full details of any past workout from your history.
     *   **Offline Support:** Progressive Web App (PWA) capabilities for reliable use in pool environments with poor connectivity.
     *   **Serialization:** Support for exporting workouts to standard formats (e.g., JSON) with future potential for direct Garmin integration.
