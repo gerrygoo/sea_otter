@@ -11,8 +11,16 @@ and could be lifted into any other context unchanged.
 
 ## 1. The core flow
 
-```
-WorkoutParameters ──▶ generateWorkout() ──▶ Workout { warmup, mainSet, cooldown }
+```mermaid
+flowchart LR
+    P["WorkoutParameters"] --> GW["generateWorkout()"]
+    GW --> W["Workout\nwarmup + mainSet + cooldown"]
+
+    P2["existing Workout"] --> GS["generateSimilar()"]
+    GS -->|mutation.ts| W2["Workout[]\nvariations"]
+
+    GW --> GWO["generateWorkoutOptions()\n(calls generateWorkout N times, randomize=true)"]
+    GWO --> W3["Workout[]\noptions"]
 ```
 
 Entry points, all in `index.ts`:
@@ -72,6 +80,22 @@ rules:
 5. **`assembleWorkout`** concatenates the three arrays, sums distance and
    duration, and calls `tagWorkout` (see §7) to attach summary tags.
 
+```mermaid
+flowchart TD
+    A["1. Choose mainSet modality from TrainingFocus\nStrength→Pull/Kick, Technique→Drill/Kick, else Swim"] --> B["2. fillSlot(mainSet)\nanchor, 70% budget"]
+    B --> C["3. Split remaining time/distance\nproportionally across warmup + cooldown\n(capped at 30% of total each)"]
+    C --> D["fillSlot(warmup)"]
+    C --> E["fillSlot(cooldown)"]
+    D --> F["4. Distance top-off\nhit target distance / return to pool wall"]
+    E --> F
+    F --> G{"totalTimeMinutes >= 40\nAND warmup/cooldown empty?"}
+    G -- yes --> H["Insert fallback set\n300 Free Easy / 200 Free Easy"]
+    G -- no --> I["assembleWorkout()"]
+    H --> I
+    I --> J["tagWorkout()"]
+    J --> K["Workout"]
+```
+
 ### Filling a single slot: `fillSlot`
 
 For each slot, `fillSlot`:
@@ -91,6 +115,21 @@ For each slot, `fillSlot`:
    (from `getFocusIntensity`, or always `Easy` for warmup/cooldown),
    `targetPacePer100` and `restSeconds` (from `pace_logic.ts`), and a final
    `intervalSeconds` rounded up to the nearest 5 seconds.
+
+```mermaid
+flowchart TD
+    S["fillSlot(slot, context, budget)"] --> Sort["Sort slot.generators by\nfocusAlignment[context.focus] desc"]
+    Sort --> Rand{"randomize?"}
+    Rand -- yes --> Shuffle["Fisher-Yates shuffle\ntop 3 generators only"]
+    Rand -- no --> Loop
+    Shuffle --> Loop["Call next generator.generate(context, constraints)"]
+    Loop --> Null{"returned null?"}
+    Null -- yes --> More{"generators\nremaining?"}
+    More -- yes --> Loop
+    More -- no --> Empty["return []"]
+    Null -- no --> Apply["Layer on intensity, targetPacePer100,\nrestSeconds, intervalSeconds"]
+    Apply --> Sets["return SwimSet[]"]
+```
 
 This is why individual generators don't need to know about pacing — they
 describe the *shape* of a set (reps/distance/stroke/structure) and the
@@ -216,3 +255,14 @@ logic itself.
 saving persists a `SavedWorkout` via `src/lib/stores/history.ts` →
 `src/lib/utils/storage.ts` (localStorage, validated against
 `SavedWorkoutSchema`).
+
+```mermaid
+flowchart LR
+    UI["+page.svelte\nGeneratorForm / WorkoutPicker"] -->|WorkoutParameters| Engine["engine/index.ts\ngenerateWorkoutOptions / generateSimilar"]
+    Engine -->|"Workout[]"| UI
+    UI -->|selected Workout| Actions["engine/actions.ts\nsaveWorkout()"]
+    Actions --> HistoryStore["stores/history.ts"]
+    HistoryStore --> Storage["utils/storage.ts\nlocalStorage"]
+    Storage -.validated by.-> Schema["schema.ts\nSavedWorkoutSchema (Zod)"]
+    HistoryStore --> FavStore["derived store: favorites"]
+```
