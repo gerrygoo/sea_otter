@@ -1,3 +1,9 @@
+> **STALE.** This plan predates an NFR-gathering session that revised its
+> core decisions (compute engine, renderer, search strategy, core design,
+> and scope). Read `HANDOFF.md` in this directory first — it supersedes
+> the sections below wherever they conflict, and defines the next step
+> (rewrite this file). Kept here for historical rationale only.
+
 # Relational (miniKanren-style) workout search + live visualization
 
 ## Context
