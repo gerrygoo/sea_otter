@@ -72,6 +72,40 @@ To allow for complex combinations (e.g., "Descending Pull Set"), the engine sepa
 3. **Stroke (The Style):** Free, Back, Breast, Fly, IM.
 
 ## 5. Workout Construction Blocks
-* **Warm-Up:** 15-20% of distance. Structured in 3 phases: Loosening (Z1), Activation (Kick/Drill), and Priming (Build/Speed). Mandatory for workouts ≥ 40 mins.
 * **Main Set:** 60-70% of distance. Driven by Primary Focus and Structure/Modality mix.
-* **Cool Down:** 10-15% of distance. Z1 focus. Volume scales with Main Set intensity. Mandatory for workouts ≥ 40 mins.
+* **Warm-Up:** 15-20% of distance, mandatory for workouts ≥ 40 mins. See §5a for the full 3-phase logic.
+* **Cool Down:** 10-15% of distance, mandatory for workouts ≥ 40 mins. See §5b.
+
+## 5a. Warm-Up Logic (15-20% of Total Volume)
+The warm-up block is constructed in three phases:
+
+1.  **Loosening (40-50% of Warm-up Dist):**
+    * **Focus:** General movement.
+    * **Intensity:** Z1 (Recovery).
+    * **Structure:** Continuous swim or long reps.
+    * *Example:* `300m Choice Swim.`
+
+2.  **Activation (30-40% of Warm-up Dist):**
+    * **Focus:** Engagement of legs and core; neural connection.
+    * **Structure:** Mix of **Kick** and **Drill**.
+    * *Example:* `4 x 50m (25 Kick / 25 Drill).`
+
+3.  **Priming (20% of Warm-up Dist):**
+    * **Focus:** Preparation for the specific Main Set intensity.
+    * **Logic Branch:**
+        * *If Focus = Endurance/Threshold:* Do **Build** sets (Z1 -> Z3).
+        * *If Focus = Speed/Sprint:* Do **Variable** speed (Easy w/ fast breakouts).
+    * *Example:* `4 x 25m Build` OR `4 x 25m (12.5 Fast / 12.5 Easy).`
+
+## 5b. Cool-Down Logic (10-15% of Total Volume)
+The cool-down is simpler but strictly governed by intensity caps.
+
+* **Focus:** Active Recovery / Flushing.
+* **Intensity:** Strictly **Z1**.
+* **Structure:** Continuous easy swimming.
+* **Engine Rule:** If Main Set intensity was >Z3 (Anaerobic), Cool-down volume should ideally be higher (closer to 15-20% if time permits) to clear lactate.
+* *Example:* `200m Easy Choice (Double Arm Backstroke recommended).`
+
+(Implemented in `src/lib/engine/generators/protocol_warmup.ts` and
+`protocol_cooldown.ts` — see `docs/ARCHITECTURE.md` §5 for how the phase
+percentages map to code.)
