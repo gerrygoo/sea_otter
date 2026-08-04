@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { eq, callFresh, freshN, disj, conj, conde, Zzz, run, runStream } from './microkanren';
+import { eq, callFresh, freshN, disj, conj, conde, delay, run, runStream } from './microkanren';
 import type { Goal, Term } from './microkanren';
 
 // Classic microKanren cons-list encoding: a pair is a 2-tuple [car, cdr],
@@ -27,54 +27,45 @@ function toArray(term: unknown): unknown[] {
 		out.push(t[0]);
 		t = t[1];
 	}
+	if (t !== null) out.push(t); // dotted pair: non-nil, non-list tail
 	return out;
 }
 
-// appendo(l, s, out) <=> out is l appended with s. Only the recursive
-// self-call is wrapped in Zzz, matching the plan's guidance: goal
-// *invocation* is eager, so an unwrapped self-call would recurse (and
-// overflow the stack) before `run` ever pulls a single value.
+// appendo(l, s, out) <=> out is l appended with s. Unlike the first,
+// superseded design, the recursive self-call here needs no `delay` wrapper:
+// it's nested inside `callFresh`'s lambda, which the trampoline never
+// invokes at construction time (only when it actually pops the
+// corresponding job) — that's already enough of a laziness boundary.
 function appendo(l: Term, s: Term, out: Term): Goal {
 	return disj(
 		conj(eq(l, nil), eq(s, out)),
 		callFresh((h) =>
 			callFresh((t) =>
-				callFresh((res) =>
-					conj(
-						eq(cons(h, t), l),
-						conj(
-							eq(cons(h, res), out),
-							Zzz(() => appendo(t, s, res))
-						)
-					)
-				)
+				callFresh((res) => conj(eq(cons(h, t), l), conj(eq(cons(h, res), out), appendo(t, s, res))))
 			)
 		)
 	);
 }
 
-// membero(x, l) <=> x is a member of list l.
+// membero(x, l) <=> x is a member of list l. Same reasoning as appendo: the
+// recursive call is guarded by the enclosing callFresh lambdas.
 function membero(x: Term, l: Term): Goal {
-	return callFresh((h) =>
-		callFresh((t) =>
-			conj(
-				eq(cons(h, t), l),
-				disj(
-					eq(x, h),
-					Zzz(() => membero(x, t))
-				)
-			)
-		)
-	);
+	return callFresh((h) => callFresh((t) => conj(eq(cons(h, t), l), disj(eq(x, h), membero(x, t)))));
 }
 
-// The standard hand-rolled-microKanren trap: without Zzz around the
-// recursive call, invoking this goal recurses synchronously and blows the
-// stack before `run` ever gets to pull a value.
+// foreverO has no callFresh (or any other lambda) between its own name and
+// its recursive self-reference — it recurses as a bare argument to `disj`.
+// JS evaluates call arguments eagerly regardless of how a Goal is
+// represented internally, so calling `foreverO(x)` to build disj's second
+// argument would call `foreverO(x)` again to produce that argument's value,
+// forever, before `disj` itself is ever reached — a construction-time stack
+// overflow, not a search-time one. `delay` defers that specific call until
+// the trampoline actually pops the job, which is the one place in this
+// core's design where an explicit deferral combinator is still required.
 function foreverO(x: Term): Goal {
 	return disj(
 		eq(x, 5),
-		Zzz(() => foreverO(x))
+		delay(() => foreverO(x))
 	);
 }
 
@@ -164,7 +155,7 @@ describe('microkanren core', () => {
 		});
 	});
 
-	describe('laziness (Zzz)', () => {
+	describe('laziness (delay)', () => {
 		it('pulls a finite number of results from an infinitely-recursive relation without overflowing the stack', () => {
 			const results = run(3, (q) => foreverO(q));
 			expect(results).toEqual([5, 5, 5]);

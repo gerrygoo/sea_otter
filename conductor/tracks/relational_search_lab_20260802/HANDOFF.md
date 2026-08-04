@@ -2,12 +2,65 @@
 
 **Branch:** `claude/relational-search-lab` (pushed to origin, branched from
 latest `main`). No PR opened yet — this is early/experimental work.
-**Status:** `plan.md` has been rewritten to its second revision and is
-current — no more stale banner, read it as the source of truth. Zero
-implementation code exists for this revision yet. One code file predates
-it and needs rework, not extension: `src/lib/logic/microkanren.spec.ts`
-(commit `a2700e3`) targets the **first, superseded** design (closures/
-generators, `Zzz`). See "What's stale" below before touching it.
+**Status:** `plan.md` is current (second revision). `src/lib/logic/microkanren.ts`
+now implements Track A's continuation/task-based core and is green against
+a rewritten `microkanren.spec.ts` (15/15 passing, `svelte-check`/`lint`
+clean, no regressions in the existing 118 engine tests). Next: `relations.ts`
+and `slot_search.ts` for both slots (cooldown, warmup), per `plan.md`'s
+Track A section.
+
+## Confirmed: the core's stack-safety hypothesis, and what `delay` actually guards
+
+`plan.md` speculated the continuation/trampoline design "likely makes `Zzz`
+obsolete" and said to confirm by construction rather than assume. Confirmed,
+with a more precise finding than a flat yes/no:
+
+- **Search-time stack safety is unconditional.** The trampoline
+  (`step`/`run`/`runStream` in `microkanren.ts`) processes one `Job` per
+  loop iteration and pushes follow-up jobs onto an explicit array instead of
+  recursing — so search depth, however large, costs queue iterations, never
+  JS call-stack frames. This holds for *every* goal, with or without any
+  deferral combinator.
+- **A deferral combinator (`delay`, this design's much-simplified
+  replacement for `Zzz` — a one-line data tag, no generators/`yield*`) is
+  still structurally required, but only for relations that reference
+  themselves as a bare combinator argument with no intervening
+  `callFresh`/`freshN` lambda** (see `foreverO` in the spec). That's a plain
+  JS eager-argument-evaluation hazard at goal-*construction* time, and it's
+  independent of how a `Goal` is represented internally — no trampoline
+  design change avoids it. `appendo`/`membero`'s recursive self-calls, by
+  contrast, are already nested inside a `callFresh` lambda, which the
+  trampoline never invokes at construction time — so they need no
+  wrapping at all (unlike the first design, which wrapped both in `Zzz`
+  defensively). See the doc comment on `delay` in `microkanren.ts` and the
+  comments above `appendo`/`foreverO` in the spec for the full reasoning.
+
+## WebGPU test environment: resolved, with a caveat
+
+`plan.md`'s Track A "Testing note" assumed no headless WebGPU test harness
+exists for this repo's Vitest setup and planned to mitigate via a pure-TS
+reference implementation only. Checked this directly before starting
+implementation:
+
+- **`npm run test:unit`'s browser project (Playwright-driven headless
+  Chromium) has no WebGPU at all** — confirmed via a probe script:
+  `navigator.gpu` is `undefined` even in the full (non-headless-shell)
+  Chromium binary with `--enable-unsafe-webgpu --ignore-gpu-blocklist`
+  flags, headed or headless. So the plan's assumption holds for anything
+  driven through `vitest`/Playwright specifically — don't expect to
+  automate WebGPU verification through `npm run test:unit`.
+- **The `claude-in-chrome` browser tool (the user's real, extension-driven
+  Chrome) does get a working WebGPU adapter/device** — confirmed on this
+  machine: `navigator.gpu.requestAdapter()` resolves to an AMD GCN-4
+  adapter (`maxComputeWorkgroupsPerDimension: 65535`), i.e. this MacBook's
+  discrete GPU via switchable graphics, not the Intel HD 630 integrated
+  chip `system_profiler` reports by default. So there **is** a route to
+  interactively drive and verify the large view's actual WebGPU
+  compute/render output once it exists — just manual (via that tool),
+  not part of the automated `npm run test:unit` run. Worth using once
+  Track A's `gpu/` module and Track B's canvases exist, in addition to
+  (not instead of) the pure-TS reference-implementation spec tests the
+  plan already calls for.
 
 ## Handoff paragraph (for a new session with no prior context)
 
@@ -30,34 +83,22 @@ reactive re-filtering over a candidate population in the thousands. Read
 `plan.md` in full, including its "Decisions locked in" section for the
 reasoning behind each choice, before writing any code.
 
-**The very next concrete step is to write a red-phase spec for
-`src/lib/logic/microkanren.ts`** — `plan.md`'s Track A section specifies a
-continuation/task-based core (goals and search state as flat,
-serializable data, an explicit trampoline driving expansion rather than
-JS closures/generators), which is a different public shape than the
-existing (stale) `microkanren.spec.ts`. Validate against `appendo`/
-`membero` as before, and include the laziness regression test (an
-infinitely-recursive relation pulled through `run(n, ...)` must terminate
-without stack overflow) — `plan.md` flags that this core design may make
-the first version's `Zzz` delay-combinator trap and fix unnecessary;
-confirm that by writing and running the test, don't assume it going in.
-After that's green, move to `relations.ts`/`slot_search.ts` for both
-slots (Track A), then the WGSL side (`src/lib/logic/gpu/`) before Track
-B's `/lab` UI.
-
-## What's stale
-
-- **`src/lib/logic/microkanren.spec.ts`** (commit `a2700e3`) — red-phase
-  TDD spec written against the first version's `Goal = (State) => Stream`
-  closure/generator design, including a `Zzz`-specific laziness
-  regression test. Needs a rewrite (not a port) once the continuation-
-  based core's shape is settled — see `plan.md`'s Track A section and the
-  paragraph above. Do not extend it as-is.
+`src/lib/logic/microkanren.ts` now implements that core and is green (see
+"Confirmed" section above for what the laziness regression test actually
+established about `delay` vs. the old `Zzz`). **The next concrete step is
+`relations.ts`**: domain relations for cooldown and warmup (per-phase),
+built on `GeneratorContext`/`GeneratorConstraints`/`SwimSet` and
+`isModality Available`/`getAvailableStrokes` per `plan.md`'s Track A
+section, then `slot_search.ts`'s `searchCooldownSlot`/`searchWarmupSlot`
+entry points. After those are green, move to the WGSL side
+(`src/lib/logic/gpu/`) before Track B's `/lab` UI — and see the "WebGPU
+test environment" note above for how to verify that part once it exists.
 
 ## Quick facts
 
-- Nothing outside this track's docs and `src/lib/logic/microkanren.spec.ts`
-  has been created or modified on this branch.
+- `src/lib/logic/microkanren.ts` and its spec are the only implementation
+  code on this branch so far; nothing outside this track's docs and those
+  two files has been created or modified.
 - No dependencies are planned for the small view. The large view needs
   none either — WebGPU is a browser API, not a package.
 - This work is intentionally kept off `main` and off the existing
