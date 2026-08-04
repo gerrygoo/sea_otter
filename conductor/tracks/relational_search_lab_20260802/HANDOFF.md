@@ -2,12 +2,15 @@
 
 **Branch:** `claude/relational-search-lab` (pushed to origin, branched from
 latest `main`). No PR opened yet — this is early/experimental work.
-**Status:** `plan.md` is current (second revision). `src/lib/logic/microkanren.ts`
-now implements Track A's continuation/task-based core and is green against
-a rewritten `microkanren.spec.ts` (15/15 passing, `svelte-check`/`lint`
-clean, no regressions in the existing 118 engine tests). Next: `relations.ts`
-and `slot_search.ts` for both slots (cooldown, warmup), per `plan.md`'s
-Track A section.
+**Status:** `plan.md` is current (second revision). Track A's TypeScript
+side is now fully implemented and green: `microkanren.ts` (continuation/
+task-based core), `relations.ts` (cooldown + warmup-per-phase candidate
+generation and relations), and `slot_search.ts`
+(`searchCooldownSlot`/`searchWarmupSlot`). 47/47 tests passing across the
+three spec files, `svelte-check`/`lint`/`prettier` clean, no regressions in
+the existing 134 engine/e2e-adjacent tests. Next: Track A's `gpu/` module
+(WGSL relations + brute-force search for the large view), then Track B's
+`/lab` UI.
 
 ## Confirmed: the core's stack-safety hypothesis, and what `delay` actually guards
 
@@ -83,22 +86,68 @@ reactive re-filtering over a candidate population in the thousands. Read
 `plan.md` in full, including its "Decisions locked in" section for the
 reasoning behind each choice, before writing any code.
 
-`src/lib/logic/microkanren.ts` now implements that core and is green (see
+`src/lib/logic/microkanren.ts` implements that core and is green (see
 "Confirmed" section above for what the laziness regression test actually
-established about `delay` vs. the old `Zzz`). **The next concrete step is
-`relations.ts`**: domain relations for cooldown and warmup (per-phase),
-built on `GeneratorContext`/`GeneratorConstraints`/`SwimSet` and
-`isModality Available`/`getAvailableStrokes` per `plan.md`'s Track A
-section, then `slot_search.ts`'s `searchCooldownSlot`/`searchWarmupSlot`
-entry points. After those are green, move to the WGSL side
-(`src/lib/logic/gpu/`) before Track B's `/lab` UI — and see the "WebGPU
-test environment" note above for how to verify that part once it exists.
+established about `delay` vs. the old `Zzz`). `relations.ts` and
+`slot_search.ts` now implement the rest of Track A's TypeScript side —
+see "Track A TypeScript side: complete" below for the shape and a design
+decision worth knowing about (why `searchCooldownSlot` returns one
+solution, not the full candidate set). **The next concrete step is Track
+A's `gpu/` module**: `webgpu_context.ts`, the WGSL compute shaders
+(`candidates.wgsl`, `warmup_candidates.wgsl`), and `gpu_search.ts`'s
+orchestration, per `plan.md`'s Track A section — then Track B's `/lab`
+UI. See the "WebGPU test environment" note above for how to verify the
+GPU side once it exists (headless Vitest can't; the claude-in-chrome
+tool's real browser can).
+
+## Track A TypeScript side: complete
+
+`relations.ts` builds each slot/phase's candidate population as an
+ordinary JS Cartesian product (reps × distance × stroke × modality),
+filtered by budget/gear/`isModalityAvailable` checks in plain JS — not
+unified relationally — per the plan's explicit CLP(FD)-avoidance scoping.
+Candidates are pre-sorted so the first is the most preferred (stroke
+preference descending, then distance/reps descending), then fed to
+`microkanren.ts`'s `conde` as one clause per candidate: the relational
+core's job is genuinely the search/enumeration itself (in a specific,
+meaningful order), not the filtering.
+
+`slot_search.ts`'s `searchCooldownSlot`/`searchWarmupSlot` return only
+the single most-preferred solution per slot/phase — deliberately the
+same shape as `protocolCooldownGenerator`/`protocolWarmupGenerator`'s
+output (one `SwimSet` per cooldown call, three for warmup), for direct,
+apples-to-apples comparison. This means the day-to-day search feels
+"deterministic" today, same as the heuristic engine it's replacing — the
+payoff of having a real search (multiple valid candidates, explorable in
+a specific preference order) is available but not exercised by
+`slot_search.ts` itself; it's exercised directly in `relations.spec.ts`
+via `run(candidates.length, ...)`, and is what Track B's future
+search-visualization work should hook into (the full candidate
+population + `conde`'s branch order *is* the choice-point tree to
+visualize).
+
+One functional improvement over today's generator, found while modeling
+activation's domain: `isModalityAvailable(context, Modality.Drill)` is
+now actually enforced before offering Drill as a modality candidate.
+Today's `protocol_warmup.ts` applies `Modality.Drill` unconditionally,
+regardless of gear/stroke-preference — a small instance of the
+"correct by construction" gap `docs/ENGINE_REVIEW.md` critiques the
+existing heuristic engine for.
+
+Also fixed along the way: `conde` in `microkanren.ts` built its
+disj/conj chains with a left fold, which reordered solutions away from
+clause order for 3+ clauses under the FIFO trampoline (see the commit
+`fix(logic): preserve conde clause order for 3+ clauses` and the comment
+above `conde`'s definition) — found because `relations.ts`'s candidate
+ordering depends on `conde` trying clauses in the order given, for
+arbitrarily many clauses, not just the 2-clause cases the original spec
+happened to test.
 
 ## Quick facts
 
-- `src/lib/logic/microkanren.ts` and its spec are the only implementation
-  code on this branch so far; nothing outside this track's docs and those
-  two files has been created or modified.
+- `src/lib/logic/` now has: `microkanren.ts`, `relations.ts`,
+  `slot_search.ts`, and their specs. Nothing outside this track's docs
+  and `src/lib/logic/` has been created or modified on this branch.
 - No dependencies are planned for the small view. The large view needs
   none either — WebGPU is a browser API, not a package.
 - This work is intentionally kept off `main` and off the existing
