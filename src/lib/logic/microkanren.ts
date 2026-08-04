@@ -63,9 +63,17 @@ export function freshN(n: number, f: (...vars: Var[]) => Goal): Goal {
 	return go(n, []);
 }
 
+// Built with reduceRight, not reduce: under the FIFO trampoline, a
+// left-associated disj/conj chain interleaves breadth-first across the
+// *whole* chain before reaching later terminal goals, which reorders
+// solutions away from clause order for 3+ clauses (a left-folded
+// disj(disj(disj(a,b),c),d), FIFO-processed, yields d before a). A
+// right-associated chain instead peels one clause off at a time, each of
+// which resolves before the next is even expanded, preserving "first
+// clause tried first" for any number of clauses.
 export function conde(...clauses: Goal[][]): Goal {
-	const conjoined = clauses.map((clause) => clause.reduce((acc, g) => conj(acc, g)));
-	return conjoined.reduce((acc, g) => disj(acc, g));
+	const conjoined = clauses.map((clause) => clause.reduceRight((acc, g) => conj(g, acc)));
+	return conjoined.reduceRight((acc, g) => disj(g, acc));
 }
 
 function isVar(t: Term): t is Var {

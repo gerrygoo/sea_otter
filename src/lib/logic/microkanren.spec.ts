@@ -107,6 +107,16 @@ describe('microkanren core', () => {
 			const results = run(2, (q) => conde([eq(q, 1), eq(q, 2)], [eq(q, 3)]));
 			expect(results).toEqual([3]);
 		});
+
+		it('conde preserves clause order across 3+ clauses under the FIFO trampoline', () => {
+			// Regression test: a left-associated disj/conj fold interleaves
+			// breadth-first across the whole chain before reaching later
+			// terminal goals, which reorders solutions away from clause order
+			// once there are 3+ clauses (2-clause cases can't catch this,
+			// since a 2-element fold has only one possible associativity).
+			const results = run(4, (q) => conde([eq(q, 1)], [eq(q, 2)], [eq(q, 3)], [eq(q, 4)]));
+			expect(results).toEqual([1, 2, 3, 4]);
+		});
 	});
 
 	describe('freshN', () => {
