@@ -6,9 +6,10 @@ latest `main`). No PR opened yet — this is early/experimental work.
 side is now fully implemented and green: `microkanren.ts` (continuation/
 task-based core), `relations.ts` (cooldown + warmup-per-phase candidate
 generation and relations), and `slot_search.ts`
-(`searchCooldownSlot`/`searchWarmupSlot`). 47/47 tests passing across the
-three spec files, `svelte-check`/`lint`/`prettier` clean, no regressions in
-the existing 134 engine/e2e-adjacent tests. Next: Track A's `gpu/` module
+(`searchCooldownSlot`/`searchWarmupSlot`). 31/31 tests passing across the
+three spec files (16 + 9 + 6), `svelte-check`/`lint`/`prettier` clean, and
+the full suite is 134/134 passing across 44 files (31 new + 103
+pre-existing) — no regressions. Next: Track A's `gpu/` module
 (WGSL relations + brute-force search for the large view), then Track B's
 `/lab` UI.
 
